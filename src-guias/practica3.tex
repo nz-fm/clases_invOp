@@ -1,0 +1,260 @@
+\documentclass[12pt]{article}
+%\include{amsfonts}
+\usepackage{amssymb,amsmath,amsthm,latexsym,epsfig,euscript,multicol}
+\usepackage{enumitem}
+\usepackage[utf8x]{inputenc}
+\usepackage{booktabs}
+\usepackage{babel}[spanish]
+% \usepackage{enumerate}
+
+% Caracteres especiales
+\def\A{\mathbb{A}}
+\def\C{\mathbb{C}}
+\def \N{\mathbb{N}}
+\def \P{\mathbb{P}}
+\def \Q{\mathbb{Q}}
+\def \R{\mathbb{R}}
+\def \Z{\mathbb{Z}}
+\def \sen{\textrm{sen}}
+
+\theoremstyle{definition}
+\newtheorem{ejer}{Ejercicio}
+\newcommand{\bej}{\begin{ejer}}
+\newcommand{\fej}{\end{ejer}}
+
+\def\dt{\Delta t}
+\def\dx{\Delta x}
+
+\topmargin-2cm \vsize 29.5cm \hsize 21cm
+\setlength{\textwidth}{16.75cm}\setlength{\textheight}{23.5cm}
+\setlength{\oddsidemargin}{0.0cm}
+\setlength{\evensidemargin}{0.0cm}
+
+
+\begin{document}
+
+%----------------------------------------------------------
+%Encabezado:
+
+\centerline{{\small Universidad de Buenos Aires - Facultad de Ciencias Exactas y Naturales - Depto. de Matemática}}
+
+\vskip 0.2cm
+
+\hrule
+
+\vskip 0.2cm
+
+ \centerline{{\bf\Large{\sc Investigación Operativa}}}
+
+ \vskip 0.2cm
+
+ \centerline{\ttfamily Segundo Cuatrimestre 2025}
+
+\vskip 0.2cm
+
+ \hrule
+
+ \bigskip
+ \centerline{\bf Práctica 3: Dualidad y Branch \& Bound}
+ \bigskip
+
+%--------------------------------------------------------- 
+% 1
+\bej
+    Formular el dual de los siguientes problemas lineales:
+    \begin{multicols}{2}
+    \begin{enumerate}[label=\alph*)]
+        \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = x_1+4x_2+x_3} \\
+            s.a: & 2x_1-2x_2+x_3 & = & 4 \\\
+             & x_1-x_3 & = & 1 \\
+             & x_2, x_3& \geq & 0 \\
+             & x_1 & \multicolumn{2}{l}{\text{libre}}
+            \end{array}
+            \]
+        \item \[
+                \begin{array}{rrcl}
+                \max & \multicolumn{2}{l}{z = -3x_1-9x_2+x_3-x_5} \\
+                s.a: & -5x_1+2x_2-x_4 & \leq & 12 \\
+                 & -3x_1+x_2+2x_3+x_5 & \leq & 7 \\
+                 & x_1 - 3x_4 + x_5 & \geq & -4 \\
+                  & x_1,x_2,x_3 & \geq & 0 \\
+                  & x_4, x_5 & \leq & 0
+                \end{array}
+                \]
+    \end{enumerate}
+    \end{multicols}
+\fej
+
+%---------------------------------------------------------
+\bej
+    Probar que el problema dual del problema dual es el problema primal.
+\fej
+
+%---------------------------------------------------------
+\bej
+    Encuentre un problema no factible cuyo dual tampoco sea factible.
+\fej
+
+%---------------------------------------------------------
+\bej
+    Dado el siguiente problema:
+    \[
+    \begin{array}{rrcl}
+    \min & \multicolumn{3}{l}{z = x_1+x_2+3x_3+2x_4+8x_5+2x_6+x_7} \\
+    s.a: & 2x_1+2x_2+x_3+32x_4+3x_5+20x_6+11x_7 & \geq & 1 \\
+     & x & \geq & 0
+    \end{array}
+    \]
+    \begin{enumerate}[label=\alph*)]
+        \item Hallar el valor óptimo de la función objetivo.
+        \item Hallar el punto donde se alcanza a partir de la resolución del problema dual.
+    \end{enumerate}
+\fej
+
+%---------------------------------------------------------
+\bej 
+    Resolver cada uno de los siguientes problemas a partir del planteo y resolución de su correspondiente problema dual:
+    \begin{multicols}{2}
+    \begin{enumerate}[label=\alph*)]
+        \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = -5x_1-7x_2-12x_3+x_4} \\
+            s.a: & 2x_1+3x_2+2x_3+x_4 & \leq & 38 \\
+             & 3x_1+2x_2+4x_3-x_4 & \leq & 55 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \max & \multicolumn{2}{l}{z = 5x_1+3x_2+2x_3} \\
+            s.a: & 4x_1+5x_2+2x_3+x_4 & \leq & 20 \\
+             & 3x_1+4x_2-x_3+x_4 & \leq & 30 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \end{enumerate}
+    \end{multicols} 
+\fej
+
+
+\bej Para cada uno de los siguientes modelos, decidir si $x^\ast$ es una solución óptima utilizando el problema dual.
+    \begin{enumerate}
+        \item 
+        \[x^\ast = (0, 0, 8, 3) \]
+        \[
+        \begin{array}{rrrrrrrrcl}
+        \max & 3x_1&+&2x_2&-&x_3&+&3x_4 & &  \\
+        s.a: & x_1&+&2x_2&-&x_3&+&2x_4 & \leq & -2 \\
+         & 3x_1&-&x_2&+&x_3&-&x_4 & \leq & 5 \\
+         & -2x_1&+&x_2&-&3x_3&+&3x_4 & \leq & 10 \\
+         & \multicolumn{7}{r}{x_1,x_2,x_3,x_4} & \geq & 0
+        \end{array}
+        \]
+        \item     
+        \[x^\ast = (0, 2, 0, 7, 0)\]
+        \[\begin{array}{rrrrrrrrrrrr}
+        \max & 8x_1 & - & 9x_2 & + & 12x_3 & + & 4x_4 & + & 11x_5   \\
+        \text{s.a:} & 2x_1 & - & 3x_2 & + &4x_3 & + & x_4 & + & 3x_5 & \leq & 1 \\
+         & x_1 & + & 7x_2 & + &3x_3 & - & 2x_4 & + & x_5 & \leq & 1 \\
+         & 5x_1 & + & 4x_2 & - & 6x_3 & + & 2x_4 & + & 3x_5 & \leq & 22 \\
+         & \multicolumn{9}{r}{x_1,x_2,x_3,x_4,x_5} & \geq & 0
+    \end{array}
+    \]
+
+    \end{enumerate}
+\fej
+
+
+%---------------------------------------------------------
+%\bej
+%    Considere el siguiente problema de programación lineal:
+%    \[
+%    \begin{array}{rrcl}
+%    \max & \multicolumn{3}{l}{z = c_1x_1+c_2x_2} \\
+%    s.a: & 2x_1+3x_2 & \leq & b_1 \\
+%     & x_1-x_2 & \leq & b_2 \\
+%     & x_1,x_2 & \geq & 0
+%    \end{array}
+%    \]
+%    con $c_1=1,\;c_2=3,\;b_1=6$ y $b_2=2$.
+%    \begin{enumerate}[label=\alph*)]
+%        \item Aplique el algoritmo Simplex para encontrar el óptimo.
+%        \item ¿En qué intervalo puede moverse $c_1$ y que el óptimo siga siendo el mismo?
+%        \item ¿En qué intervalo puede moverse $b_1$ y que el óptimo siga siendo el mismo?
+%        \item Formule el problema dual del problema original y encuentre el óptimo del dual utilizando el Teorema de Holgura Complementaria.
+%        \item Suponga que $b_1$ aumenta de $6$ a $6.5$, ¿en cuánto mejora la función objetivo?
+%        \item Suponga que $b_2$ aumenta de $2$ a $3$, ¿en cuánto mejora la función objetivo?
+%    \end{enumerate}
+%\fej
+%
+%%---------------------------------------------------------
+%\bej
+%    Sea $\theta\in\mathbb{R}$, considere el problema:
+%    \[
+%    \begin{array}{rrcl}
+%    \max & \multicolumn{3}{l}{z = (10-4\theta)x_1+(4-\theta)x_2+(7+\theta)x_3} \\
+%    s.a: & 3x_1+x_2+2x_3 & \leq & 7 \\
+%     & 2x_1+x_2+3x_3 & \leq & 5 \\
+%     & x & \geq & 0
+%    \end{array}
+%    \]
+%\fej
+%
+%\begin{enumerate}[label=\alph*)]
+%    \item Aplique el algoritmo Simplex para encontrar el óptimo con $\theta = 0$.
+%    \item Determine el intervalo de valores de $\theta$ para que la solución básica factible obtenida en el ítem anterior siga siendo óptima.
+%    \item Sea $\theta$ perteneciente al intervalo hallado en el ítem anterior, encuentre el intervalo de valores de $b_1$ tales que la base factible óptima siga siendo la misma. Repetir el procedimiento para $b_2$.
+%    \item Analice el caso en el que $b_1$ y $b_2$ se mueven a la vez.
+%    \item Formule el dual del problema original.
+%    \item Para $\theta=0$, hallar el óptimo del problema dual utilizando el Teorema de Holgura Complementaria.
+%\end{enumerate}
+
+%---------------------------------------------------------
+\bej
+    Resuelva utilizando Branch \& Bound los siguientes problemas:
+    \begin{multicols}{2}
+    \begin{enumerate}[label=\alph*)]
+    \item \[
+        \begin{array}{rrcl}
+        \max & \multicolumn{3}{l}{z = 2x_1+x_2} \\
+        s.a: & 2x_1+3x_2 & \leq & 19 \\
+         & 7x_1+3x_2 & \leq & 43 \\
+         & x_1, x_2 & \geq & 0 \\
+         & x_1, x_2 &\in & \mathbb{Z}
+        \end{array}
+        \]
+
+    \item \[
+        \begin{array}{rrcl}
+        \min & \multicolumn{3}{l}{z = -10x_1-15x_2} \\
+        s.a: & 8x_1+4x_2 & \leq & 40 \\
+         & 15x_1+30x_2 & \leq & 20 \\
+          & x_1, x_2 & \geq & 0 \\
+         & x_1, x_2 &\in & \mathbb{Z}
+        \end{array}
+        \]
+    \item \[
+        \begin{array}{rrcl}
+        \min & \multicolumn{3}{l}{z = -4x_1+5x_2} \\
+        s.a: & 5x_1-2x_2 & \geq & -2 \\
+         & 2x_1-4x_2 & \leq & 5 \\
+         & x_1 & \leq & 5 \\
+         & x_2 & \leq & 4 \\
+           & x_1, x_2 & \geq & 0 \\
+         & x_1, x_2 &\in & \mathbb{Z}
+
+        \end{array}
+        \]
+    \end{enumerate}
+    \end{multicols} 
+\fej
+
+\bej
+    Para los ejemplos del ejercicio anterior, supongamos que por restricciones de tiempo, no
+    podemos expandir el árbol más allá del segundo nivel. Elija la mejor solución al problema en
+    ese caso y dé una medida de la calidad de la solución encontrada.
+\fej
+\end{document}
+%--------------------------------------------------------- 

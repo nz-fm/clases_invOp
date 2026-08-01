@@ -1,0 +1,439 @@
+\documentclass[12pt]{article}
+%\include{amsfonts}
+\usepackage{amssymb,amsmath,amsthm,latexsym,epsfig,euscript,multicol}
+\usepackage{enumitem}
+\usepackage[utf8x]{inputenc}
+\usepackage{booktabs}
+\usepackage{babel}[spanish]
+\usepackage{multicol}
+% \usepackage{enumerate}
+
+% Caracteres especiales
+\def\A{\mathbb{A}}
+\def\C{\mathbb{C}}
+\def \N{\mathbb{N}}
+\def \P{\mathbb{P}}
+\def \Q{\mathbb{Q}}
+\def \R{\mathbb{R}}
+\def \Z{\mathbb{Z}}
+\def \sen{\textrm{sen}}
+
+\theoremstyle{definition}
+\newtheorem{ejer}{Ejercicio}
+\newcommand{\bej}{\begin{ejer}}
+\newcommand{\fej}{\end{ejer}}
+
+\def\dt{\Delta t}
+\def\dx{\Delta x}
+
+\topmargin-2cm \vsize 29.5cm \hsize 21cm
+\setlength{\textwidth}{16.75cm}\setlength{\textheight}{23.5cm}
+\setlength{\oddsidemargin}{0.0cm}
+\setlength{\evensidemargin}{0.0cm}
+
+
+\begin{document}
+
+%----------------------------------------------------------
+%Encabezado:
+
+\centerline{{\small Universidad de Buenos Aires - Facultad de Ciencias Exactas y Naturales - Depto. de Matemática}}
+
+\vskip 0.2cm
+
+\hrule
+
+\vskip 0.2cm
+
+ \centerline{{\bf\Large{\sc Investigación Operativa}}}
+
+ \vskip 0.2cm
+
+ \centerline{\ttfamily Segundo Cuatrimestre 2025}
+
+\vskip 0.2cm
+
+ \hrule
+
+ \bigskip
+ \centerline{\bf Práctica 2: Simplex}
+ \bigskip
+
+%--------------------------------------------------------- 
+% 1
+\bej
+Resolver gráficamente los siguientes problemas de programación lineal:
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item \[
+            \begin{array}{rrcl}
+            \max & \multicolumn{3}{l}{z = 7x_1+8x_2} \\
+            \text{s.a:} & 4x_1+x_2 & \leq & 100 \\
+             & x_1+x_2 & \leq & 80 \\
+             & x_1 & \leq & 40 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = 3x_1+9x_2} \\
+            \text{s.a:} & -5x_1+2x_2 & \leq & 30 \\
+             & -3x_1+x_2 & \leq & 12 \\
+              & x& \geq & 0
+            \end{array}
+            \]
+\end{enumerate}
+\end{multicols}
+\fej
+
+%--------------------------------------------------------- 
+% 2
+\bej
+Resuelva los siguientes problemas aplicando Simplex:
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = 3x_1-x_2-3x_3} \\
+            \text{s.a:} & x_1+3x_2-x_3+2x_4 & \leq & 2 \\
+             & 2x_1+x_2-4x_3 & \leq & 1 \\
+             & -4x_2+2x_3 & \leq & 10 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = x_1-2x_3} \\
+            \text{s.a:} & 2x_1+x_2 & \leq & 4 \\
+             & -x_1+2x_2+x_3 & \leq & 7 \\
+             & x_3 & \geq & -3 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item     \[
+    \begin{array}{rrl}
+        \max & \multicolumn{2}{l}{3x_1+2x_2-4x_3}  \\
+        \text{s.a:} & x_1+x_2-2x_3 \leq& 4 \\
+         & -2x_1 + 3x_3 \geq & -5 \\
+         & 2x_1 + x_2 - 3x_3 \leq & 7 \\
+         & x_1, x_2\geq & 0 \\
+         & x_3  \leq & 0 
+    \end{array}
+    \]
+    \item     \[
+    \begin{array}{rrl}
+        \max & \multicolumn{2}{l}{5x_1 + 6x_2 + 9x_3 + 8x_4}  \\
+        \text{s.a:} & x_1+2x_2+3x_3+x_4 \leq& 5 \\
+         & x_1 + x_2 + 2x_3 + 3x_4 \leq & 3 \\
+         & x_1, x_2, x_3, x_4 \geq & 0 \\
+    \end{array}
+    \]
+\end{enumerate}
+\end{multicols}
+
+\fej
+
+%--------------------------------------------------------- 
+% 3
+\bej
+Resolver los modelos del ejercicio anterior utilizando SCIP. 
+\fej
+
+%--------------------------------------------------------- 
+% 4
+\bej
+¿Puede una variable que acaba de dejar la base volver a entrar en el siguiente paso del
+algoritmo Simplex?
+\fej
+
+%--------------------------------------------------------- 
+% 5
+%\bej
+%Demuestre que el problema de minimizar $c^tx$ sujeto a $Ax = b$ carece de interés porque sobre
+%$\{x : Ax = b\}$ no existe el mínimo de $c^tx$ o bien $c^tx$ es constante.
+%\fej
+
+%--------------------------------------------------------- 
+% 6
+\bej
+Supongamos que se ha resuelto un problema de programación lineal y se desea incorporar
+al planteo una nueva variable no negativa con sus correspondientes datos. ¿Cómo se puede
+proceder sin rehacer todos los cálculos?
+\fej
+
+%--------------------------------------------------------- 
+% 7
+\bej
+Resuelva los siguientes problemas de Programación Lineal utilizando el método simplex.
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = -5x_1-7x_2-12x_3+x_4} \\
+            s.a: & 2x_1+3x_2+2x_3+x_4 & \leq & 38 \\
+             & 3x_1+2x_2+4x_3-x_4 & \leq & 55 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \max & \multicolumn{2}{l}{z = 5x_1+3x_2+2x_3} \\
+            s.a: & 4x_1+5x_2+2x_3+x_4 & \leq & 20 \\
+             & 3x_1+4x_2-x_3+x_4 & \leq & 30 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = 3x_1-2x_2-4x_3} \\
+            s.a: & 4x_1+5x_2-2x_3 & \leq & 22 \\
+             & x_1-2x_2+x_3 & \leq & 30 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrl}
+            \min & \multicolumn{2}{l}{z = -6x_1-14x_2-13x_3} \\
+            s.a: & x_1+4x_2+2x_3  \leq & 48 \\
+             & x_1+2x_2+4x_3 \leq & 60 \\
+              & x \geq & 0
+            \end{array}
+            \]
+\end{enumerate}
+\end{multicols}
+\fej
+
+%--------------------------------------------------------- 
+\bej
+Considere el siguiente problema de programación lineal:
+\[
+    \begin{array}{rrcl}
+    \min & \multicolumn{2}{l}{z = -\dfrac{3}{4}x_1+150x_2-\dfrac{1}{50}x_3+6x_4} \\[1em]
+    s.a: & \dfrac{1}{4}x_1-60x_2-\dfrac{1}{25}x_3+9x_4+x_5 & = & 0 \\[1em]
+     & \dfrac{1}{2}x_1-90x_2-\dfrac{1}{50}x_3+3x_4+x_6 & = & 0 \\[1em]
+     & x_3+x_7 & = & 1 \\
+     & x & \geq & 0
+    \end{array}
+\]
+\begin{enumerate}[label=\alph*)]
+    \item Verifique que si se usa como criterio elegir la variable con menor índice para entrar a la base cuando hay empate, entonces el algoritmo no termina.
+    \item Verifique que $(\frac{1}{25}, 0, 1, 0, \frac{3}{100}, 0, 0)$ es una solución óptima y que su valor en la función objetivo es $z_0 = -\frac{1}{20}$ .
+\end{enumerate}
+\fej
+
+%--------------------------------------------------------- 
+%\bej
+%Considere el modelo lineal:
+%\[
+%    \begin{array}{rrcl}
+%        \min & \multicolumn{3}{l}{z = c^t x} \\
+%        \text{s.a:} & Ax & = & b \\
+%         & e^t x & = & 1 \\
+%         & x_i & \geq & 0 \quad \forall\,i\in\{1,\dots,n-1\} \\
+%         & \multicolumn{2}{c}{x_n\text{ libre}}
+%    \end{array}
+%\]
+%donde $e=(1,\dots, 1)^t$, $b,c\in\mathbb{R}^n$ y $A$ está definida por:
+%\[  A_{ij} =\begin{cases} 1 \quad \text{si $i=j$ o $j=n$} \\
+%    0 \quad \text{c.c.}
+%    \end{cases}
+%\]
+%Usar la restricción $e^tx=1$ para eliminar la variable libre. ¿Se podría hacer lo mismo si $x_n$ no fuera libre?
+%\fej
+
+%---------------------------------------------------------
+%\bej
+%Considere el modelo lineal:
+%\[
+%    \begin{array}{rrl}
+%        \min & \multicolumn{2}{l}{z=c^tx}  \\
+%        \text{s.a:} & Ax = & b\\
+%         & x  \geq & 0
+%    \end{array}
+%\]
+%Formule un modelo equivalente en forma estándar tal que el vector de términos independientes sea cero.
+%
+%Pista: se puede hacer introduciendo una variable y una restricción adicionales.
+%\fej
+
+%---------------------------------------------------------
+\bej
+ Halle todos los valores del parámetro $\alpha$ tales que las regiones definidas por las siguientes restricciones presenten vértices degenerados:
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item \[
+        \begin{array}{rcl}
+            x_1+x_2 & \leq & 8 \\
+            6x_1+x_2 & \leq & 12 \\
+            2x_1+x_2 & \leq & \alpha \\
+            x & \geq & 0
+        \end{array}
+        \]
+    \item \[
+            \begin{array}{rcl}
+             \alpha x_1+x_2 & \geq & 1 \\
+             2x_1+x_2 & \leq & 6 \\
+             -x_1+x_2 & \leq & 5 \\
+             x_1+2x_2 & \geq & 6 \\
+             x & \geq & 0
+            \end{array}
+            \]
+\end{enumerate}
+\end{multicols}
+\fej
+
+%---------------------------------------------------------
+\bej
+Aplique el test de optimalidad para encontrar todos los valores del parámetro $\alpha$ tales que
+$x^\ast=(0, 1, 1, 3, 0, 0)^t$ sea una solución óptima del siguiente problema de programación lineal:
+\[
+    \begin{array}{rrcl}
+    \min & \multicolumn{3}{l}{z = -x_1-\alpha^2x_2+2x_3-2\alpha x_4-5x_5+10x_6} \\
+    s.a: & -2x_1-x_2+x_4+2x_6 & = & 2 \\
+     & 2x_1+x_2+x_3 & = & 2 \\
+     & -2x_1-x_3+x_4+2x_5 & = & 2 \\
+     & x & \geq & 0
+    \end{array}
+\]
+\fej
+
+%---------------------------------------------------------
+\bej
+El siguiente diccionario corresponde a alguna iteración del método simplex para un problema de minimización:
+\[
+\begin{array}{rrrrrrrrr}
+    x_3 & = & c & + & 2x_2 & - & dx_4 & - & 2x_6  \\
+    x_1 & = & e & - & fx_2 & + & 2x_4 & - & x_6  \\
+    x_5 & = & 1 & - &  & + & gx_4 & - & 43x_6  \\\hline
+    z & = & -1 & + & ax_2 & + & bx_4 & + & 3x_6  \\
+\end{array}
+\]
+Hallar condiciones sobre $a,b,\dots,g$ para que se cumpla:
+\begin{enumerate}[label=\alph*)]
+    \item la base actual es óptima.
+    \item la base actual es la única base óptima.
+    \item la base actual es óptima pero no única.
+    \item el problema no está acotado.
+    \item que $x_4$ entre en la base y el cambio en la función objetivo sea cero.
+\end{enumerate}
+\fej
+
+%---------------------------------------------------------
+\bej
+Usar el método simplex (de dos fases o Método M) para resolver los siguientes problemas de programación lineal:
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = x_2-3x_3+2x_5} \\
+            \text{s.a:} & x_1+3x_2-x_3+2x_5 & = & 2 \\
+             & -2x_2+4x_3+x_4 & = & 12 \\
+             & x& \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{2}{l}{z = x_1+4x_2+x_3} \\
+            \text{s.a:} & 2x_1-2x_2+x_3 & = & 4 \\\
+             & x_1-x_3 & = & 1 \\
+             & x_2, x_3& \geq & 0 \\
+             & \multicolumn{2}{r}{x_1 \text{ libre}} &
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{3}{l}{z = x_1-2x_2-8x_5} \\
+            s.a: & -2x_1+x_2+x_3-x_5 & \geq & 4 \\
+             & -x_1+2x_2+x_6 & \geq & 7 \\
+             & x_3+\dfrac{1}{3}x_6 & \leq & 11 \\
+             & 6x_2+x_4 & \leq & 3 \\
+             & x & \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{3}{l}{z = 5x_1+2x_2+3x_3} \\
+            s.a: & 5x_1-3x_2+6x_3 & \leq & 30 \\
+             & x_1+x_2+x_3 & \geq & 14 \\
+             & 3x_1-4x_3 & \geq & -15 \\
+             & x_1-2x_3 & = & 0 \\
+             & x & \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{3}{l}{z = -4x_1-2x_2-8x_3} \\
+            s.a: & 2x_1-x_2+3x_3 & = & 30 \\
+             & x_1+2x_2+4x_3 & = & 40 \\
+             & x & \geq & 0
+            \end{array}
+            \]
+    \item \[
+            \begin{array}{rrcl}
+            \min & \multicolumn{3}{l}{z = 2x_1-2x_2-x_3-2x_4+3x_5} \\
+            s.a: & -2x_1+x_2-x_3-x_4 & = & 1 \\
+             & x_1-x_2+2x_3+x_4+x_5 & = & 4 \\
+             & -x_1+x_2-x_5 & = & 4 \\
+             & x & \geq & 0
+            \end{array}
+            \]
+
+\end{enumerate}
+\end{multicols}
+
+\fej
+
+% \bej
+% Dado un torneo de $n$ equipos donde juegan todos contra todos entre sí $r$ veces, se desea encontrar la mayor cantidad de puntos que un equipo puede obtener y quedar en una posición menor o igual a $k$ al finalizar el torneo. Para resolver este problema, se plantean dos modelos:
+
+% \textbf{Primer modelo:}
+%  \begin{itemize}
+%         \item $x_{ij}:$ cantidad de veces que el equipo $i$ le gan\'o al equipo $j$ a lo largo del torneo, $x_{ij}\in\mathbb{Z}_{\geq 0}$
+%         \item $P_i:$ puntaje del equipo $i$ al finalizar el torneo, $P_i\in \mathbb{Z}_{\geq 0}$
+%         \item $\theta_i:$ vale $1$ si y sólo si $P_i \geq P_1$, $\theta_i\in\{0,1\}$
+%     \end{itemize}
+%     \[\setlength\arraycolsep{1.5pt}
+%   \begin{array}{l r c l l r}
+%     \max          & P_1  & & & & \\
+%     \mathrm{s.a:} & \sum\limits_{i = 2}^n \theta_i & \geq & k-1 & & \\
+%                   & \sum\limits_{j \neq i} \left ( 3x_{ij} +(r-x_{ij}-x_{ji} ) \right ) & = & P_i & & \forall i \in \{1,\dots,n \} \\
+%                  & x_{ij} & \leq & r & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                  & x_{ij} + x_{ji} & \leq & r & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                  & P_i  & \geq & P_1 - M\cdot (1-\theta_i) & & \forall i \in \{1,\dots,n \} \\
+%                  & P_i  & \leq & P_1 + M\cdot \theta_i-1 & & \forall i \in \{1,\dots,n \} \\
+%                  & \theta_i & \in & \{0, 1\} & & \forall i \in \{1,\dots,n \} \\
+%                  & x_{ij} & \in & \mathbb{Z}_{\geq 0} & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                  & P_i & \in & \mathbb{Z}_{\geq 0} & & \forall (i,j) \in \{1,\dots,n \}^2
+%   \end{array}
+%     \]
+    
+%     \textbf{    Segundo modelo:}
+    
+%     \begin{itemize}
+%         \item $x_{ij}:$ cantidad de veces que el equipo $i$ le gan\'o al equipo $j$ a lo largo del torneo, $x_{ij}\in\mathbb{Z}_{\geq 0}$
+%         \item $P_i:$ puntaje del equipo $i$ al finalizar el torneo, $P_i\in \mathbb{Z}_{\geq 0}$
+%     \end{itemize}
+    
+%     \[
+%       \begin{array}{l r c l l r}
+%     \max          & P_k  & & & & \\
+%     \mathrm{s.a:} & P_i & \geq & P_{i+1} & & \forall i \in \{1,\dots,n-1 \} \\
+%                   & \sum\limits_{j \neq i} \left ( 3x_{ij} +(r-x_{ij}-x_{ji} ) \right ) & = & P_i & & \forall i \in \{1,\dots,n \} \\
+%                   & x_{ij} & \leq & r & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                  & x_{ij} + x_{ji} & \leq & r & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                 & x_{ij} & \in & \mathbb{Z}_{\geq 0} & & \forall (i,j) \in \{1,\dots,n \}^2 \\
+%                  & P_i & \in & \mathbb{Z}_{\geq 0} & & \forall (i,j) \in \{1,\dots,n \}^2
+%   \end{array}
+%     \]
+% Utilizando SCIP, resolver ambos modelos para cada uno de los siguientes conjuntos de parámetros:
+% \begin{enumerate}[label=\alph*)]
+%     \item $n=4,\;k=3,\; r=1$
+%     \item $n=10,\;k=5,\; r=2$
+%     \item $n=20,\;k=5,\; r=2$
+%     \item $n=30,\;k=4,\; r=2$
+% \end{enumerate}
+
+% ¿Cuál de los dos modelos se resuelve más rápido? ¿Por qué?
+% \fej
+\end{document}
+%--------------------------------------------------------- 

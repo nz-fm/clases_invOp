@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+%\include{amsfonts}
+\usepackage{amssymb,amsmath,amsthm,latexsym,epsfig,euscript,multicol}
+\usepackage{enumitem}
+\usepackage[utf8x]{inputenc}
+\usepackage{booktabs}
+\usepackage{babel}[spanish]
+\usepackage{multicol}
+% \usepackage{enumerate}
+
+% Caracteres especiales
+\def\A{\mathbb{A}}
+\def\C{\mathbb{C}}
+\def \N{\mathbb{N}}
+\def \P{\mathbb{P}}
+\def \Q{\mathbb{Q}}
+\def \R{\mathbb{R}}
+\def \Z{\mathbb{Z}}
+\def \sen{\textrm{sen}}
+
+\theoremstyle{definition}
+\newtheorem{ejer}{Ejercicio}
+\newcommand{\bej}{\begin{ejer}}
+\newcommand{\fej}{\end{ejer}}
+
+\def\dt{\Delta t}
+\def\dx{\Delta x}
+
+\topmargin-2cm \vsize 29.5cm \hsize 21cm
+\setlength{\textwidth}{16.75cm}\setlength{\textheight}{23.5cm}
+\setlength{\oddsidemargin}{0.0cm}
+\setlength{\evensidemargin}{0.0cm}
+
+
+\begin{document}
+
+%----------------------------------------------------------
+%Encabezado:
+\begin{enumerate}
+    \item Los siguientes diccionarios corresponden soluciones básicas factibles de modelos de PL con objetivo de
+    \textbf{maximizar}.
+    Realizar una iteración de SIMPLEX. ¿Qué se observa?
+        \begin{enumerate}[label=\alph*)]
+        \item  \[
+        \begin{array}{ccccccccc}
+            x_2 & = & 5 & + & 2x_3 & - & x_4  & - & 3x_1 \\
+            x_5 & = & 7 &   &      & - & 3x_4 & - & 4x_1 \\ \hline
+            z   & = & 5 & + & x_3  & - & x_4  & - & x_1  \\
+        \end{array}
+        \]
+        \item
+        \[
+        \begin{array}{ccccccccc}
+            x_2 & = & 1 & - & 2x_1 & - & x_4   \\
+            x_3 & = &     & - & x_1 & - & x_4\\ \hline
+            z   & = & 4   & + & 2x_1 & - & x_4\\
+        \end{array}
+        \]
+        \end{enumerate}
+    \item El siguiente diccionario corresponde a una solución óptima de un modelo de PL con objetivo de
+    \textbf{maximizar}.
+    Si aumentamos el valor de $x_2$, ¿qué sucede con el valor de la f.o.? ¿Cuánto puede aumentar $x_2$ y seguir
+    garantizando la no negatividad de las demás variables?
+        \[
+        \begin{array}{ccccccccc}
+            w_1 & = & 3 & + & x_2  & - & 2w_2 & + & 7x_3 \\
+            x_1 & = & 1 & - & 5x_2 & + & 6w_2 & - & 8x_3 \\
+            w_3 & = & 4 & + & 9x_2 & + & 2w_2 & - & x_3  \\ \hline
+            z   & = & 8 &   &      & - & w_2  & - & x_3  \\
+        \end{array}
+        \]
+\end{enumerate}
+\end{document}

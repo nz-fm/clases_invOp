@@ -1,0 +1,659 @@
+\documentclass[12pt]{article}
+%\include{amsfonts}
+\usepackage{amssymb,amsmath,amsthm,latexsym,epsfig,euscript,multicol}
+\usepackage{enumitem}
+\usepackage[utf8x]{inputenc}
+\usepackage{booktabs}
+\usepackage{babel}[spanish]
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue]{hyperref}
+\usepackage{listings,xcolor,bm}
+% \usepackage{enumerate}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you must add
+  basicstyle=\small\ttfamily,      % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+%  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=4,	                   % sets default tabsize to 2 spaces
+  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+  numbers=none
+}
+% Caracteres especiales
+\def\A{\mathbb{A}}
+\def\C{\mathbb{C}}
+\def \N{\mathbb{N}}
+\def \P{\mathbb{P}}
+\def \Q{\mathbb{Q}}
+\def \R{\mathbb{R}}
+\def \Z{\mathbb{Z}}
+\def \sen{\textrm{sen}}
+
+\theoremstyle{definition}
+\newtheorem{ejer}{Ejercicio}
+\newcommand{\bej}{\begin{ejer}}
+\newcommand{\fej}{\end{ejer}}
+\newcommand{\scip}{\texttt{[SCIP]}}
+\newcommand{\opt}[1]{#1^{\ast}}
+\newcommand{\dsum}{\displaystyle\sum}
+
+\def\dt{\Delta t}
+\def\dx{\Delta x}
+
+\topmargin-2cm \vsize 29.5cm \hsize 21cm
+\setlength{\textwidth}{16.75cm}\setlength{\textheight}{23.5cm}
+\setlength{\oddsidemargin}{0.0cm}
+\setlength{\evensidemargin}{0.0cm}
+
+
+\begin{document}
+
+%----------------------------------------------------------
+%Encabezado:
+
+\centerline{{\small Universidad de Buenos Aires - Facultad de Ciencias Exactas y Naturales - Depto. de Matemática}}
+
+\vskip 0.2cm
+
+\hrule
+
+\vskip 0.2cm
+
+ \centerline{{\bf\Large{\sc Investigación Operativa}}}
+
+ \vskip 0.2cm
+
+ \centerline{\ttfamily Segundo Cuatrimestre 2025}
+
+\vskip 0.2cm
+
+ \hrule
+
+ \bigskip
+ \centerline{\bf Práctica 1: Modelado y SCIP}
+ \bigskip
+
+\textit{Los ejercicios con la etiqueta \scip pueden ser resueltos con el solver.}
+%--------------------------------------------------------- 
+% 1
+
+\bej \scip
+    Un nutricionista está planeando el menú de la comida de una escuela. Proyecta servir tres alimentos principales,
+    todos ellos con distinto contenido nutricional, de manera que se suministre al
+    menos la ración diaria mínima (RDM) de vitaminas A, C y D en una comida. En la siguiente
+    tabla se sintetiza el contenido vitamínico y el costo por día por cada 30 gramos de los tres
+    tipos de alimento.
+    
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|}\hline
+             & Vitamina A & Vitamina C  & Vitamina D & Costo \\\hline
+            Alimento 1 & $0.03$ g & $0.01$ g & $0.04$ g & \$ $0.15$ \\\hline
+            Alimento 2 & $0.02$ g & $0.015$ g & $0.03$ g & \$ $0.10$ \\\hline
+            Alimento 3 & $0.04$ g & $0.005$ g & $0.02$ g & \$ $0.12$ \\\hline
+            RDM & $0.3$ g & $0.12$ g & $0.21$ g & \\\hline
+        \end{tabular}
+    \end{table}
+    
+    Cualquier combinación de ellos puede seleccionarse, con tal de que el tamaño total de la
+    porción sea de por lo menos 225g.
+    Plantee un modelo de programación lineal que, al ser resuelto, determine la cantidad que
+    debe servirse de cada alimento sabiendo que el objetivo es reducir al mínimo el costo de la
+    comida y teniendo en cuenta que se deben alcanzar los niveles de las raciones mínimas de las
+    tres vitaminas y se debe respetar la restricción relativa al tamaño mínimo de la porción.
+\fej
+
+%--------------------------------------------------------- 
+%2
+
+\bej \scip
+    Se cuenta con un presupuesto de mil millones de pesos para otorgarlos como subsidio destinado a la investigación innovadora en el campo de la búsqueda de otras formas de producir
+    energía. Se seleccionaron seis proyectos. En la siguiente tabla figuran la utilidad neta que se
+    obtendrá por cada peso invertido en el proyecto así como el nivel requerido de financiamiento
+    (en millones de pesos).
+    
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c|c|c|c|}\hline
+            Proyecto & Clasificación & Utilidad Neta & Financiamiento \\\hline
+            1 & Solar & $4.4$ & $220$ \\\hline 
+            2 & Solar & $3.8$ & $180$ \\\hline 
+            3 & Comb. Sintéticos & $4.1$ & $250$ \\\hline 
+            4 & Carbón & $3.5$ & $150$ \\\hline 
+            5 & Nuclear & $5.1$ & $400$ \\\hline 
+            6 & Geotérmico & $3.2$ & $120$ \\\hline 
+        \end{tabular}
+    \end{table}
+    
+    Además se ha resuelto financiar por lo menos el 50\% del proyecto de energía nuclear y como
+    mínimo 300 millones de pesos de los proyectos de energía solar. Plantee el problema sabiendo
+    que el objetivo es maximizar los beneficios netos.
+
+\fej
+
+%--------------------------------------------------------- 
+%3
+\bej
+    \textit{(Problema de coloreo)}. Dado un mapa con $N$ regiones (provincias o países), formular un modelo de programación lineal que permita minimizar la cantidad de colores necesarios para pintar el mapa, de manera tal que dos regiones limítrofes no sean pintadas con el mismo color.
+\fej
+
+%--------------------------------------------------------- 
+%4
+\bej \scip
+    Una empresa quiere decidir una ubicación, de entre tres disponibles ($U_1$, $U_2$ y $U_3$) para construir una fábrica que elaborará 3 productos ($P_1$, $P_2$ y $P_3$). La producción de estos productos genera un volumen de contaminación de $0.5$, $2$ y $1$ $cm^3$ respectivamente por unidad producida, independientemente de la ubicación, pero los costos de producción y contratación (afectan al beneficio y a la capacidad de producción) y la política medioambiental varían de una ubicación a otra. La capacidad diaria de producción, el beneficio neto por unidad producida, el volumen máximo de contaminación diaria permitido (en $cm^3$) y la penalización diaria por excedente de contaminación (pesos por $cm^3$) en cada ubicación se muestran en la siguiente tabla:
+
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{cccc}
+             & $U_1$ & $U_2$ & $U_3$  \\ \midrule
+            Beneficio unitario $P_1$ & $2$ & $4$ & $3$ \\
+            Beneficio unitario $P_2$ & $5$ & $3$ & $6$ \\
+            Beneficio unitario $P_3$ & $3$ & $4$ & $2$ \\
+            Capacidad máxima de producción & $200$ & $400$ & $300$ \\
+            Volumen máximo de contaminación & $150$ & $250$ & $200$ \\
+            Penalización por contaminación excedente & \$$200$ & \$$150$ & \$$100$ \\ 
+        \end{tabular}
+    \end{table}
+
+Formular un modelo de programación lineal para determinar la ubicación de la fábrica y cuántas unidades de cada producto
+deben producirse, de modo que se maximice el beneficio total (sin contar posibles multas) y no se incurra en sanciones
+por más de \$$90000$ al día.
+\fej
+
+%---------------------------------------------------------
+%5
+\bej
+El objetivo de este ejercicio es modelar fórmulas de lógica proposicional con programación lineal. Como las variables
+proposicionales pueden tomar dos valores (verdadero o falso), se suelen utilizar variables binarias para modelarlas.
+Para cada una de las siguientes fórmulas, encontrar un conjunto de restricciones lineales cuyas soluciones factibles se
+correspondan con los valores que la hacen verdadera. Al modelar podría ser necesario incluir variables auxiliares
+enteras.
+
+    \textit{Ejemplo}: el enunciado $x\wedge y$ se puede modelar como $x+y=2$.
+    \begin{multicols}{2}
+        \begin{enumerate}[label=\emph{\alph*})]
+            \item $x\veebar y$ \textit{(disyunción exclusiva)}
+            \item $x\Rightarrow y$
+            \item $x\iff y$
+            \item $\neg(x\vee y)$
+            \item $(x \vee y) \Rightarrow z$
+            \item $x \Rightarrow (y \wedge z)$
+            \item $x \iff (y \wedge z)$
+            \item $x\vee (y\wedge (\neg z))$
+            \item $x_1\wedge x_2\wedge \dots \wedge x_n$
+            \item $(x_1\wedge x_2\wedge \dots \wedge x_n)\iff y$
+            \item $(x_1\vee x_2\vee \dots \vee x_n)\iff y$
+        \end{enumerate}
+    \end{multicols}
+
+\fej
+
+%---------------------------------------------------------
+% 6
+
+\bej \scip
+    El dueño de un establecimiento quiere alquilarlo por 4 años, aunque no necesariamente a la
+    misma gente. Para decidir la duración de los contratos, contacta con una empresa de estudios
+    de mercado, que le proporciona la siguiente tabla, indicando la utilidad esperada, en miles
+    de pesos, si se alquila desde el inicio del año i hasta el inicio del año j:
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{c|cccc}
+            $i$\textbackslash$j$ & 2 & 3 & 4 & 5\\\hline
+            $1$ & $12$ & $22$ & $38$ & $40$ \\
+            $2$ & - & $13$ & $20$ & $29$ \\
+            $3$ & - & - & $10$ & $19$ \\
+            $4$ & - & - & - & $12$ \\
+        \end{tabular}
+    \end{table}
+
+    Elaborar un modelo de programación lineal que permita decidir cuándo y por cuánto tiempo alquilar para maximizar la
+    ganancia durante los próximos 4 años.
+\fej
+
+%---------------------------------------------------------
+%7
+
+\bej
+    El intendente de una ciudad del interior de Argentina ha decidido relocalizar todos los colegios
+    de modo de hacer más cómoda la movilidad de los alumnos. La ciudad se puede dividir en
+    $I$ distritos, y cada uno contiene $p_i$ alumnos. Análisis preliminares (estudios de terrenos,
+    factores políticos, etc.) han establecido que las escuelas sólo pueden ser ubicadas en $J$ sitios
+    predeterminados dentro de la ciudad.
+
+    Sea $d_{ij} \geq 0$ la distancia desde el centro del distrito $i$
+    hasta el sitio $j$. Se deben seleccionar los sitios en los cuales construir un colegio (en un sitio
+    cabe a lo sumo uno) y además se debe asignar un colegio a cada distrito. Es decir, cada distrito
+    de la ciudad debe tener uno (y sólo un) colegio asociado. En cambio, cada colegio puede tener
+    hasta dos distritos asociados. Además, si un colegio fue construido, al menos un distrito tiene que
+    serle asignado.
+
+    Construir un colegio en el sitio $j$ tiene un costo fijo asociado igual a $c_j$. Existe
+    también un costo variable que es linealmente proporcional (la constante de proporcionalidad
+    es $F$) a la cantidad total de alumnos a que debe servir el colegio. O sea, si se construye un
+    colegio en el sitio $j$, entonces el costo asociado es $c_j +Fs_j$, donde $s_j$ es la población total a que
+    debe servir el colegio ubicado en $j$ (cuidado que $s_j$ no es un dato previo sino que es la suma de
+    las poblaciones de los distritos asociados a ese colegio).
+
+    La capacidad de alumnos que soporta
+    un colegio construido en el sitio $j$ es un dato conocido ($T_j$). El presupuesto total destinado
+    para construir los colegios es igual a $B$ y no debe ser sobrepasado. Además, la Dirección de
+    Educación de la ciudad ha determinado que los distritos $u$ y $v$ deben ser atendidos por 2
+    colegios distintos. Formular un problema
+    de programación lineal mixto, que, respetando las condiciones planteadas, determine dónde construir los colegios y qué
+    colegio atiende a qué distrito. El objetivo es minimizar la distancia
+    máxima entre el centro de un distrito y su respectivo colegio.
+\fej
+
+%---------------------------------------------------------
+%8
+
+\bej \scip
+En este ejercicio compararemos dos modelos para el Problema No Simétrico del Viajante de Comercio , aplicándolos a una
+instancia con $17$ ciudades. El primero fue propuesto por Dantzig, Fulkerson y Johnson\footnote
+{Dantzig G, Fulkerson D, Johnson S (1954) \textit{Solutions of a large-scale traveling-salesman problem}. Oper Res 2(4)
+    :393–410} para resolver el Problema del Viajante de Comercio. Las variables binarias $x_{ij}$
+indican si se viaja desde la ciudad $i$ hasta la ciudad $j$. Los parámetros $d_{ij}$ indican la distancia desde la
+ciudad $i$ hasta la ciudad $j$. El modelo es el siguiente:
+\[
+    \begin{array}{rrl}
+         \min & \multicolumn{2}{l}{\dsum_{i=1}^N \dsum_{\substack{j = 1 \\ j\neq i}}^N d_{ij}x_{ij} }  \\
+         \text{s.a:}& \dsum_{\substack{i=1 \\ i\neq j}} ^N x_{ij} & = 1 \quad j=1,\dots, N \\
+         & \dsum_{\substack{j=1 \\ j\neq i}} ^N x_{ij} & = 1 \quad i=1,\dots, N \\
+         & \dsum_{i\in S} \dsum_{\substack{j \in S \\ j\neq i}} x_{ij} & \leq |S| - 1 \quad S\subset\{1,\dots, N\},
+         2 \leq |S|\leq N-1 \\
+         & x_{ij} & \in \{0,1\} \quad i,j=1,\dots, N
+    \end{array}
+\]
+El segundo modelo que veremos fue propuesto por Miller, Tucker y Zemlin\footnote{C. E. Miller, A. W. Tucker,
+    and R. A. Zemlin. 1960. \textit{Integer Programming Formulation of Traveling Salesman Problems}. J. ACM 7, 4 (
+    Oct. 1960), 326–329.}. Usa las mismas variables
+$x_{ij}$ y además utilizan variables reales no negativas $u_i$
+que representan el orden en que se visitan las ciudades (saliendo desde la ciudad $1$). El modelo es el siguiente:
+\[
+    \begin{array}{rrl}
+         \min & \multicolumn{2}{l}{\dsum_{i=1}^N \dsum_{\substack{j = 1 \\ j\neq i}}^N d_{ij}x_{ij} }  \\
+         \text{s.a:}& \dsum_{\substack{i=1 \\ i\neq j}} ^N x_{ij} & = 1 \quad j=1,\dots, N \\
+         & \dsum_{\substack{j=1 \\ j\neq i}} ^N x_{ij} & = 1 \quad i=1,\dots, N \\
+         & u_i + x_{ij} & \leq u_j + (N-1)(1-x_{ij}) \quad i=1,\dots, N, j=2,\dots, N, i\neq j\\[0.2em]
+         & x_{ij} & \in \{0,1\} \quad i,j=1,\dots, N \\[0.2em]
+         & u_i & \in \mathbb{R}_{\geq 0} \quad i=1,\dots, N
+    \end{array}
+\]
+Implementar los dos modelos, leyendo los datos de la distancia entre las ciudades que son proporcionados en el archivo
+\texttt{ATSP\_17.csv} con \texttt{np.loadtxt}:
+\begin{lstlisting}
+dist = np.loadtxt('ATSP_17.csv', delimiter=';')
+\end{lstlisting}
+
+¿Cuál de los dos modelos es más rápido? ¿Cuál es la desventaja del primer modelo?
+
+\vspace{0.5cm}
+\textbf{Sugerencia:} para escribir el último conjunto de restricciones del primer modelo, se sugiere utilizar la
+función \href{https://docs.python.org/es/3.10/library/itertools.html#itertools.combinations}{\texttt{combinations}}
+de la librería \verb|itertools|:
+\begin{lstlisting}
+from itertools import combinations
+\end{lstlisting}
+\fej
+
+%---------------------------------------------------------
+% 10
+
+\bej \scip
+Determine la mayor cantidad de alfiles que se pueden colocar en un tablero de ajedrez de $8\times8$,
+tal que no haya dos alfiles en la misma casilla y cada alfil sea amenazado como máximo por uno de los otros alfiles.
+Nota: Un alfil amenaza a otro si ambos se encuentran en dos casillas distintas de una misma diagonal. El tablero tiene
+por diagonales las 2 diagonales principales y las paralelas a ellas.
+\fej
+
+\bej
+    Sea $N\in\Z$ conocido, elaborar un modelo de programación lineal entera que permita resolver el siguiente problema:
+    \[
+        \begin{array}{lrcl}
+            \min & \multicolumn{3}{l}{z=f(x,y)}  \\
+            \text{s.a:} & x & \neq & y \\
+             & |x| & \leq & N \\
+             & |y| & \leq & N \\
+             & x, y & \in & \Z \\
+        \end{array}
+    \]
+\fej 
+
+%---------------------------------------------------------
+% 11
+
+\bej \scip
+Una compañía de construcción quiere mover arena desde sitios (A,B,C) de construcción que están terminados a tres nuevos
+sitios de construcción (1,2,3). Los kilos de arena que se encuentran en los sitios A, B y C es, respectivamente, $700$
+kg., $600$ kg. y $400$ kg. mientras que los sitios $1$, $2$ y $3$ requieren $800$, $500$ y $400$
+kilos de arena respectivamente. La siguiente tabla muestra el costo de trasladar cada kilo de arena desde un sitio de
+construcción terminada a uno nuevo:
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccc}
+        & 1 & 2 & 3 \\ \midrule
+        A & 9 & 6 & 5 \\
+        B & 7 & 4 & 9 \\
+        C & 4 & 6 & 3 \\
+    \end{tabular}
+\end{table}
+
+
+Se utilizan camiones para mover arena desde un sitio a otro. Cada camión tiene una capicidad de $600$
+kg. de arena. Formular un modelo de PL que determine el plan de transporte de costo mínimo, considerando que:
+\begin{itemize}
+    \item usar un camión tiene un costo de \$$50$
+    \item se cuenta con 4 camiones (cada camión puede ser utilizado para un único par de sitios de construcción
+    terminada y sitio nuevo).
+    \item es posible alquilar un quinto camión por \$$65$.
+    \item el sitio 2 no puede recibir arena de A y de B simultáneamente.
+\end{itemize}
+\fej
+
+
+%%---------------------------------------------------------
+%%6
+%\bej
+%    Sean $f_1,\dots, f_s$:$\R^n \rightarrow \R$ funciones lineales, modelar el siguiente problema como un problema de programación lineal:
+%    \[
+%        \begin{array}{lrcl}
+%            \min & \multicolumn{3}{l}{z = \max\{f_1(x),\dots, f_s(x)\}}  \\
+%            \text{s.a:} & Ax & \leq & b \\
+%            & x & \geq & 0
+%        \end{array}
+%    \]
+%\fej
+
+%---------------------------------------------------------
+% 10
+%\bej
+%(\textit{Problema del viajante de comercio}) Se quieren recorrer $N$ ciudades numeradas $1,\dots,N$.
+%Es necesario empezar por la primera ciudad y recorrer todas las ciudades pasando una sola vez por cada una. Al final
+%del recorrido se debe volver a la ciudad original. Se conoce la matriz $D$ de distancias entre las ciudades ($D_{ij}$
+%es la distancia entre la ciudad $i$ y la ciudad $j$).
+%Formule un problema de programación lineal entera para calcular la forma de hacer el recorrido que minimice la
+%distancia total recorrida.
+%\fej
+
+%%---------------------------------------------------------
+%%12
+%
+%\bej
+%Han dejado sólo al rey en el tablero de ajedrez, que tiene un tamaño de $n\times n$. El rey se encuentra en el casillero
+%$(s,t)$ y debe llegar al casillero $(u, v)$, con $s,t,u,v\in\{1,\dots,n\}$.
+%Recordar que el rey se puede mover una casilla por vez en cualquier dirección (
+%$\rightarrow, \nearrow, \uparrow, \nwarrow, \leftarrow, \swarrow, \downarrow, \searrow$)
+%
+%Además en el tablero hay piezas enemigas, cuya posición está fija. El rey, para no ser atacado, tiene que procurar no
+%moverse a un casillero que ya esté ocupado por una pieza enemiga. Se conoce el conjunto de casilleros $\mathcal{E}$
+%ocupados por piezas enemigas. Naturalmente, $(s,t)\not\in \mathcal{E}$ y $(u,v)\not \in \mathcal{E}$
+%. Formular un problema lineal que permita hallar el camino con la menor cantidad de movimientos que debe recorrer el rey
+%desde la casilla $(s,t)$ hasta $(u,v)$.
+%\fej
+
+%---------------------------------------------------------
+
+
+%\bej
+%\begin{enumerate}
+%    \item Formule un modelo de programación lineal entera para resolver el sudoku.
+%    \item Utilice el modelo del item anterior para resolver el
+%\end{enumerate}
+%\fej
+
+%---------------------------------------------------------
+% 12
+
+\bej \scip
+    Una compañía minera empezará a operar en una determinada zona por los próximos 5
+    años para extraer hierro. En dicha zona se localizan cuatro minas pero,
+    por razones ambientales, la empresa puede explotar a lo sumo tres de ellas cada año. A pesar de que
+    una mina puede no estar operando cierto año, es necesario que permanezca abierta, en el sentido que
+    las regalías por su explotación se siguen pagando si operará en un año futuro (de los 5 pactados).
+    Todas las minas se abren al comienzo del primer año. Si una mina
+    dejase de funcionar, se cierra y se dejan de abonar regalías por ella. Anualmente, la compañía abonará
+    regalías por cada una de las minas abiertas.
+%    Debido a que la zona de minas explotada se encuentra cercana a una ciudad, se ha consensuado con
+%    sus habitantes que la empresa minera pague una multa en función de un indicador ambiental de los
+%    ríos próximos. Este indicador ambiental varía entre $0$ y $5$ y la función que indica la multa, en
+%    millones de dólares, es $f(a)=5a$.
+%    sus habitantes que la empresa minera pague una multa en función de un indicadores ambientales de los
+%    ríos próximos. Estos indicadores ambientales varían entre $0$ y $5$ y la función que indica la multa, en
+%    millones de dólares, es:
+%    \[
+%        f(a)=\begin{cases}
+%            \begin{array}{lr}
+%                2a & \text{si } 0\leq a \leq 2  \\
+%                3a+1 & \text{si } 2<a\leq 4 \\
+%                5a+7 & \text{si } 4<a\leq 5
+%            \end{array}
+%        \end{cases}
+%    \]
+%    Por estudios ambientales, es sabido que, luego de un año de explotación, el indicador ambiental correspondiente es
+%    por lo menos $2/3$ de la cantidad de millones de toneladas de minerales de hierro extraída
+%    en ese año.
+
+    La cantidad de hierro que la minera podrá extraer cada año por cada mina tiene límites
+    que se detallan en la Tabla 1.
+    En dicha tabla también figura la calidad del hierro extraído de cada mina.
+%    La calidad de esos minerales varía según sea la mina de la cual se
+%    extraen y es medida en una escala de manera que la calidad de la mezcla de minerales resulta en una
+%    combinación lineal de la respectiva calidad de los minerales mezclados. Medidas en esas unidades, se
+%    tienen las calidades de los minerales de cada mina que figuran en la siguiente tabla:
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{l|cccc}
+             & \multicolumn{4}{c}{Mina} \\
+             & 1 & 2 & 3 & 4 \\\hline
+            Regalía (en millones) & $5$ & $7$ & $4$ & $6$ \\
+            Límite de cantidad de minerales extraída (en millones de Tn.) & $2$ & $2.5$ & $1.7$ & $3$ \\
+            Indicador de la calidad de los minerales & $1$ & $0.7$ & $1.5$ & $0.5$ \\
+        \end{tabular}
+        \caption{}
+    \end{table}
+
+    En cada año, es necesario
+%    combinar el total de extracciones de cada mina para producir una mezcla
+    que la calidad promedio
+    del hierro extraído sea al menos $0.9$; $0.8$; $1.2$; $1$ y $1.1$; respectivamente.
+    El hierro que se obtiene cada año se vende a 10 millones de dólares por millón de toneladas.
+    Formular un problema de programación lineal entera mixto para mixmizar la ganancia de la
+    compañía minera. Notar que la ganancia se computa como lo recaudado por la venta del hierro menos el pago de
+    regalías.
+\fej
+
+
+%--------------------------------------------------------- 
+%7
+\bej
+    Plantear un modelo de programación lineal que permita resolver el siguiente problema:
+    \[
+        \begin{array}{lrcl}
+            \min & \multicolumn{3}{l}{z = |y+x-2w|}  \\
+            \text{s.a:} & x+\frac{1}{2}y & \geq & 1 \\
+            & 2x + w & = & 3 \\
+            & x, y, w & \in & \mathbb{R}_{\geq 0}
+        \end{array}
+    \]
+\fej
+
+%---------------------------------------------------------
+\bej
+Se desea organizar un festival de música que se celebrará a lo largo de tres días. Cada jornada tendrá una duración de
+$14$ horas divididas en franjas de dos horas, acumulando un total de $21$
+franjas horarias a lo largo de los tres días. A cada banda invitada se le asignará exactamente una de esas franjas
+horarias para realizar su show.
+
+Se cuenta con cuatro escenarios $E_0,E_1,E_2,E_3$, por lo que durante cada franja horaria pueden ocurrir a lo
+sumo cuatro conciertos simultáneamente.
+
+Se tiene un conjunto $B$ de bandas candidatas a ser invitadas a tocar en el festival. Para cada banda $i\in B$
+, se estima que atraerá $e_i$ espectadores a su show y se pronostica que dará una ganancia neta de $r_i$
+pesos. Las bandas candidatas se categorizan en cinco conjuntos disjuntos según su género musical:
+$G_0, G_1, G_2, G_3, G_4$ (es decir:
+$\displaystyle\bigcup_{k=0}^1 G_k = B,\; G_k\cap G_r =\varnothing\;\text{si}\; k\neq r$).
+    
+    \begin{enumerate}
+        \item
+        Teniendo en cuenta que se desea decidir qué bandas invitar y en qué escenario y franja horaria tocará cada una
+        de las bandas invitadas, modelar linealmente las siguientes restricciones del festival definiendo las variables
+        y conjuntos que se consideren necesarios:
+        
+        \begin{enumerate}[label=\emph{\alph*})]
+            \item cada banda invitada debe tocar exactamente durante una franja horaria en exactamente un escenario.
+            \item en cada franja horaria, en cada escenario puede tocar a lo sumo una banda.
+%            \item durante cada franja horaria pueden ocurrir a lo sumo cuatro conciertos simultáneamente.
+            \item para cada franja horaria, la cantidad de espectadores del escenario $E_j$ no debe superar su capacidad $\ell_j$.
+            \item la cantidad de espectadores totales en cada franja horaria no debe superar 20000.
+            \item se deben invitar al menos $g_k$ bandas del género $G_k$.
+            \item el escenario $3$ debe permanecer vacío durante la primera franja horaria de cada día.
+            \item hay un conjunto $P\subset B$ de bandas muy populares que deben ser invitadas.
+            \item cada banda del conjunto $P$ debe tocar durante alguna de las dos últimas franjas horarias de cualquiera de los días.
+            \item la ganancia neta del festival debe superar los $R$ pesos.
+            \item las bandas invitadas con menos de $S$ espectadores deben tocar durante los primeras tres franjas horarias.
+        \end{enumerate}
+        \item La empresa organizadora del festival está interesada en analizar el resultado obtenido con diferentes criterios. Utilizando las variables y conjuntos definidos en el ítem $1.$, modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes.
+        \begin{enumerate}[label=\emph{\alph*})]
+            \item Maximizar el mínimo de espectadores totales diarios.
+            \item Minimizar el máximo número de espectadores totales durante la misma franja horaria.
+            \item Minimizar la suma de la diferencia absoluta de cantidad de bandas invitadas entre cada par de géneros musicales.
+        \end{enumerate}
+        \item Utilizar SCIP para resolver el modelo con el primer objetivo del item anterior. La instancia a
+        resolver tiene los siguientes parámetros:
+
+        \begin{tabular}{lll}
+            $B=\{0,\dots,119\}$ & $g = (15, 10, 11, 13, 12)$ & $P=\{2,27,37,41,43,50\}$\\
+            $\ell = (4500, 5000, 8000, 7700)$ & $R=100000$ & $S=2500$
+        \end{tabular}
+
+        La información correspondiente a la cantidad de espectadores esperados para cada banda ($e$) y la ganancia
+        neta de cada una ($r$) se encuentran en los archivos \newline \texttt{recital\_espectadores.csv} y
+        \texttt{recital\_ganancia.csv}, respectivamente.
+
+        El diccionario con las bandas que pertenecen a cada género se encuentra en el archivo
+        \texttt{recital\_generos\_musicales.pkl} y puede cargarse con:
+        \begin{lstlisting}[belowskip=-1.5\baselineskip]
+import pickle
+with open("recital_generos_musicales.pkl", "rb") as f:
+  G = pickle.load(f)
+        \end{lstlisting}
+        Como el solver puede demorar bastante en llegar a la solución óptima,
+        podemos imponer un límite de dos minutos a la
+        resolución del problema agregando la siguiente línea antes de \texttt{model.optimize()}:
+        \begin{lstlisting}[belowskip=-1.5\baselineskip]
+model.setParam("limits/time", 120)
+        \end{lstlisting}
+
+        ¿Cuál es el gap de optimalidad de la solución obtenida?
+    \end{enumerate}
+
+\fej
+
+
+
+\bej
+    \begin{enumerate}
+        \item 	La organización de un congreso internacional decidió albergar a los $n$ participantes del mismo en un hotel que tiene $h$ habitaciones. La $j$-ésima habitación del hotel tiene capacidad para $c_j$ personas, y tiene una calificación de $e_j$ estrellas. Además se conoce que la $i$-ésima persona es de país de origen $p_i$, tiene $a_i$ años y se dedica al estudio del tema $t_i$.
+	
+	Luego de una larga deliberación, la organización concluyó que necesariamente al ubicar a cada persona en una habitación del hotel se debe cumplir que:
+	\begin{enumerate}
+		\item Toda persona sea ubicada en alguna habitación
+		\item Se evite asignar más personas a una habitación que la capacidad de la misma
+		\item Se evite ubicar personas de Argentina y Brasil en una misma habitación.
+		\item No haya más de 2 personas que estudien el mismo tema en una misma habitación
+		\item Las personas que tengan al menos 50 años sean ubicadas en habitaciones de 3 estrellas o más
+	\end{enumerate}
+	\item Por otro lado, la organización todavía no logró definir con qué criterio desempatar entre distintas posibles asignaciones. Las propuestas existentes son las siguientes:
+	\begin{enumerate}
+		\item Minimizar la cantidad de habitaciones utilizadas (con al menos una persona)
+		\item Minimizar la máxima diferencia de edad entre dos personas de una misma habitación.
+		\item Dados $G$ grupos de amigos (llamamos $\mathcal{A}_g$ al $g$-ésimo grupo de amigos), se busca maximizar la cantidad de grupos de amigos que son asignados a una misma habitación.
+		\textit{Sugerencia}: utilizar el ejercicio $5j)$
+    \end{enumerate}
+	\end{enumerate}
+	Formular un modelo de programación lineal entera que modele las condiciones que deben cumplirse necesariamente (ítem 1), y luego formular cómo incorporar a ese modelo cada criterio de desempate entre soluciones (cada uno por separado, ítem 2).
+\fej
+
+%\bej
+%    Una empresa forestal acaba de adquirir un territorio que desea explotar responsablemente. El terreno fue dividido en $N$ secciones y se desean producir $J$ tipos de madera distintos. Se cuenta con los siguientes datos:
+%    \begin{itemize}
+%        \item $m_j$: el árbol con madera $j$ tarda $m_j$ meses desde que fue plantado hasta su maduración (es decir, hasta estar listo para ser talado).
+%        \item $a_i$: área de la sección $i$.
+%        \item $A_t$: área máxima de tierra en la que se puede plantar árboles durante el mes $t$.
+%        % \item $vol_{ij\ell}$: volumen de madera $j$ obtenido al talar los árboles de la sección $i$ luego de $\ell$ meses de haber sido plantados.
+%        \item $v_{ij}$: volumen de madera $j$ que se obtiene al cosechar la sección $i$.
+%        % \item $d_{ij}$: cantidad de meses que debe dejarse descansar la tierra de la sección $i$ luego de talar los árboles con madera $j$.
+%        \item $g_j$: ganancia por cada unidad de volumen de madera $j$.
+%        \item $k_{ij}$: costo de plantar árboles de madera $j$ en la sección $i$.
+%        \item $f_{it}$: costo de cada camión de transporte desde la sección $i$ hasta el aserradero en el mes $t$.
+%        \item $C_t$: cantidad de camiones de transporte disponibles durante el mes $t$.
+%        \item $V$: capacidad de volumen de madera de cada camión de transporte.
+%    \end{itemize}
+%
+%    Cuando se cosecha la madera de una sección, se talan todos los árboles de la misma y todo el volumen de madera obtenido es transportado al aserradero. Cada camión de transporte hace a lo sumo un viaje por mes. El objetivo es planificar la producción de madera durante los próximos $\mathcal{T}$ meses. Plantear un modelo de programación lineal que permita decidir dónde, cuándo y qué árboles plantar y cuándo talarlos, de manera tal que se maximice la ganancia. Se deben considerar las siguientes restricciones:
+%    \begin{enumerate}
+%        \item en cada sección no puede haber más de una especie de árbol.
+%        \item en cada sección se puede plantar a lo sumo una vez.
+%        \item si se plantan árboles en una sección, deben ser talados en algún momento.
+%        \item no se puede talar árboles que no han madurado.
+%        \item en cada mes $t$, no se pueden plantar árboles en un área mayor que $A_t$.
+%        \item no sobrepasar la disponibilidad mensual de camiones
+%        \item no se puede plantar en las secciones del conjunto $\mathcal{S}$ durante los primeros $6$ meses.
+%        \item los árboles de la madera $4$ sólo pueden plantarse a partir del mes $12$, inclusive.
+%    \end{enumerate}
+%\fej
+
+%%---------------------------------------------------------
+%\bej
+%    Para cada una de las siguientes operaciones estime la cantidad máxima de sumas, multiplicaciones y divisiones que deben realizarse. Exprese el resultado usando la notación de la $\mathcal{O}$.
+%    \begin{enumerate}[label=\emph{\alph*})]
+%        \item sumar dos matrices de $n\times n$
+%        \item multiplicar dos matrices de $n \times n$
+%        \item invertir una matriz inversible de $n\times n$
+%        \item resolver un sistema $Ax=b$ con $A$ inversible.
+%        \item multiplicar dos polinomios de grado $n$
+%    \end{enumerate}
+%\fej
+%
+%%---------------------------------------------------------
+%\bej
+%    Escriba en pseudocódigo un algoritmo para ordenar una lista de números. Estimar la cantidad
+%    de comparaciones ($<$, $>$ o $=$) necesarias.
+%\fej
+%
+%%---------------------------------------------------------
+%\bej ($\dagger$)
+%    Pruebe que decidir si un problema de programación lineal entera tiene alguna solución es NP-Completo.
+%
+%    \textit{Sugerencia:} considere el ejercicio 7 y el 3-SAT.
+%\fej
+\end{document}
