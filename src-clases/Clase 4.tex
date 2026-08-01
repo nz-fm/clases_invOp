@@ -1,0 +1,149 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación Operativa - Clase 4}
+\subtitle{Minimax y maximin}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{frame}{Para ir pensando}
+    ¿Cómo modelarías linealmente el siguiente problema?
+
+    \[
+        \begin{array}{rlcl}
+            \min & \multicolumn{3}{l}{\max\{2x_1+x_2, -x_1+3x_2\}}  \\
+            \text{s.a:} & x_1 + x_2 & \leq & 4 \\
+             &          2x_1-x_2 & \geq & 2 \\
+             &          x_1, x_2 &\in & \mathbb{R}_{\geq 0}
+        \end{array}
+    \]
+\end{frame}
+
+\begin{frame}{Minimax}
+    Lo reformulamos como un problema de programación lineal añadiendo una nueva variable real $w$:
+    \[
+        \begin{array}{rlcl}
+            \min & \multicolumn{3}{l}{\color{red}w}  \\
+            \text{s.a:} & x_1 + x_2 & \leq & 4 \\
+             &          2x_1-x_2 & \geq & 2 \\
+             &          \color{red}2x_1+x_2 & \color{red}\leq & \color{red}w \\
+             &          \color{red}-x_1+3x_2 & \color{red}\leq & \color{red}w \\
+             &          x_1, x_2 &\in & \mathbb{R}_{\geq 0} \\
+             &          \color{red}w \in \color{red}\mathbb{R}
+        \end{array}
+    \]
+    La solución óptima es $(x_1^\ast, x_2^\ast, w^\ast) = (1, 0, 2)$
+\end{frame}
+
+\begin{frame}{Minimax}
+    \begin{itemize}
+        \item El objetivo es minimizar el máximo de un conjunto de funciones lineales, sujetos a ciertas restricciones
+    \end{itemize}
+    \[\begin{array}{crl}
+        \min & \multicolumn{2}{l}{\max\{f_1(x), f_2(x),\dots,f_\ell(x)\}}\\
+        s.a.: & Ax\leq b \\
+%         & x\geq0
+    \end{array}
+    \]
+\end{frame}
+
+\begin{frame}{Minimax - transformación a problema lineal}
+    \begin{itemize}
+        \item Consideramos una nueva variable real $w$ y le imponemos el siguiente conjunto de restricciones:
+        \[w \geq f_k(x) \quad \forall k\in\{1,\dots,\ell\} \]
+        El problema queda formulado entonces como:
+        \[\begin{array}{crl}
+        \min & \multicolumn{2}{l}{w}\\
+        s.a.: & Ax &\leq b \\
+         & w &\geq f_k(x) \quad \forall k\in\{1,\dots,\ell\} \\
+%         & x &\geq0 \\
+         & x &\in \mathbb{K}^n\\
+         & w &\in \mathbb{R}
+        \end{array}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Maximin}
+    \textbf{Obs:} una idea análoga sirve para el caso maximin
+
+    \begin{itemize}
+        \item El objetivo es maximizar el mínimo de un conjunto de funciones lineales, sujetos a ciertas restricciones
+    \end{itemize}
+    \[\begin{array}{crl}
+        \max & \multicolumn{2}{l}{\min\{f_1(x), f_2(x),\dots,f_\ell(x)\}}\\
+        s.a.: & Ax\leq b \\
+%         & x\geq0
+    \end{array}
+    \]
+\end{frame}
+
+
+\begin{frame}{Maximin - transformación a problema lineal}
+    \begin{itemize}
+        \item Consideramos una nueva variable real $w$ y le imponemos el siguiente conjunto de restricciones:
+        \[w \leq f_k(x) \quad \forall k\in\{1,\dots,\ell\} \]
+        El problema queda formulado entonces como:
+        \[\begin{array}{crl}
+        \max & \multicolumn{2}{l}{w}\\
+        s.a.: & Ax &\leq b \\
+         & w &\leq f_k(x) \quad \forall k\in\{1,\dots,\ell\} \\
+%         & x &\geq0 \\
+         & x &\in \mathbb{K}^n\\
+         & w &\in \mathbb{R}
+        \end{array}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejercicio}
+    \scriptsize
+    \parbox{\textwidth}{Para dar a conocer sus productos, MicroApple decidió invertir  $850$
+        mil pesos en publicidad. Hay tres proyecciones distintas de audiencia (en miles de personas)
+        por cada anuncio en cada uno de los medios:
+    \begin{table}[]
+        \centering
+        \begin{tabular}{ccccc}\toprule
+             & Redes Sociales & TV & Radio & Periódico \\ \midrule
+            P1 & 50  & 31 & 20 & 26 \\
+            P2 & 32  & 41 & 15 & 19 \\
+            P3 & 60  & 38 & 22 & 25
+        \end{tabular}
+    \end{table}
+
+        Los datos se encuentran en la siguiente tabla:
+        \begin{table}[]
+            \centering
+            \begin{tabular}{ccccc}
+                \toprule
+                & Redes Sociales & TV & Radio & Periódico \\ \midrule
+                %Audiencia (en miles) & 50 & 31 & 20 & 35 \\
+                Costo por anuncio (en miles) & 35 & 29    & 22     & 27        \\
+                Máxima cantidad de anuncios  & 20 & 15    & 25     & 15
+            \end{tabular}
+        \end{table}
+        Además de respetar el presupuesto, el departamento de marketing requiere que:
+        \begin{enumerate}[(1)]
+            \item
+            el valor absoluto de la diferencia entre la cantidad de anuncios en medios masivos (redes soluciones y
+            televisión) y la cantidad en medios tradicionales (radio y periódico) sea a lo sumo $10$.
+            \item los anuncios en radio deben ser al menos el $5$\% de los anuncios totales
+        \end{enumerate}
+
+        Elaborar un modelo para decidir cuántos anuncios de cada medio debe comprar MicroApple para maximizar el mínimo de
+        audiencia alcanzada según las proyecciones.
+    }
+\end{frame}
+
+
+\end{document}
+
+
+

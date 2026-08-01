@@ -1,0 +1,349 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación Operativa - Clase 1}
+\subtitle{Introducción a Programación Lineal y modelización}
+\date{\cuatri}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+
+%% Si es versión completa o para la clase
+\newif\ifCompleta
+
+% Descomentar para clase completa
+%\Completatrue
+
+\begin{document}
+
+\maketitle
+
+% \section{Introducción}
+
+
+\begin{frame}{Cronograma}
+%    \textbf{Hoja de ruta: }
+    \begin{itemize}
+        \item $XX/XX \rightarrow \mathbf{XX/XX}\colon$ Cómo modelar problemas con Programación Lineal
+        \item $XX/XX \rightarrow \mathbf{XX/XX}\colon$ SIMPLEX y Branch \& Bound
+        \item $XX/XX \rightarrow XX/XX\colon$ Optimización no lineal
+        \item $XX/XX \rightarrow \mathbf{XX/XX}\colon$ Teoría de grafos
+        \item $XX/XX \rightarrow XX/XX\colon$ Aplicaciones (teórica) y Consultas de TPs y recus (práctica)
+        \item $XX/XX, XX/XX$ y $XX/XX\colon$ recuperatorios
+    \end{itemize}
+    \vspace{1em}
+
+    Para aprobar la parte práctica de la materia:
+    \begin{itemize}
+        \item Tres parciales
+        \item Un TP de implementación de Programación Lineal
+        \item Un TP teórico-práctico sobre optimización no lineal
+    \end{itemize}
+    La materia es \alert{promocionable}.
+\end{frame}
+
+\begin{frame}{(Abuso de) Notación}
+    Sean $u, v\in\mathbb{R}^n$, si $u_i\leq v_i \;\forall\, i=1,\dots, n$ vamos a notarlo $u\leq v$.
+    
+    Ejemplos:
+    \begin{enumerate}
+        \item $x \geq 0$ significa que $x_i\geq 0\;\forall\, i=1,\dots, n$
+        \item Sean:
+        \[A = \begin{bmatrix} -2 & 3 \\ 4 & -1\end{bmatrix} \quad 
+        x=\begin{bmatrix}x_1 \\ x_2\end{bmatrix} \quad b=\begin{bmatrix}-3 \\ 5\end{bmatrix}\]
+        $Ax\leq b$ significa que:
+        \[\begin{cases}
+            -2x_1 + 3x_2 \leq -3 \\
+            4x_1 - x_2 \leq 5
+        \end{cases}\]
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Formulación canónica}
+% \footnotesize
+Sean $c\in\mathbb{R}^n$, $A\in\mathbb{R}^{m\times n}$ y $b\in \mathbb{R}^m$
+
+\only<1>{
+\textbf{Programación Lineal (PL)}
+
+\[\begin{array}{cl}
+    \max & c^Tx  \\
+    \text{s.a:} & Ax \leq b \\
+     & x \geq 0 \quad \\
+     & (x\in\mathbb{R}^n)
+\end{array}
+\]
+
+\textbf{Programación Lineal Entera (PLE)}
+
+\[\begin{array}{cl}
+    \max & c^Tx  \\
+    \text{s.a:} & Ax \leq b \\
+     & x \geq 0 \quad \\
+     & x\in\mathbb{Z}^n
+\end{array}
+\]}
+
+\only<2>{
+\textbf{Programación Lineal Entera Binaria}
+
+\[\begin{array}{cl}
+    \max & c^Tx  \\
+    \text{s.a:} & Ax \leq b \\
+     & x \geq 0 \quad \\
+     & x\in\mathbb{\{0,1\}}^n
+\end{array}
+\]
+
+\textbf{Programación Lineal Entera Mixta}
+
+\[\begin{array}{cl}
+    \max & c^Tx  \\
+    \text{s.a:} & Ax \leq b \\
+     & x \geq 0 \quad \\
+     & x_i \in\mathbb{Z} \quad \forall i\in I \\
+     & x_j \in \mathbb{R} \quad \forall j\in J
+\end{array}
+\]
+
+}
+\end{frame}
+
+\begin{frame}{}
+    \centering \textbf{Problema $\rightarrow$ \alert{Plantear modelo} $\rightarrow$ Resolver modelo}
+    
+    \pause
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{imagenes/meme_2.jpg}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Componentes de un problema lineal}
+    \begin{itemize}
+        \item \textbf{Variables} $(x_1, x_2, \dots, x_n)$
+            \begin{itemize}
+                \item Reales
+                \item Enteras
+                \item Binarias
+            \end{itemize}
+        \item \textbf{Parámetros}: datos conocidos del problema
+        % \item \textbf{Conjuntos}
+        \item \textbf{Función objetivo}: función que queremos maximizar o minimizar. Es \textbf{combinación lineal} de las variables:
+        \small
+        \[ f(x_1, \dots, x_n)= c_1x_1+c_2x_2+\dots+c_nx_n = \sum_{j=1}^n c_jx_j=c^Tx  \]
+        \normalsize
+        \item \textbf{Restricciones}: se expresan como una igualdad o desigualdad entre una \textbf{combinación lineal} de las variables y $b_i$ un número real:
+        \small{
+        \[ \sum_{j=1}^n a_{ij}x_j \leq b_i \qquad \sum_{j=1}^n a_{ij}x_j \geq b_i \qquad \sum_{j=1}^n a_{ij}x_j = b_i\]        
+        }
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Ejemplo}
+\parbox{\linewidth}{
+Una fábrica de pintura quiere producir $P_I$ y $P_E$. Para producir una tonelada de $P_I$ necesita 6 toneladas del material $M_1$ y una de material $M_2$. Por cada tonelada de $P_E$ necesita $4$ toneladas de $M_1$ y 2 de $M_2$. La fábrica dispone diariamente de $24$ toneladas de $M_1$ y $6$ de $M_2$.\\
+
+Por otro lado, se sabe que diariamente se venden a lo sumo $2$ toneladas de $P_I$ y lo que se vende de $P_E$ es a lo sumo la cantidad producida de $P_I$ mas una tonelada.
+La fábrica vende todo lo que produce y no quiere quedarse con excedente. \\
+
+Teniendo en cuenta que la fábrica gana $5$ por tonelada de $P_I$ y $4$ por tonelada de $P_E$, decidir la cantidad de pintura de cada tipo que debe producir para maximizar su ganancia. }
+\end{frame}
+
+\ifCompleta
+\begin{frame}{Ejemplo}
+    % \small
+    \begin{itemize}
+        \item Variables:
+        \[ \begin{array}{cl}
+            x_1\, : &  \, \text{cantidad de $P_I$ que se produce} \; (x_1\in\mathbb{R})\\
+            x_2\, :& \, \text{cantidad de $P_E$ que se produce}\; (x_2\in\mathbb{R})
+        \end{array}
+        \]
+        \item Función objetivo: $f(x)=5x_1+4x_2$
+        \item Restricciones:
+        \[ \begin{array}{rll}
+            6x_1+4x_2 & \leq 24 & \rightarrow\text{Cantidad de $M_1$ disponible}  \\
+            x_1 + 2x_2  & \leq 6 & \rightarrow\text{Cantidad de $M_2$ disponible}\\
+            x_1&  \leq  2 & \rightarrow\text{Demanda máxima de $P_I$}\\
+            x_2  & \leq x_1+1 & \rightarrow\text{Demanda máxima de $P_E$}\\
+            x_1 & \geq 0 & \rightarrow\text{No se pueden producir cantidades negativas}\\
+            x_2 & \geq 0 & \rightarrow\text{No se pueden producir cantidades negativas}\\
+        \end{array}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+    \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{f(x_1,x_2)=5x_1+4x_2}\\
+        \text{s.a.:} &  6x_1+4x_2 & \leq 24 \\
+            & x_1 + 2x_2  & \leq 6 \\
+            & x_1&  \leq  2 \\
+            & x_2  & \leq x_1+1\\
+            & x_1 & \geq 0 \\
+            & x_2 & \geq 0 \\
+            & \multicolumn{2}{c}{x_1, x_2\in\mathbb{R}}
+    \end{array}
+    \]
+\end{frame}
+\fi
+
+\begin{frame}{Soluciones de un PL}
+    \begin{itemize}
+        \item Sea $x=(x_1, x_2, \dots, x_n)$ tal que cumple con todas las restricciones, entonces $x$ es una \textbf{solución factible}. En el ejemplo, $(2,0)$ es una solución factible.
+        \item A una solución factible que maximiza (o minimiza) la f.o. se la denomina \textbf{solución óptima} y el correspondiente valor de la f.o. es el \textbf{valor óptimo}. En el ejemplo, $(2,2)$ es una solución óptima y $18$ es el valor óptimo.
+        \item Puede haber una única solución óptima, infinitas o ninguna.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Operaciones l\'ogicas}
+    \begin{itemize}
+        \item Si tenemos dos variables binarias $x_1,\,x_2$, las operaciones l\'ogicas pueden ser representadas de manera relativamente sencilla:
+        \begin{table}[]
+            \centering
+            \begin{tabular}{ccc}\toprule
+                Operaci\'on & Notaci\'on l\'ogica & Restricci\'on  \\ \midrule
+                Conjunci\'on & $x_1 \land x_2$ &  \\
+                Disyunci\'on inclusiva & $x_1 \lor x_2$ & \\
+                Disyunci\'on exclusiva & $x_1 \veebar x_2$ &  \\
+                Implicaci\'on & $x_1 \Rightarrow x_2$ &  \\
+                Doble implicaci\'on & $x_1 \Leftrightarrow x_2$  &
+            \end{tabular}
+        \end{table}
+        % Todas estas operaciones pueden ser generalizadas (a veces con un poco de trabajo extra) al caso de m\'as variables. (Lo veremos la clase que viene)
+    \end{itemize}
+    % \pause
+    % \parbox{0.3\textwidth}{
+    % \begin{columns}
+    %     \begin{column}{0.2\textwidth}\hfill
+    %         \begin{figure}
+    %             \includegraphics[scale=0.07]{Thinking_Face_Emoji.png}
+    %         \end{figure}
+    %     \end{column}
+    %     \begin{column}{0.5\textwidth}
+    %         ¿Y si las variables no son binarias? \hfill \\
+    %         \hfill \alert{Lo veremos la clase que viene...}
+    %     \end{column}
+    % \end{columns}
+    % }
+\end{frame}
+
+% \begin{frame}{Operaciones l\'ogicas}
+%     \begin{itemize}
+%         \item Si tenemos dos variables binarias $x_1,\,x_2$, las operaciones l\'ogicas pueden ser representadas de manera relativamente sencilla:
+%         \begin{table}[]
+%             \centering
+%             \begin{tabular}{ccc}\toprule
+%                 Operaci\'on & Notaci\'on l\'ogica & Restricci\'on  \\ \midrule
+%                 Conjunci\'on & $x_1 \land x_2$ & {\color{red} $x_1\cdot x_2=1$ ¡No!} \\
+%                 Disyunci\'on inclusiva & $x_1 \lor x_2$ &  \\
+%                 Disyunci\'on exclusiva & $x_1 \veebar x_2$ &  \\
+%                 Implicaci\'on & $x_1 \Rightarrow x_2$ &  \\
+%                 Doble implicaci\'on & $x_1 \Leftrightarrow x_2$  & 
+%             \end{tabular}
+%         \end{table}
+%         Todas estas operaciones pueden ser generalizadas (a veces con un poco de trabajo extra) al caso de m\'as variables. (Lo veremos la clase que viene)
+%     \end{itemize}
+% \end{frame}
+
+\ifCompleta
+\begin{frame}{Operaciones l\'ogicas}
+    \begin{itemize}
+        \item Si tenemos dos variables binarias $x_1,\,x_2$, las operaciones l\'ogicas pueden ser representadas de manera relativamente sencilla:
+        \begin{table}[]
+            \centering
+            \begin{tabular}{ccc}\toprule
+                Operaci\'on & Notaci\'on l\'ogica & Restricci\'on  \\ \midrule
+                Conjunci\'on & $x_1 \land x_2$ & $x_1+x_2=2$ \\
+                Disyunci\'on inclusiva & $x_1 \lor x_2$ &  \onslide<2->{$x_1+x_2 \geq 1$}\\
+                Disyunci\'on exclusiva & $x_1 \veebar x_2$ &  \onslide<3->{$ x_1+x_2 = 1$} \\
+                Implicaci\'on & $x_1 \Rightarrow x_2$ &  \onslide<4->{$ x_1\leq x_2$ }\\
+                Doble implicaci\'on & $x_1 \Leftrightarrow x_2$  & \onslide<5->{$ x_1 = x_2$}
+            \end{tabular}
+        \end{table}
+        Todas estas operaciones pueden ser generalizadas (a veces con un poco de trabajo extra) al caso de m\'as variables. Seguiremos trabajando con esto la clase que viene.
+    \end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}{Ejercicio}
+
+    \parbox{\linewidth}{ La empresa multinacional MicroApple, presidida por Bill Jobs,
+        decidió comprar empresas de distintos rubros y así aumentar su presencia en el mercado. Las adquisiciones se
+        llevarán a cabo durante cada mes del año próximo, y se cuenta con un presupuesto de $d_k$ para cada mes $k$ (
+        $1\leq k\leq 12 $). Hay $N$ empresas pertenecientes a $S$ rubros que pueden ser compradas,
+        pero su precio varía según la época del año en la que se efectúa la compra: el precio de la empresa $i$ (
+        $1\leq i\leq N)$ en el mes $k$ es $p_{ik}$. Naturalmente, cada empresa puede ser comprada a lo sumo una vez.\\
+
+        Se conoce $g_{ik}$, la ganancia que habrá obtenido MicroApple a finales de año por haber comprado la empresa $i$
+        en el mes $k$.
+        Por otro lado, MicroApple debe cumplir con la reglamentación anti-monopolio: a lo sumo puede comprar $m_s$
+        empresas del rubro $s$ ($1\leq s \leq S$) durante el año. Además, el equipo de finanzas de MicroApple indica que es
+        conveniente comprar a lo sumo una de las empresas del conjunto $\{5, 7, 11\}$.
+
+        Ayudemos a Bill a decidir qué empresas comprar y cuándo hacerlo para maximizar la ganancia de MicroApple.
+    }
+\end{frame}
+
+\ifCompleta
+\begin{frame}{Ejercicio - Resolución}
+    \begin{itemize}
+        \item Variables binarias:
+        \[ x_{ik}= \begin{cases} 1 \; \text{si se compra la empresa $i$ en el mes $k$} \\
+        0 \; \text{c.c.}
+        \end{cases}
+        \]
+        \item Conjuntos:
+        \begin{itemize}
+            \item[$\blacktriangleright$] Empresas según los rubros: $E_s = \{i: \text{$e_i$ pertenece al rubro $s$},\, 1\leq i \leq n \} \quad \forall s\in \{1,\dots, S\}$
+        \end{itemize}
+        \item Función objetivo:
+        \[ \sum_{i=1}^N \sum_{k=1}^{12} g_{ik}x_{ik}\]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejercicio - Resolución}
+    \footnotesize
+        
+
+    \[\begin{array}{rll}
+        \max & \displaystyle \sum_{i=1}^N \sum_{k=1}^{12} g_{ik}x_{ik} &\\
+        \text{s.a.:} & \displaystyle \sum_{k=1}^{12} x_{ik}  \leq 1 \quad \forall i\in \{1,\dots, N\} & \text{Comprar empresa a lo sumo una vez} \\
+         & \displaystyle \sum_{i=1}^{N} p_{ik}x_{ik}  \leq d_{k} \quad \forall k\in \{1,\dots,12\} & \text{Respetar el presupuesto mensual} \\
+         & \displaystyle \sum_{k=1}^{12} \sum_{i\in E_s} x_{ik} \leq m_s \quad \forall s\in \{1,\dots, S\} & \text{Reglamentación anti-monopolio} \\
+        %  & \displaystyle \sum_{k=1}^{12}x_{7k} \geq \displaystyle \sum_{k=1}^{12}x_{3k} & \text{a)} \\
+          & \displaystyle \sum_{k=1}^{12} x_{5k} + x_{7k} + x_{11k} \leq 1 \quad & \text{Comprar a lo sumo una de $\{5,7,11\}$} \\
+        %  & \displaystyle \sum_{i\in E_4}\sum_{k=1}^{12} x_{ik} \geq R  & \text{c)}\\
+         & x_{ik}\in\{0,1\} \quad \forall i\in\{1,\dots,N\}\, \forall k\in \{1,\dots,12\} & \text{Naturaleza de las variables}\\
+    \end{array}
+    \]
+    
+    
+\end{frame}
+\fi
+
+\begin{frame}{\texttt{sum} - Ejemplos}
+    \centering \small
+    \[ {\color{red}\sum_{i\in I}} {\color{blue}a_{ij}x_{ij}} {\color{ForestGreen}\leq 4}\]
+
+    \texttt{\color{red}sum(\color{blue}a[i,j]*x[i,j] \color{red} for i in I) \color{ForestGreen} <= 4}
+
+%    \noindent\rule{2cm}{0.4pt}
+
+    \[{\color{red}\sum_{i\in I} \sum_{j\in J}} {\color{blue}a_{ij}x_{ij}} {\color{ForestGreen}\leq 4}\]
+
+    \texttt{\color{red}sum(\color{blue}a[i,j]*x[i,j] \color{red} for i in I for j in J) \color{ForestGreen} <= 4}
+
+    \[ {\color{red}\sum_{i\in I}\sum_{j\in J}} {\color{blue}a_{ij}x_{ij}} {\color{ForestGreen}\leq 4 -}
+    {\color{Orchid}\sum_{j\in J}}{\color{Magenta}y_j}\]
+
+    \texttt{\color{red}sum(\color{blue}a[i,j]*x[i,j] \color{red} for i in I for j in J) \color{ForestGreen} <= 4 -
+    \color{Orchid} sum(\color{Magenta} y[j] \color{Orchid} for j in J)}
+
+
+\end{frame}
+
+
+\end{document}

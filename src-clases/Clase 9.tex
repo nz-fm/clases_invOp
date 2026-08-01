@@ -1,0 +1,626 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% handout
+% \documentclass[handout, 10pt]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación operativa}
+\subtitle{Significado económico de las variables del dual y Análisis de Sensibilidad}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{frame}{Significado económico}
+    \fontsize{8.5pt}{2pt}\selectfont
+    A las variables del problema dual puede otorgársele un significado económico: si nuestro problema original es
+    \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{\displaystyle \sum_j c_jx_j} \\
+        \text{s.a:} & \displaystyle \sum_j a_{ij}x_j \leq& b_i \quad \forall i=1,\cdots,m \\
+         & x \geq& 0
+    \end{array}
+    \]
+    Entendemos que $b_i$ es la cantidad disponible del recurso $i$, $a_{ij}$ es la cantidad de recurso $i$ que se requiere por cada unidad de producto $j$ y $c_j$ es la ganancia que obtenemos por cada unidad de producto $j$.\\
+    El problema dual se plantea como:
+    \[\begin{array}{rrl}
+        \min & \multicolumn{2}{l}{\displaystyle \sum_i b_iy_i} \\
+        \text{s.a:} & \displaystyle \sum_i a_{ij}y_i \geq& c_j \quad \forall j=1,\cdots,n \\
+         & y \geq& 0
+    \end{array}
+    \]
+    Para que la comparación $\displaystyle \sum_i a_{ij}y_i \geq c_j$ tenga sentido dentro de la interpretación, podríamos pensar que $y_i$ simboliza la ganancia por cada unidad de recurso $i$:
+    \[ \frac{\text{recurso}}{\text{unidad de producto}}\cdot \only<1>{\frac{?}{?}} \only<2>{\frac{ganancia}{recurso}} = \frac{\text{ganancia}}{\text{unidad de producto}} \]
+\end{frame}
+
+\begin{frame}{Significado económico}\vskip 0.2cm\footnotesize
+    \begin{tcolorbox}[title=Teorema]
+    Si el problema primal
+        \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{\displaystyle \sum_j c_jx_j} \\
+        \text{s.a:} & \displaystyle \sum_j a_{ij}x_j \leq& b_i\quad \forall i=1,\cdots,m \\
+         & x \geq& 0
+    \end{array}
+    \]
+    tiene al menos una solución básica óptima no degerada, luego existe $\varepsilon>0$ que cumple la siguiente propiedad: si $|t_i|\leq\varepsilon \quad \forall i=1,\dots,m$ entonces el problema
+    \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{\displaystyle \sum_j c_jx_j} \\
+        \text{s.a:} & \displaystyle \sum_j a_{ij}x_j \leq& b_i+t_i \quad \forall i=1,\cdots,m \\
+         & x \geq& 0
+    \end{array}
+    \]
+    tiene solución óptima y el valor óptimo es igual a:
+    \[ z^{\ast} + \displaystyle\sum_{i=1}^m t_iy^{\ast}_i \]
+    Donde $z^{\ast}$ es el valor óptimo del problema primal original e $y^{\ast}$ es la solución óptima del problema dual asociado al problema original.
+    \end{tcolorbox}
+\end{frame}
+
+\begin{frame}{}
+    \textbf{Idea:} usaremos que en el dual la región factible no cambió, por lo que basta tomar un $\varepsilon$ lo suficientemente chico para no cambiar el vértice donde se alcanza el óptimo y luego utilizar el Teorema Fundamental de Dualidad. \pause
+    
+    \centering
+    \includegraphics[scale=0.75]{imagenes/sweat_meme.jpg}
+\end{frame}
+
+\begin{frame}{}\fontsize{9pt}{2pt}\selectfont
+    \textbf{Demo:} Sabemos que en $\xopt$ se realiza el óptimo de:
+    \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{\displaystyle \sum_{j=1}^n c_jx_j} \\
+        \text{s.a:} & \displaystyle \sum_{j=1}^n a_{ij}x_j \leq& b_i\quad \forall i=1,\cdots,m \\
+         & x \geq& 0
+    \end{array}
+    \]
+    Si consideramos el siguiente problema (A):
+        \[\begin{array}{rrl}
+        \max & \multicolumn{2}{l}{\displaystyle \sum_{j=1}^n c_jx_j} \\
+        \text{s.a:} & \displaystyle \sum_{j=1}^n a_{ij}x_j \leq& b_i+t_i \quad \forall i=1,\cdots,m \\
+         & x \geq& 0
+    \end{array}
+    \]
+    y su problema dual asociado (B):
+        \[\begin{array}{rrl}
+        \min & \multicolumn{2}{l}{\displaystyle \sum_{i=1}^m b_iy_i + \sum_{i=1}^m t_iy_i} \\
+        \text{s.a:} & \displaystyle \sum_{i=1}^m a_{ij}y_i \geq& c_j \quad \forall j=1,\cdots,n \\
+         & y \geq& 0
+    \end{array}
+    \]
+\end{frame}
+
+\begin{frame}{}
+    
+    \fontsize{9pt}{2pt}\selectfont
+    Como $\xopt$ no es degenerada, se tiene que el óptimo del problema dual asociado al problema original  es único y, por Teorema Fundamental de Dualidad: \[\zopt=\displaystyle\sum_{j=1}^n c_j\xopt_j=\sum_{i=1}^m b_i\yopt_i\]
+    % Ahora bien, notar que cada costo reducido de (B) es de la forma $\Bar{b}_i+t_i$
+    Sean $t=(t_1,\cdots,t_m)$ y $B^{\ast}$ las columnas de $A^T$ correspondientes a las variables básicas de $\yopt$, los costos reducidos $\Bar{\beta}$ de (B) se calculan como:
+    \begin{align*}
+    \Bar{\beta}_R^T & =  (b_R+t_R)^T - (b_B+t_B)^TB^{\ast}{}^{-1}R  = b_R^T-b_B^TB^{\ast}{}^{-1}R + t_R^T - t_B^TB^{\ast}{}^{}{-1}R \\
+     & = \Bar{b}_R^T + t_R^T - t_B^TB^{\ast}{}^{-1}R
+    \end{align*}
+    Luego, el costo reducido para cada $i$ correspondiente a variables no básicas de $\yopt$ queda:
+    \[ \bar{\beta}_i = \bar{b}_i + t_{R_i}^T - t_B^T(B^{\ast}{}^{-1}R)_{\cdot i}\]
+    Notar que $\bar{b}_i>0$ pues la solución %no es degenerada
+    del dual es única. Para que $\yopt$ siga siendo óptimo necesitamos que los $\bar{\beta}_{R_i}$ sean no negativos.
+\end{frame}
+
+\begin{frame}{}
+    \vspace{1em}
+    \fontsize{9pt}{2pt}\selectfont
+    Veamos que alcanza tomar $\varepsilon < \displaystyle\min_{\ell: \text{ $y_\ell$ no básica}}\{\bar{b}_\ell \}\cdot \dfrac{1}{1 + \lVert B^{\ast}{}^{-1}R \rVert _1}$. 
+    
+    \begin{align*}
+        \lvert t_{R_i}^T - t_B^T(B^{\ast}{}^{-1}R)_{\cdot i} \rvert & \leq \lvert t_{R_i}^T \rvert + \lvert t_B^T(B^{\ast}{}^{-1}R)_{\cdot i} \rvert = \lvert t_{R_i}^T \rvert + \lvert \displaystyle\sum_j \left(t_{B}^T\right)_j(B^{\ast}{}^{-1}R)_{j i} \rvert \leq \\
+        & \leq \lvert t_{R_i}^T \rvert + \displaystyle\sum_j \lvert\left(t_{B}^T\right)_j\rvert\lvert (B^{\ast}{}^{-1}R)_{j i} \rvert \leq \varepsilon + \varepsilon \displaystyle\sum_j \lvert (B^{\ast}{}^{-1}R)_{j i} \rvert \leq \\
+        & \leq \varepsilon + \varepsilon \lVert B^{\ast}{}^{-1}R \rVert _1 = (1 + \lVert B^{\ast}{}^{-1}R \rVert _1) \varepsilon < \displaystyle\min_{\ell: \text{ $y_\ell$ no básica}}\{\bar{b}_\ell \} \leq \\
+        & \leq \bar{b}_i
+    \end{align*}
+
+    Luego, si $\lvert t_i \rvert \leq\varepsilon$, se tiene que los $\bar{\beta}_{R_i}$ son no negativos. Por ende, cuando se cambie $b_i$ por $b_i+t_i$, el óptimo del dual se alcanzará en el mismo vértice, entonces el óptimo de (B) sigue siendo $\yopt$ y el valor óptimo de (B) es:
+    \[ \displaystyle \sum_{i=1}^m b_i\yopt_i + \sum_{i=1}^m t_i\yopt_i = \zopt + \sum_{i=1}^m t_i\yopt_i \]
+    Luego, por Teorema Fundamental de Dualidad, el valor óptimo de (A) es 
+    \[\zopt+ \sum_{i=1}^m t_i\yopt_i\]
+\end{frame}
+
+\begin{frame}{Significado económico}
+    \textbf{Ejemplo:} supongamos que se fabrican tres productos a partir de dos recursos: madera y vidrio. El modelo de programación lineal que permite maximizar la ganancia a partir de la disponibilidad de ambos recursos es el siguiente:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3\leq & 18 & (Vidrio)\\
+     & x_1+2x_2+3x_3\leq & 15 & (Madera)\\
+     & x_1, x_2, x_3\geq & 0 \\
+    \end{array}
+    $$
+    La clase pasada, vimos que la solución del problema dual es $\yopt=(\frac{2}{3}, \frac{2}{3})$ y que el valor óptimo del problema primal es $\zopt=22$.
+\end{frame}
+
+\begin{frame}{Significado económico}
+        $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3\leq & 18 & (Vidrio)\\
+     & x_1+2x_2+3x_3\leq & 15 & (Madera)\\
+     & x_1, x_2, x_3\geq & 0 \\
+    \end{array}
+    $$
+    \begin{center}
+         $\yopt=(\frac{2}{3}, \frac{2}{3})\qquad$  $\zopt=22$
+    \end{center}
+    El teorema anterior nos permite ver cómo impactan \textbf{pequeñas} variaciones en la cantidad de vidrio y/o de madera en la ganancia (valor óptimo)
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3\leq & 18+t_1 & (Vidrio)\\
+     & x_1+2x_2+3x_3\leq & 15+t_2 & (Madera)\\
+     & x_1, x_2, x_3\geq & 0 \\
+    \end{array}
+    $$
+    Tendrá como valor óptimo a $\zopt + t_1\yopt_1 + t_2\yopt_2$
+\end{frame}
+
+\begin{frame}{Significado económico}
+    En particular, podemos interpretar a $\yopt_1$ como el tope de lo que nos conviene pagar por una unidad de vidrio si queremos aumentar las ganancias. Análogamente, $\yopt_2$ sería el tope de los que nos conviene pagar por cada unidad de madera.
+
+    En este caso, si nos cobran la unidad de madera a un precio menor o igual que \$$0.66$, nos conviene comprar un poco más de madera para aumentar las ganancias. \vspace{1cm}
+    \pause
+    \begin{center}
+        \alert{Si aumentamos la cantidad de recursos, ¿$\xopt$ sigue siendo el mismo?} 
+    \end{center}
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad}
+    Dado un problema de PL y su óptimo $\xopt$ queremos saber qué ocurre si:
+    \begin{itemize}
+        \item Cambian los coeficientes de la f.o.
+        \item Cambian los términos independientes (lado derecho de la desigualdad)
+    \end{itemize}
+    \vskip 1cm
+    \centering
+    ¿Cuánto pueden cambiar esos parámetros para que la base óptima siga siendo factible y óptima?
+\end{frame}
+
+\begin{frame}{}
+       \vspace{2em}
+
+       \begin{columns}
+       \column{0.5\textwidth}
+       Problema:
+        \[
+        \begin{array}{rrcl}
+        \max & \multicolumn{3}{l}{z = 7x_1+8x_2} \\
+        s.a: & 4x_1+x_2 & \leq & 100 \\
+         & x_1+x_2 & \leq & 80 \\
+         & x_1 & \leq & 40 \\
+         & x& \geq & 0
+        \end{array}
+        \]
+        \[\xopt = (0, 80)\]
+       \column{0.5\textwidth}
+       Problema estandarizado: 
+        \[
+        \begin{array}{rrcl}
+        \max & \multicolumn{3}{l}{z = 7x_1+8x_2} \\
+        s.a: & 4x_1+x_2 + w_1 & = & 100 \\
+         & x_1+x_2 +w_2 & = & 80 \\
+         & x_1  + w_3& = & 40 \\
+         & x, w& \geq & 0
+        \end{array}
+        \]
+        \[\xopt = (0, 80, 20, 0, 40)\]
+        \end{columns}
+        
+        En el problema estandarizado:
+        \[A = \pause\begin{pmatrix}
+        4 & 1 & 1 & 0 & 0 \\
+        1 & 1 & 0 & 1 & 0 \\
+        1 & 0 & 0 & 0 & 1 
+        \end{pmatrix}
+        \quad
+        \text{en $x^\ast$, $(x_2,x_3,w_3)$ son básicas} \Rightarrow
+        B^\ast = \pause\begin{pmatrix}
+        1 & 1 & 0 \\
+        1 & 0 & 0 \\
+        0 & 0 & 1
+        \end{pmatrix}
+        \]
+        
+        \vspace{1em}
+        Gráfico: \small \color{blue}\url{https://www.desmos.com/calculator/t4sdqkfd6c}
+
+\end{frame}
+
+\begin{frame}{}
+    Al cambiar coeficientes de la función objetivo, la base $B^\ast$ podría dejar de ser \pause \textbf{óptima}.
+        \[
+        \begin{array}{rrcl}
+        \max & \multicolumn{3}{l}{z = 7x_1+\alert{(8+\delta)}x_2} \\
+        s.a: & 4x_1+x_2 & \leq & 100 \\
+         & x_1+x_2 & \leq & 80 \\
+         & x_1 & \leq & 40 \\
+         & x& \geq & 0
+        \end{array}
+        \]
+    
+    En el gráfico vemos que si $\delta\geq -1$, $B^\ast$ sigue siendo óptima.
+    
+    Supongamos $\delta\geq -1$, ¿$\xopt = (0, 80)$? \pause
+    
+    \textbf{Sí}, pues cambiar el valor de los coeficientes de la f.o. no altera la región de soluciones factibles.
+\end{frame}
+
+\begin{frame}{}
+    Al cambiar términos independientes, la base $B^\ast$ podría dejar de ser \pause \textbf{factible}.
+    \[
+    \begin{array}{rrcl}
+    \max & \multicolumn{3}{l}{z = 7x_1+8x_2} \\
+    s.a: & 4x_1+x_2 & \leq & 100 \\
+     & x_1+x_2 & \leq & \alert{80 + \varepsilon} \\
+     & x_1 & \leq & 40 \\
+     & x& \geq & 0
+    \end{array}
+    \]
+    
+    En el gráfico vemos que si $-80\leq \varepsilon \leq 20$, la base óptima sigue siendo factible.
+    
+    Supongamos $\varepsilon\in[-80, 20]$, ¿$\xopt = (0, 80)$? \pause
+    
+    \textbf{No}, si bien $B^\ast$ sigue siendo óptima, el valor de $\xopt$ cambia si $\varepsilon\neq 0$, pero \underline{las variables básicas en el problema estandarizado siguen siendo las mismas}.
+    
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad - Coeficientes de la f.o.}
+    Tenemos nuestro problema:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3\leq & 18 & (Vidrio)\\
+     & x_1+2x_2+3x_3\leq & 15 & (Madera)\\
+     & x_1, x_2, x_3\geq & 0 \\
+    \end{array}
+    $$
+    Sabemos que el óptimo es $\xopt=(7,4,0)$. Nos gustaría saber para qué valores de $\delta\in\mathbb{R}$ el problema con función objetivo $(2+\delta)x_1+2x_2+\frac{3}{2}x_3$ sigue teniendo a $\xopt$ como solución óptima.
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad - Coeficientes de la f.o.}
+    \textbf{Método de diccionarios:} tenemos que escribir el diccionario para la solución $(7,4,0)$ Para eso, primero estandarizamos el problema:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{(2+\delta)x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    Como hay \textbf{dos} restricciones, hay \textbf{dos} variables básicas: $x_1$ y $x_2$. Para escribir el diccionario, debo escribir a las variables básicas en función de las no básicas.
+
+\end{frame}
+
+
+\begin{frame}{Análisis de Sensibilidad - Coeficientes de la f.o.}\footnotesize
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{(2+\delta)x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    \[ \text{De (1): } x_2= 18-2x_1-\frac{1}{2}x_3 - w_1  \qquad (a) \]
+    Despejando a $x_1$ en (2):
+    \begin{align*}
+        x_1 &=15-2x_2-3x_3-w_2 = 15-2\left(18-2x_1-\frac{1}{2}x_3-w_1\right)-3x_3-w_2 = \\
+        & = -21 +4x_1 -2x_3 +2w_1 - w_2 \Rightarrow x_1 = 7 + \frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2
+    \end{align*}
+    Volviendo a (a) para reemplazar a $x_1$:
+    \begin{align*}
+        x_2&= 18-2x_1-\frac{1}{2}x_3 - w_1 = 18-2\left(7+\frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2\right)-\frac{1}{2}x_3-w_1 = \\
+        &= 4-\frac{11}{6}x_3+\frac{1}{3}w_1-\frac{2}{3}w_2
+    \end{align*}
+    Reemplazando a $x_1,x_2$ en $z$:
+    \begin{align*}
+        z &= (2+\delta)x_1+2x_2+\frac{3}{2}x_3 = \\
+         & =(2+\delta)\left(7 + \frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2\right)+2\left(4-\frac{11}{6}x_3+\frac{1}{3}w_1-\frac{2}{3}w_2\right)+\frac{3}{2}x_3 = \\
+         & = 22+7\delta+\left(-\frac{5}{6}+\frac{2\delta}{3}\right)x_3+\left(-\frac{2}{3}-\frac{2\delta}{3}\right)w_1+\left(-\frac{2}{3}+\frac{\delta}{3}\right)w_2
+    \end{align*}
+\end{frame}
+
+\begin{frame}{}
+    Si queremos que $\xopt$ siga siendo óptimo, necesitamos que:
+    \[
+    \begin{array}{lcl}
+        -\frac{5}{6}+\frac{2\delta}{3} \leq 0 & \onslide<2->{\Rightarrow} & \only<2>{\delta\leq \frac{5}{4}} \\
+        -\frac{2}{3}-\frac{2\delta}{3} \leq 0 & \onslide<2->{\Rightarrow} & \only<2>{\delta\geq -1} \\
+        -\frac{2}{3}+\frac{\delta}{3} \leq 0 & \onslide<2->{\Rightarrow} & \only<2>{\delta\leq 2} \\
+    \end{array}
+    \]
+    \onslide<2>{Luego, necesitamos que $-1\leq \delta\leq \frac{5}{4}$}
+\end{frame}
+
+\begin{frame}{} \footnotesize
+    Veamos qué sucede ahora si la función objetivo pasa a ser:
+    \[2x_1+2x_2+\left(\frac{3}{2}+\delta\right)x_3\]
+    ¿Para qué valores sigue siendo óptima?\\
+    Otra vez, estandarizamos el problema:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\left(\frac{3}{2}+\delta\right)x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    Con las mismas cuentas de antes, tenemos que:
+    \begin{align*}
+        x_1 = & 7 + \frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2 \\
+        x_2 = & 4-\frac{11}{6}x_3+\frac{1}{3}w_1-\frac{2}{3}w_2
+    \end{align*}
+    Escribimos $z$ en función de las variables no básicas:
+    \begin{align*}
+        z & = 2x_1+2x_2+\left(\frac{3}{2}+\delta\right)x_3 = \\
+         & =2\left(7 + \frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2\right)+2\left(4-\frac{11}{6}x_3+\frac{1}{3}w_1-\frac{2}{3}w_2\right)+\left(\frac{3}{2}+\delta\right)x_3 = \\
+         & = 22 +\left(-\frac{5}{6}+\delta\right)x_3-\frac{2}{3}w_1-\frac{2}{3}w_2
+    \end{align*}
+\end{frame}
+
+\begin{frame}{}
+    Luego, lo único que necesitamos para que la base siga siendo óptima es que:
+    \[ -\frac{5}{6}+\delta \leq 0 \qquad \Rightarrow \qquad \delta \leq \frac{5}{6} \]
+    \pause
+    \vskip 1cm
+    ¿Cuál fue la diferencia entre alterar el coeficiente de $x_1$ y de $x_3$? ¿Por qué?
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad - Coeficientes de la f.o.} \small
+    \textbf{Método matricial:} estandarizando el problema y sabiendo que $(7,4,0)$ es solución óptima del problema, tenemos que:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3} & (Ganancia)\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    \[A=
+    \left(\begin{matrix} 
+    2 & 1 & \frac{1}{2} & 1 & 0 \\
+    1 & 2 & 3 & 0 & 1
+    \end{matrix}\right)
+    \quad 
+    B=\left(
+    \begin{matrix}
+    2 & 1 \\
+    1 & 2
+    \end{matrix}
+    \right)
+    \quad
+    B^{-1}=\left(
+    \begin{matrix}
+    \frac{2}{3} & -\frac{1}{3} \\
+    -\frac{1}{3} & \frac{2}{3}
+    \end{matrix}
+    \right)
+    \quad
+    R=\left(
+    \begin{matrix}
+    \frac{1}{2} & 1 & 0 \\
+    3 & 0 & 1
+    \end{matrix}
+    \right)
+    \]
+    \[ c_B^T=(2,2) \qquad c_R^T=(\frac{3}{2},0,0)
+    \]
+\end{frame}
+
+\begin{frame}{}\small
+    Modificando el coeficiente de una variable no básica:
+    $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\left(\frac{3}{2}+\delta\right)x_3}\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+        \[A=
+    \left(\begin{matrix} 
+    2 & 1 & \frac{1}{2} & 1 & 0 \\
+    1 & 2 & 3 & 0 & 1
+    \end{matrix}\right)
+    \quad 
+    B=\left(
+    \begin{matrix}
+    2 & 1 \\
+    1 & 2
+    \end{matrix}
+    \right)
+    \quad
+        B^{-1}=\left(
+    \begin{matrix}
+    \frac{2}{3} & -\frac{1}{3} \\
+    -\frac{1}{3} & \frac{2}{3}
+    \end{matrix}
+    \right)
+    \quad
+    R=\left(
+    \begin{matrix}
+    \frac{1}{2} & 1 & 0 \\
+    3 & 0 & 1
+    \end{matrix}
+    \right)
+    \]
+    \[ c_B^T=(2,2) \qquad c_R^T=(\frac{3}{2}+\delta,0,0)
+    \]
+    Sólo hay que chequear para qué valores de $\delta$ el costo reducido de $x_3$ siga siendo no positivo:
+    \[\bar{c}_{R_1}^T = c_{R_1}^T - c_B^TB^{-1}R_{\cdot1} = -\frac{5}{6}+\delta  \]
+    Luego, esta base sigue siendo óptima si $\delta\leq \frac{5}{6}$
+
+\end{frame}
+
+\begin{frame}{}
+    \small
+    Modificando el coeficiente de una variable básica:
+        $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{(2+\delta)x_1+2x_2+\frac{3}{2}x_3}\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+        \[A=
+    \left(\begin{matrix} 
+    2 & 1 & \frac{1}{2} & 1 & 0 \\
+    1 & 2 & 3 & 0 & 1
+    \end{matrix}\right)
+    \quad 
+    B=\left(
+    \begin{matrix}
+    2 & 1 \\
+    1 & 2
+    \end{matrix}
+    \right)
+    \quad
+        B^{-1}=\left(
+    \begin{matrix}
+    \frac{2}{3} & -\frac{1}{3} \\
+    -\frac{1}{3} & \frac{2}{3}
+    \end{matrix}
+    \right)
+    \quad
+    R=\left(
+    \begin{matrix}
+    \frac{1}{2} & 1 & 0 \\
+    3 & 0 & 1
+    \end{matrix}
+    \right)
+    \]
+    \[ c_B^T=(2+\delta,2) \qquad c_R^T=(\frac{3}{2},0,0)
+    \]
+    Debemos ver para qué valores de $\delta$ el vector de costos reducidos tiene todas sus componentes no positivas:
+    \[\bar{c}_{R}^T = c_{R}^T - c_B^TB^{-1}R = \left(-\frac{5}{6}+\frac{2\delta}{3}, -\frac{2}{3}-\frac{2\delta}{3}, -\frac{2}{3}+\frac{\delta}{3}\right)  \]
+    Luego:
+    \[\bar{c}_{R}^T \leq 0 \Leftrightarrow 
+    \begin{cases}
+            -\frac{5}{6}+\frac{2\delta}{3} \leq 0  \\
+        -\frac{2}{3}-\frac{2\delta}{3} \leq 0\\
+        -\frac{2}{3}+\frac{\delta}{3} \leq 0 \\
+    \end{cases}
+    \Leftrightarrow
+    -1\leq\delta\leq \frac{5}{4}
+    \]
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad - Términos independientes}\small
+    \textbf{Método de diccionarios:} supongamos ahora que, sabiendo que $(7,4,0)$ es el óptimo del problema original, queremos ver cuánto puede variar uno de los recursos disponibles de manera tal que la base óptima no cambie. 
+        $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3}\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18 + \delta & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    Una vez más, haciendo cuentas, tenemos que:
+    \[\begin{array}{rl}
+        x_1 = & 7+\frac{2}{3}\delta + \frac{2}{3}x_3-\frac{2}{3}w_1+\frac{1}{3}w_2 \\
+        x_2 = & 4-\frac{1}{3}\delta -\frac{11}{6}x_3+\frac{1}{3}w_1-\frac{2}{3}w_2 \\\hline
+        z = & 14+6\delta -\frac{5}{6}x_3-\frac{2}{3}w_1-\frac{2}{3}w_2
+    \end{array}\]
+    Para que la base óptima siga siendo factible, necesitamos que:\pause
+    \[
+    \begin{array}{lclcl}
+        x_1\geq 0 & \Leftrightarrow & 7+\frac{2}{3}\delta \geq 0 & \Leftrightarrow & \delta \geq -\frac{21}{2} \\
+        x_2\geq 0 & \Leftrightarrow & 4-\frac{1}{3}\delta \geq 0 & \Leftrightarrow & \delta \leq 12 \\
+    \end{array}\Leftrightarrow -\frac{21}{2}\leq\delta\leq 12
+    \]
+\end{frame}
+
+\begin{frame}{}\small
+    \textbf{Método matricial:} estandarizamos el problema y se tiene que:
+            $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3}\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18+\delta & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    \[A=
+    \left(\begin{matrix} 
+    2 & 1 & \frac{1}{2} & 1 & 0 \\
+    1 & 2 & 3 & 0 & 1
+    \end{matrix}\right)
+    \quad 
+    B=\left(
+    \begin{matrix}
+    2 & 1 \\
+    1 & 2
+    \end{matrix}
+    \right)
+    \quad
+        B^{-1}=\left(
+    \begin{matrix}
+    \frac{2}{3} & -\frac{1}{3} \\
+    -\frac{1}{3} & \frac{2}{3}
+    \end{matrix}
+    \right)
+    \quad
+    R=\left(
+    \begin{matrix}
+    \frac{1}{2} & 1 & 0 \\
+    3 & 0 & 1
+    \end{matrix}
+    \right)
+    \]
+    \[ c_B^T=(2,2) \qquad c_R^T=(\frac{3}{2},0,0) \qquad b^T=(18+\delta, 15)
+    \]
+    Para ver que la solución básica es factible, basta ver que $\bar{b}=B^{-1}b\geq 0$:
+    \[ \bar{b} = B^{-1}b = \left(
+    \begin{matrix}
+    \frac{2}{3} & -\frac{1}{3} \\
+    -\frac{1}{3} & \frac{2}{3}
+    \end{matrix}
+    \right) \left(\begin{matrix}
+    18+\delta \\
+    15
+    \end{matrix}\right) = \left(\begin{matrix}
+    7+\frac{2}{3}\delta \\
+    4-\frac{1}{3}\delta
+    \end{matrix}\right)\]
+    Luego, 
+    \[ \bar{b}\geq 0 \Leftrightarrow \begin{cases} 7+\frac{2}{3}\delta \geq 0 \\ 4-\frac{1}{3}\delta \geq 0 \end{cases} \Leftrightarrow \begin{cases} \delta \geq -\frac{21}{2} \\
+         \delta \leq 12 \end{cases} \Leftrightarrow -\frac{21}{2}\leq\delta\leq 12 \]
+\end{frame}
+
+\begin{frame}{Análisis de Sensibilidad - Términos independientes}
+    \textbf{Obs:} con los mismos procedimientos también se puede ver qué ocurre si varían todos los términos independientes al mismo tiempo:
+                $$
+    \begin{array}{rrlc}
+    \max & \multicolumn{2}{l}{2x_1+2x_2+\frac{3}{2}x_3}\\
+    \text{s.a:}& 2x_1+x_2+\frac{1}{2}x_3 + w_1 = & 18+\delta_1 & (1)\\
+     & x_1+2x_2+3x_3 + w_2 = & 15+\delta_2 & (2)\\
+     & x_1, x_2, x_3, w_1, w_2\geq & 0 \\
+    \end{array}
+    $$
+    
+    En este caso, nos va a quedar que la base sigue siendo óptima si y sólo si:
+    \[
+    \begin{cases}
+            \frac{2}{3}\delta_1 - \frac{1}{3}\delta_2 \geq -7 \\
+            -\frac{1}{3}\delta_1 + \frac{2}{3}\delta_2 \geq -4
+    \end{cases}
+    \]
+    
+    \textbf{Ejercicio:} chequearlo.
+    
+\end{frame}
+
+
+
+\end{document}
+
+

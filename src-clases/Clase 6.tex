@@ -1,0 +1,257 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% handout
+% \documentclass[handout, 9pt]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación Operativa}
+\subtitle{Método de diccionarios - $\infty$ soluciones y soluciones degeneradas}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{frame}{Infinitas soluciones óptimas}
+    \small
+    Por ejemplo, considerar el siguiente diccionario para un problema de maximización:
+    \[
+        \begin{array}{ccccccccc}
+            w_1 & = & 3 & + & x_2  & - & 2w_2 & + & 7x_3 \\
+            x_1 & = & 1 & - & 5x_2 & + & 6w_2 & - & 8x_3 \\
+            w_3 & = & 4 & + & 9x_2 & + & 2w_2 & - & x_3  \\ \hline
+            z   & = & 8 &   &      & - & w_2  & - & x_3  \\
+        \end{array}
+        \Rightarrow
+        (\underbrace{1}_{x_1},\underbrace{0}_{x_2},\underbrace{0}_{x_3},\underbrace{3}_{w_1},\underbrace{0}_{w_2},
+        \underbrace{4}_{w_3}) \text{ es una solución óptima.}
+    \]
+    Si aumentamos el valor de $x_2$, la función objetivo no disminuye. Toda solución óptima debe cumplir que
+    $x_3=w_2=0$ (pero no necesariamente
+    $x_2=0$). Para tales soluciones, el diccionario implica que:
+
+    \[
+        \begin{array}{ccccc}
+            w_1 & = & 3 & + & x_2  \\
+            x_1 & = & 1 & - & 5x_2 \\
+            w_3 & = & 4 & + & 9x_2 \\
+        \end{array}
+    \]
+    Luego, cada solución óptima se obtiene asignando valores a $x_2$ tales que:
+    \[  \begin{cases}
+            \begin{array}{cccc}
+                - & x_2  & \leq & 3 \\
+                & 5x_2 & \leq & 1 \\
+                - & 9x_2 & \leq & 4 \\
+                \multicolumn{2}{r}{x_2} & \geq & 0
+            \end{array}
+            \iff x_2\in [0,\frac{1}{5}]
+        \end{cases}
+    \]
+%    \footnotesize
+
+\end{frame}
+
+\begin{frame}{Infinitas soluciones óptimas}
+   Es decir, podemos asignar cualquier valor en $[0,\frac{1}{5}]$ a $x_2$
+    y vamos a obtener otra solución factible óptima. Por ejemplo, si tomamos $x_2=\frac{1}{6}$
+    obtenemos otra solución óptima:
+
+   $(\frac{1}{6}, \frac{1}{6}, 0, \frac{19}{6}, 0, \frac{33}{6})$ [que NO es solución básica, pero si factible]
+
+    \vspace{1cm}
+    En general, \textbf{si llegamos a una solución óptima y hay alguna variable no básica con costo reducido igual a
+    $0$, entonces el problema tiene infinitas soluciones óptimas}.
+\end{frame}
+
+\begin{frame}{Problemas no acotados}
+
+%    Recordar que la variable que sale de la base es la variable básica cuya no-negatividad impone la cota superior más
+%    restrictiva al incremento de la variable que va a entrar en la base.\\
+    Ejemplo (objetivo de maximizar):
+    \[
+        \begin{array}{ccccccccc}
+            x_2 & = & 5 & + & 2x_3 & - & x_4  & - & 3x_1 \\
+            x_5 & = & 7 &   &      & - & 3x_4 & - & 4x_1 \\ \hline
+            z   & = & 5 & + & x_3  & - & x_4  & - & x_1  \\
+        \end{array}
+    \]
+
+    La variable que va a entrar a la base es $x_3$, pero ninguna de las variables básicas $x_2$ ni $x_5$
+    imponen alguna restricción sobre cuánto puede aumentar $x_3$ $\Rightarrow$
+    el problema no está acotado: puedo aumentar $x_3$ tanto como yo quiera (por lo tanto, $z$
+    puede aumentar tanto como yo quiera).\\
+    \vskip 0.3cm
+    En general, \textbf{si no existen candidatos para dejar la base, el problema es no acotado.}
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas}
+    Se dice que \textbf{una solución básica es degenerada si una o más de sus variables básicas valen cero}.\\
+    Ejemplo:
+    \[
+        \begin{array}{ccccccccc}
+            x_3 & = & 0.5 &   &      & - & 0.5x_4 &   &      \\
+            x_5 & = &     & - & 2x_1 & + & 4x_2   & + & 3x_4 \\
+            x_6 & = &     &   & x_1  & - & 3x_2   & + & 2x_4 \\ \hline
+            z   & = & 4   & + & 2x_1 & - & x_2    & - & 4x_4 \\
+            \multicolumn{9}{c}
+            {\text{\textcolor{red}{Solución actual: $(0,0,\mathbf{\frac{1}{2}},0,\mathbf{0},\mathbf{0})$}}}
+        \end{array}
+    \]
+    $x_1$ entrará a la base, pero observemos qué ocurre en la segunda ecuación:
+    \[ 0 \leq x_5 = -2x_1 \quad \Leftrightarrow \quad x_1 \leq 0\]
+    $\Rightarrow$ el crecimiento de $x_1$ está limitado a 0
+    $\Rightarrow$ ni el valor de $x_1$ ni el de las otras variables va a cambiar, y el valor de $z$
+    sigue siendo el mismo.\\
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas}
+    Aún así, debemos \textit{pivotear} para permitir que $x_1$ entre a la base y que $x_5$ salga.
+    \[
+        \begin{array}{ccccccccc}
+            x_1 & = &     &   & 2x_2 & + & 1.5x_4 & - & 0.5x_5 \\
+            x_3 & = & 0.5 &   &      & - & 0.5x_4 &   &        \\
+            x_6 & = &     & - & x_2  & + & 3.5x_4 & - & 0.5x_5 \\ \hline
+            z   & = & 4   & + & 3x_2 & - & x_4    & - & x_5    \\
+            \multicolumn{9}{c}
+            {\text{\textcolor{red}{Solución actual: $(\mathbf{0},0,\mathbf{\frac{1}{2}},0,0,\mathbf{0})$}}}
+        \end{array}
+    \]
+    Puesto que esta iteración de SIMPLEX no produjo un cambio en el valor $z$, es una \textbf{iteración degenerada}.\\
+    \vskip 0.3cm
+    En el ejemplo, la próxima iteración también será degenerada, pero la posterior no. Puede ocurrir una racha de
+    iteraciones degeneradas, pero en la gran mayoría de los casos, la racha es interrumpida por una iteración no
+    degenerada.
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas - Ciclos}
+    Podría ocurrir que las soluciones degeneradas provoquen ciclos infinitos en el SIMPLEX. Ejemplo (Chvátal, 1983):
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_5 & = &   & - & 0.5x_1 & + & 5.5x_2 & + & 2.5x_3 & - & 9x_4  \\
+            x_6 & = &   & - & 0.5x_1 & + & 1.5x_2 & + & 0.5x_3 & - & x_4   \\
+            x_7 & = & 1 & - & x_1    & + &        &   &        &   &       \\ \hline
+            z   & = &   &   & 10x_1  & - & 57x_2  & - & 9x_3   & - & 24x_4 \\
+        \end{array}
+    \]
+    Luego de la primera iteración ($x_1$ entra, $x_5$ sale):
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_1 & = &   &   & 11x_2 & + & 5x_3  & - & 18x_4  & - & 2x_5  \\
+            x_6 & = &   & - & 4x_2  & - & 2x_3  & + & 8x_4   & + & x_5   \\
+            x_7 & = & 1 & - & 11x_2 & - & 5x_3  & + & 18x_4  & + & 2x_5  \\ \hline
+            z   & = &   &   & 53x_2 & + & 41x_3 & - & 204x_4 & - & 20x_5 \\
+        \end{array}
+    \]
+    \large
+    \[ \mathbf{\vdots} \]
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas}
+    \[\mathbf{\vdots}\]
+    Luego de la quinta iteración:
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_5 & = &   &   & 9x_6  & + & 4x_1   & - & 8x_2   & - & 2x_3   \\
+            x_4 & = &   & - & x_6   & - & 0.5x_1 & + & 1.5x_2 & + & 0.5x_3 \\
+            x_7 & = & 1 &   &       & - & x_1    &   &        &   &        \\ \hline
+            z   & = &   &   & 24x_6 & + & 22x_1  & - & 93x_2  & - & 21x_3  \\
+        \end{array}
+    \]
+
+    Luego de la sexta iteración:
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_5 & = &   & - & 0.5x_1 & + & 5.5x_2 & + & 2.5x_3 & - & 9x_4  \\
+            x_6 & = &   & - & 0.5x_1 & + & 1.5x_2 & + & 0.5x_3 & - & x_4   \\
+            x_7 & = & 1 & - & x_1    & + &        &   &        &   &       \\ \hline
+            z   & = &   &   & 10x_1  & - & 57x_2  & - & 9x_3   & - & 24x_4 \\
+        \end{array}
+    \]
+    ¡Volvimos al mismo diccionario del principio!
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas - Regla de Bland}
+    \begin{tcolorbox}[colback=blue!25!white, colframe=blue!45!white]
+        \textbf{Regla de Bland}:
+        \begin{enumerate}
+            \item La variable entrante será la variable no básica \textbf{de menor índice}
+            con coeficiente positivo en la f.o.
+            \item
+            La variable que sale se elige como siempre. Si hay empates entre variables, sale la que tenga menor índice.
+        \end{enumerate}
+    \end{tcolorbox}
+    \pause
+    \vskip 0.5cm
+    Se puede demostrar que, utilizando la regla de Bland, SIMPLEX no cicla. [Demo: \textit{Linear Programming}
+    , Chvátal, 1983, p. 37]\\
+    \vskip 0.2cm
+    \textbf{Obs:}
+    no es necesario utilizar la regla de Bland en cada iteración. Podríamos comenzar a emplearla, por ejemplo, luego de
+    algunas iteraciones degeneradas y descartarla cuando se produzca una iteración no degenerada.
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas - Regla de Bland}
+    En el ejemplo donde SIMPLEX ciclaba, veamos cómo la regla de Bland nos ayuda a salir del ciclo. En la quinta
+    iteración teníamos el siguiente diccionario:
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_5 & = &   &   & 9x_6  & + & 4x_1   & - & 8x_2   & - & 2x_3   \\
+            x_4 & = &   & - & x_6   & - & 0.5x_1 & + & 1.5x_2 & + & 0.5x_3 \\
+            x_7 & = & 1 &   &       & - & x_1    &   &        &   &        \\ \hline
+            z   & = &   &   & 24x_6 & + & 22x_1  & - & 93x_2  & - & 21x_3  \\
+        \end{array}
+    \]
+    Vimos que si usamos el criterio usual, $x_6$ entra a la base y así volvemos al diccionario inicial. \\
+    En cambio, si aplicamos la Regla de Bland, $x_6$ no entrará a la base, sino que $x_1$
+    entrará. Cada ecuación nos impone las siguientes restricciones, respectivamente:
+    \[ x_1<\infty \qquad x_1\leq 0 \qquad x_1\leq 1 \]
+    Luego, $x_4$ sale de la base. Si bien esta es una iteración degenerada, veamos cómo queda el nuevo diccionario.
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas - Regla de Bland}
+    \small
+    Una vez que pivoteamos, el nuevo diccionario queda así:
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_1 & = &   & - & 2x_6  & + & 3x_2  & + & x_3  & - & 2x_4  \\
+            x_5 & = &   &   & x_6   & + & 4x_2  & + & 2x_3 & - & 8x_4  \\
+            x_7 & = & 1 & + & 2x_6  & - & 3x_2  & - & x_3  & + & 2x_4  \\ \hline
+            z   & = &   & - & 20x_6 & - & 27x_2 & + & x_3  & - & 44x_4 \\
+        \end{array}
+    \]
+    \pause
+    Primero, no volvimos al diccionario inicial. Por otro lado, veamos qué sucede con la próxima iteración: $x_3$
+    entrará a la base y $x_7$ saldrá de la base. Luego de efectuar el pivote, el nuevo diccionario queda:
+    \[
+        \begin{array}{rrrrrrrrrrr}
+            x_3 & = & 1 & + & 2x_6  & - & 3x_2  & + & 2x_4  & - & x_7  \\
+            x_1 & = & 1 &   &       &   &       &   &       & - & x_7  \\
+            x_5 & = & 2 & + & 5x_6  & - & 2x_2  & - & 4x_4  & - & 2x_7 \\ \hline
+            z   & = & 1 & - & 18x_6 & - & 30x_2 & - & 42x_4 & - & x_7  \\
+        \end{array}
+    \]
+    Como $z$
+    cambió su valor (pasó de valer 0 a valer 1), la última iteración no es degenerada. Más aún llegamos a una solución
+    óptima: (1,0,1,0,1,0,0)
+    \vskip 0.3cm
+\end{frame}
+
+\begin{frame}{Soluciones degeneradas - Regla de Bland}
+    \textbf{En síntesis:}
+    \begin{itemize}
+        \item en general es útil \textbf{el criterio usual}
+        para decidir qué variable entra a la base. En el caso de maximizar \textquotedblleft
+        Entra a la base la variable con mayor coeficiente positivo en la f.o." (análogo para minimizar)
+        \item si se viene dando una \textbf{seguidilla de iteraciones degeneradas, usar la Regla de Bland}.
+    \end{itemize}
+\end{frame}
+
+\end{document}
+
+

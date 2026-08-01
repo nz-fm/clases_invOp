@@ -1,0 +1,144 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% handout
+% \documentclass[handout, 10pt]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación Operativa - Clase 2}
+\subtitle{Problemas de costo fijo}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+
+%% Si es versión completa o para la clase
+\newif\ifCompleta
+
+% Descomentar para clase completa
+\Completatrue
+
+\begin{document}
+
+\maketitle
+
+
+\begin{frame}[fragile]{En el capítulo anterior...}
+    \begin{itemize}
+        \item \textbf{Variables} $(x_1, x_2, \dots, x_n)$
+            \begin{itemize}
+                \item Reales
+                \item Enteras
+                \item Binarias
+            \end{itemize}
+        \item \textbf{Parámetros}: datos conocidos del problema
+        \item \textbf{Conjuntos}
+        \item \textbf{Función objetivo}: función que queremos maximizar o minimizar. Es combinación lineal de las variables:
+        \small
+        \[ f(x_1, \dots, x_n)= c_1x_1+c_2x_2+\dots+c_nx_n = \sum_{j=1}^n c_jx_j \quad c_i\in\mathbb{R}\;\forall j\in\{1,\dots,n\}  \]
+        \normalsize
+        \item \textbf{Restricciones}: se expresan como una igualdad o desigualdad entre una combinación lineal de las variables y $b_i$ un número real:
+        \small{
+        \[ \sum_{j=1}^n a_{ij}x_j \leq b_i \qquad \sum_{j=1}^n a_{ij}x_j \geq b_i \qquad \sum_{j=1}^n a_{ij}x_j = b_i\]        
+        }
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Problemas de costo fijo}
+    \small
+    Se desea iniciar un emprendimiento de carpintería, donde se realizarían tres tipos de muebles: mesas, sillas y
+    roperos, utilizando tres tipos de madera: cedro, pino y nogal. Para
+    fabricar cada uno de los muebles, deben comprarse, una sola vez, las herramientas necesarias. Los datos se detallan
+    a continuación:
+    \begin{table}[]
+        \centering
+        \begin{tabular}{ccccc} \toprule
+             & Mesa & Silla & Ropero & Disponibilidad  \\ \midrule
+            Horas de trabajo & 5 & 3 & 15 & 100 \\ \hline
+            Cedro ($m^2$) & 2 & 2 & 8 & 60 \\ \hline 
+            Pino ($m^2$) & 5 & 1 & 20 & 100 \\ \hline 
+            Nogal ($m^2$) & 1 & 4 & 12 & 75 \\ \hline
+            Ganancia (x unidad) & 30 & 18 & 68 & \\ \hline
+            Costo compra herramientas & 165 & 100 & 300 & \\ \hline
+        \end{tabular}
+    \end{table}
+    También se desea que la cantidad de sillas fabricadas no exceda el $50\%$
+    de la producción total de la carpintería. Decidir cuántos
+    muebles deben fabricarse de cada tipo para maximizar la ganancia.
+\end{frame}
+
+\ifCompleta
+\begin{frame}{Problemas de costo fijo}
+    \begin{itemize}
+        \item Variables enteras:
+        \begin{itemize}
+            \itemt $x_1 =$ cantidad de mesas que serán fabricadas
+            \itemt $x_2 =$ cantidad de sillas que serán fabricadas
+            \itemt $x_3 =$ cantidad de roperos que serán fabricados
+        \end{itemize}
+        \item Función objetivo:
+        \[ f_1(x_1) + f_2(x_2) + f_3(x_3) \]
+        Siendo:
+        \begin{columns}
+        \footnotesize{
+            \begin{column}{0.33\textwidth}
+            \[ f(x_1) = \begin{cases} 30x_1-165 \quad \text{si $x_1\geq1$} \\ 0 \quad \text{si $x_1=0$} \end{cases} \]            
+            \end{column}
+
+            \begin{column}{0.33\textwidth}
+            \[ f(x_2) = \begin{cases} 18x_2-100 \quad \text{si $x_2\geq1$} \\ 0 \quad \text{si $x_2=0$} \end{cases} \]
+            \end{column}
+
+            \begin{column}{0.33\textwidth}
+            \[ f(x_3) = \begin{cases} 68x_3-300 \quad \text{si $x_3\geq1$} \\ 0 \quad \text{si $x_3=0$} \end{cases} \]
+            \end{column}}
+        \end{columns}
+        \item \textbf{Hint}: usar variables indicadoras de qué muebles se fabrican
+        % \itemt Variables binarias auxiliares:
+        % \[ w_i = \begin{cases} 1 \; \text{si $x_i \geq 1$} \\ 0 \; \text{si $x_i = 0$} \end{cases} \qquad i=1,2,3\] 
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problemas de costo fijo - Ejercicio}
+    \begin{itemize}
+
+        \item Modelo:
+        \[\begin{array}{crl}
+            \max & \multicolumn{2}{c}{30x_1-165w_1 + 18x_2-100w_2+68x_3-300w_3}  \\
+            \text{s.a.:} & 5x_1 + 3x_2 + 15x_3 \leq& 100 \\
+             & 2x_1+2x_2+8x_3 \leq & 60 \\
+             & 5x_1+x_2+20x_3 \leq & 100 \\
+             & x_1+4x_2+12x_3 \leq & 75 \\
+             & x_1 \leq & 0.5(x_1 + x_2 + x_3) \\
+             & x_1 \leq & Mw_1 \\
+             & x_2 \leq & Mw_2 \\
+             & x_3 \leq & Mw_3 \\
+             & x_i \geq & 0 \; \forall i=1,2,3 \\
+             & \multicolumn{2}{c}{x_i\in\mathbb{Z} \; \forall i=1,2,3} \\
+             & \multicolumn{2}{c}{w_i\in\{0,1\} \; \forall i=1,2,3}\\
+        \end{array}
+        \]
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Problemas de costo fijo - Ejercicio}
+    Observar que modelamos:
+    \[ x_i \geq 1 \Rightarrow w_i = 1\]
+    y no modelamos la vuelta, por lo que podría ocurrir que en una solución factible algún $w_{i_0}=1$
+    y que $x_{i_0}=0$. Pero en este problema, sabemos que esto NO va a ocurrir en la solución óptima,
+    pues estaríamos comprando herramientas que no vamos a usar y eso disminuye el valor de la función objetivo.
+    Basta tomar $w_{i_0}=0$ y tendremos otra solución factible con mejor valor en la f.o.
+    Por lo tanto, en este caso,  modelar la vuelta es \underline{\textbf{opcional}}.
+
+    Si quisiéramos modelar
+    \[ w_i = 1 \Rightarrow x_i \geq 1\]
+    podríamos agregar las restricciones: \pause
+    \[w_i \leq x_i \quad\;\forall i\in \{1,2,3\}\]
+\end{frame}    
+\fi
+
+\end{document}
+
+

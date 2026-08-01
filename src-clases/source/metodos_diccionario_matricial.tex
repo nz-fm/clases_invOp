@@ -1,0 +1,612 @@
+%! Author = naza
+%! Date = 24/9/25
+
+% Preamble
+\documentclass{article}
+\usepackage[papersize={25cm,110cm}, margin=1cm]{geometry} % Custom page size with 1cm margins
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+% Packages
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[spanish]{babel}
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+\usepackage{color}
+%\def\columnseprulecolor{\color{black}}
+\newcommand{\binv}{B^{-1}}
+
+\title{Simplex: método de diccionarios y método matricial}
+\author{Departamento de Matemática - Facultad de Ciencias Exactas y Naturales - UBA}
+\date{Nazareno Faillace Mullen}
+
+% Document
+\begin{document}
+
+    \maketitle
+    \thispagestyle{empty}
+
+    A continuación, a través de un ejemplo, veremos un paralelismo entre el método de diccionarios y el método
+    matricial para hallar la solución óptima de un modelo de Programación Lineal con Simplex.
+    Sean $A\in\mathbb{R}^{m\times n} (m<n), c\in\mathbb{R}^n, x\in\mathbb{R}^n, b\in\mathbb{R}^m$, consideramos el
+    problema de
+    Programación Lineal:
+    \[\begin{array}{cl}
+        \max & c^Tx  \\
+        \text{s.a:} & Ax = b \\
+         & x \geq 0 \quad
+    \end{array}
+    \]
+    Introducimos la siguiente notación, que utilizaremos en el método matricial:
+    \begin{table*}[h!]
+        \centering
+        \begin{tabular}{rl}
+        $A_{\boldsymbol{\cdot} j}$ & $j$-ésima columna de $A$ \\
+        $B$ & matriz básica, es decir, submatriz de $A$ cuyas columnas definen una base de $\mathbb{R}^m$ \\
+        $R$ & submatriz de $A$ que consiste en las columnas de $A$ que no están en $B$ \\
+        $x_B$ & coordenadas de $x$ correspondientes a las columnas de $B$ (variables básicas) \\
+        $x_R$ & coordenadas de $x$ correspondientes a las columnas de $R$ (variables no básicas) \\
+        $c_B$ & coordenadas de $c$ correspondientes a las variables básicas \\
+        $c_R$ & coordenadas de $c$ correspondientes a las variables no básicas \\
+        $\bar{c}_R$ & vector de costos reducidos de las variables no básicas
+        \end{tabular}
+    \end{table*}
+
+    \textbf{Definición:} dada una matriz básica $B$, el valor de las variables básicas viene dado por $\binv b$. Si
+    $\binv b\geq 0$, decimos que $B$ es una matriz básica factible.
+
+    \textbf{Recordar:} dada una matriz básica factible $B$, los costos reducidos de las variables no básicas se
+    calculan de la siguiente manera:
+    \[\bar{c}_R^T = c_R^T - c_B^T\binv R\]
+
+    Ahora, resolvamos un problema de Programación Lineal con Simplex, utilizando ambos métodos.
+    \[
+    \begin{array}{rrrrrrrr}
+        \max & 5x_1 & + & 4x_2 & + & 3x_3 & \\
+        \text{s.a:} & 2x_1 & + & 3x_2 & + & x_3  & \leq & 5  \\
+        & 4x_1 & + & x_2  & + & 2x_3 & \leq & 11 \\
+        & 3x_1 & + & 4x_2 & + & 2x_3 & \leq & 8  \\
+        & \multicolumn{5}{r}{x_1,x_2,x_3} & \geq & 0 \\
+    \end{array}
+    \]
+
+    Como siempre que querramos aplicar SIMPLEX, estandarizamos:
+    \[
+    \begin{array}{rrrrrrrrrrrrrr}
+        \max & 5x_1 & + & 4x_2 & + & 3x_3 & \\
+        \text{s.a:} & 2x_1 & + & 3x_2 & + & x_3  & + & w_1 &   &     &   &     & = & 5  \\
+        & 4x_1 & + & x_2  & + & 2x_3 &   &     & + & w_2 &   &     & = & 11 \\
+        & 3x_1 & + & 4x_2 & + & 2x_3 &   &     &   &     & + & w_3 & = & 8  \\
+        & \multicolumn{11}{r}{x_1,x_2,x_3,w_1,w_2,w_3} & \geq & 0 \\
+    \end{array}\]
+
+    En este caso, tenemos que:
+            \[ A =
+            \begin{pmatrix}
+                    2 & 3 & 1 & 1 & 0 & 0 \\
+                    4 & 1 & 2 & 0 & 1 & 0 \\
+                    3 & 4 & 2 & 0 & 0 & 1 \\
+            \end{pmatrix} \quad x =
+            \begin{pmatrix}
+                x_1 \\
+                x_2 \\
+                x_3 \\
+                w_1 \\
+                w_2 \\
+                w_3
+            \end{pmatrix} \quad b =
+            \begin{pmatrix}
+                5 \\
+                11 \\
+                8
+            \end{pmatrix} \quad c =
+            \begin{pmatrix}
+                5 \\
+                4 \\
+                3 \\
+                0 \\
+                0 \\
+                0
+            \end{pmatrix}
+        \]
+
+    \begin{center}
+        \textbf{Hallamos una base inicial factible}
+
+        (En este caso, no es necesario aplicar Método de Dos Fases ni Método Big-M porque podemos comenzar con las slack)
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Escribimos el primer diccionario despejando las variables slack
+        \[
+            \begin{array}{rrrrrrrrr}
+
+                w_1 & = & 5  & - & 2x_1 & - & 3x_2 & - & x_3  \\
+                w_2 & = & 11 & - & 4x_1 & - & x_2  & - & 2x_3 \\
+                w_3 & = & 8  & - & 3x_1 & - & 4x_2 & - & 2x_3 \\\hline
+                z   & = &    &   & 5x_1 & + & 4x_2 & + & 3x_3 \\
+            \end{array}
+        \]
+        \columnbreak
+
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Consideramos:
+        \[
+            B = \begin{pmatrix}
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 0 & 1 \\
+            \end{pmatrix} \quad
+            R = \begin{pmatrix}
+                    2 & 3 & 1 \\
+                    4 & 1 & 2 \\
+                    3 & 4 & 2 \\
+            \end{pmatrix} \;
+            x_B = \begin{pmatrix}
+                      w_1 \\
+                      w_2 \\
+                      w_3
+            \end{pmatrix} \;
+            x_R = \begin{pmatrix}
+                      x_1 \\
+                      x_2 \\
+                      x_3
+            \end{pmatrix}
+        \]
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Calculamos los costos reducidos de las variables no básicas}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        En el diccionario ya están calculados los costos reducidos, son los coeficientes de las variables no básicas
+        en el último renglón:
+        \[z    =         {\color{red}5}x_1  +  {\color{red}4}x_2  +  {\color{red}3}x_3\]
+        Como hay costos reducidos positivos, todavía no alcanzamos un óptimo.
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Calculamos los costos reducidos de las variables no básicas, aplicando la fórmula:
+        \[\bar{c}_R^T = c_R^T - c_B^T\binv R =
+        (5,4,3) - (0,0,0)
+        \begin{pmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 1 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+                2 & 3 & 1 \\
+                4 & 1 & 2 \\
+                3 & 4 & 2 \\
+        \end{pmatrix} = (5,4,3)
+        \]
+        Como hay costos reducidos positivos, todavía no alcanzamos un óptimo.
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Seleccionamos la variable que entra a la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Identificamos a la variable no básica con mayor costo reducido:
+        \[z    =         5{\color{red}\mathbf{x_1}}  +  4x_2  +  3x_3\]
+        Entra $x_1$ a la base.
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        El mayor costo reducido positivo le corresponde a la variable en la primera coordenada de $x_R$, pues $5$ es
+        la primera coordenada de $\bar{c}_R^T$.
+        Entonces, $x_1$ entra a la base.
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Determinamos qué variable deja la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Cada ecuación del diccionario acota el valor que puede tomar $x_1$ de manera tal que $w_i\geq0$:
+        \[ 0\leq w_1 = 5-2x_1 \Rightarrow x_1 \leq \frac{5}{2} \]
+        \[ 0\leq w_2 = 11-4x_1 \Rightarrow x_1 \leq \frac{11}{4} \]
+        \[ 0\leq w_3 = 8-3x_1 \Rightarrow x_1 \leq \frac{8}{3} \]
+
+        La cota relevante es la más restrictiva. En este caso, es la primera. Entonces, $w_1$ deja la base.
+
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Primero, calculamos el valor de las variables básicas
+        \[\binv b =         \begin{pmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 1 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+            5 \\
+            11 \\
+            8
+        \end{pmatrix} =
+        \begin{pmatrix}
+            5 \\
+            11 \\
+            8
+        \end{pmatrix}
+        \]
+
+        Como $x_1$ entra a la base, calculamos $\binv A_{\boldsymbol{\cdot} 1}$:
+        \[
+            \binv A_{\boldsymbol{\cdot} 1} =
+            \begin{pmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 1 \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                2 \\ 4 \\ 3
+            \end{pmatrix} =
+            \begin{pmatrix}
+                2 \\ 4 \\ 3
+            \end{pmatrix}
+        \]
+        Para los $j$ tales que $(\binv A_{\boldsymbol{\cdot} 1})_j>0$, calculamos $\frac{(\binv b)_j}{(\binv A_{\boldsymbol{\cdot} 1})_j}$:
+        \[
+            \begin{array}{rl}
+                \dfrac{(\binv b)_1}{(\binv A_{\boldsymbol{\cdot} 1})_1} = & \dfrac{5}{2} \\
+                \dfrac{(\binv b)_2}{(\binv A_{\boldsymbol{\cdot} 1})_2} = & \dfrac{11}{4}\\
+                \dfrac{(\binv b)_3}{(\binv A_{\boldsymbol{\cdot} 1})_3} = & \dfrac{8}{3}
+            \end{array}
+        \]
+        El mínimo de los tres es $\frac{5}{2}$, que le corresponde a la primera coordenada de $\binv A_{\boldsymbol{\cdot} 1}$.
+        Por ende, la variable que sale de la base es la primera coordenada de $x_B$: $w_1$.
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Pivote: se realiza el cambio en la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+            Debemos reescribir el nuevo diccionario, donde $x_1$ es básica y $w_1$ es no básica.
+            De la primera ecuación del diccionario obtenemos que:
+            \[ w_1  =  5 - 2x_1 - 3x_2 - x_3 \quad \Rightarrow \quad x_1 = \frac{5}{2} - \frac{3}{2}x_2 -\frac{1}{2}x_3 -
+            \frac{1}{2} w_1  \]
+            Luego, reemplazamos $x_1$ por la igualdad de arriba en las ecuaciones 2 y 3 y en $z$:
+            \[ w_2 = 11 - 4\left(\frac{5}{2} - \frac{3}{2}x_2 -\frac{1}{2}x_3 -\frac{1}{2} w_1 \right)
+            - x_2 - 2x_3 = 1+5x_2+2w_1  \]
+            \[w_3 = 8 - 3\left(\frac{5}{2} - \frac{3}{2}x_2 -\frac{1}{2}x_3 -\frac{1}{2} w_1 \right) - 4x_2 - 2x_3 =
+            \frac{1}{2}+\frac{1}{2}x_2-\frac{1}{2}x_3+\frac{3}{2}w_1\]
+            \[z  = 5\left(\frac{5}{2} - \frac{3}{2}x_2 -\frac{1}{2}x_3 -\frac{1}{2} w_1\right) + 4x_2 + 3x_3 = \frac{25}{2}-
+            \frac{7}{2}x_2+\frac{1}{2}x_3-\frac{5}{2}w_1 \]
+
+            Nuestro nuevo diccionario queda:
+            \[
+                \begin{array}{rrrrrrrrr}
+                    x_1 & = & \dfrac{5}{2}  & - & \dfrac{3}{2}x_2 & - & \dfrac{1}{2}x_3 & - & \dfrac{1}{2} w_1 \\
+                    w_2 & = & 1            & + & 5x_2           &   &                & + & 2w_1            \\
+                    w_3 & = & \dfrac{1}{2}  & + & \dfrac{1}{2}x_2 & - & \dfrac{1}{2}x_3 & + & \dfrac{3}{2}w_1  \\[0.5em]\hline
+                    z   & = & \dfrac{25}{2} & - & \dfrac{7}{2}x_2 & + & \dfrac{1}{2}x_3 & - & \dfrac{5}{2}w_1  \\
+                \end{array}
+            \]
+
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        En $B$, la columna de $A$ correspondiente a $x_1$ reemplaza a la columna correspondiente a $w_1$, dando
+        lugar a:
+        \[
+            B = \begin{pmatrix}
+                    2 & 0 & 0 \\
+                    4 & 1 & 0 \\
+                    3 & 0 & 1 \\
+            \end{pmatrix} \quad
+            R = \begin{pmatrix}
+                    1 & 3 & 1 \\
+                    0 & 1 & 2 \\
+                    0 & 4 & 2 \\
+            \end{pmatrix} \;
+            x_B = \begin{pmatrix}
+                      x_1 \\
+                      w_2 \\
+                      w_3
+            \end{pmatrix} \;
+            x_R = \begin{pmatrix}
+                      w_1 \\
+                      x_2 \\
+                      x_3
+            \end{pmatrix}
+        \]
+
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Calculamos los costos reducidos de las variables no básicas}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        En el diccionario ya están calculados los costos reducidos, son los coeficientes de las variables no básicas
+        en el último renglón:
+        \[z    =  \dfrac{25}{2}  -  {\color{red}\dfrac{7}{2}}x_2  +  {\color{red}\dfrac{1}{2}}x_3  -
+            {\color{red}\dfrac{5}{2}}w_1\]
+        Como hay costos reducidos positivos, todavía no alcanzamos un óptimo.
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+        Calculamos los costos reducidos de las variables no básicas, aplicando la fórmula:
+        \[\bar{c}_R^T =
+        (0,4,3) - (5,0,0)
+        \begin{pmatrix}
+                \dfrac{1}{2} & 0 & 0 \\
+                -2 & 1 & 0 \\
+                -\dfrac{3}{2} & 0 & 1 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+                1 & 3 & 1 \\
+                0 & 1 & 2 \\
+                0 & 4 & 2 \\
+        \end{pmatrix} = \left(-\dfrac{5}{2}, -\dfrac{7}{2}, \dfrac{1}{2}\right)
+        \]
+        Como hay costos reducidos positivos, todavía no alcanzamos un óptimo.
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Seleccionamos la variable que entra a la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Identificamos a la variable no básica con mayor costo reducido:
+        \[z    =  \dfrac{25}{2}  -  \dfrac{7}{2}x_2  +  \dfrac{1}{2}{\color{red}x_3}  -
+            \dfrac{5}{2}w_1\]
+        Entra $x_3$ a la base.
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        El mayor costo reducido positivo le corresponde a la variable en la tercera coordenada de $x_R$, pues
+        $\frac{1}{2}$ es la tercera coordenada de $\bar{c}_R^T$.
+        Entonces, $x_3$ entra a la base.
+    \end{multicols}
+
+        \begin{center}
+        \textbf{Determinamos qué variable deja la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Cada ecuación del diccionario acota el valor que puede tomar $x_3$ de manera tal que $x_1, w_2, w_3 \geq 0$:
+        \[ 0\leq x_1 = \frac{5}{2}-\frac{1}{2}x_3 \Rightarrow x_3 \leq 5 \]
+        \[ 0\leq w_2 = 1+0x_3 \Rightarrow \text{no se restringe el crecimiento de $x_3$} \]
+        \[ 0\leq w_3 = \frac{1}{2}-\frac{1}{2}x_3 \Rightarrow \mathbf{x_3 \leq 1} \]
+
+        Como la tercera es la condición más restrictiva, $x_3$ entra a la base y $w_3$ sale de la base.
+
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Primero, calculamos el valor de las variables básicas
+        \[\binv b =         \begin{pmatrix}
+                \dfrac{1}{2} & 0 & 0 \\
+                -2 & 1 & 0 \\
+                -\dfrac{3}{2} & 0 & 1 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+            5 \\
+            11 \\
+            8
+        \end{pmatrix} =
+        \begin{pmatrix}
+            \dfrac{5}{2} \\
+            1 \\
+            \dfrac{1}{2}
+        \end{pmatrix}
+        \]
+
+        Como $x_3$ entra a la base, calculamos $\binv A_{\boldsymbol{\cdot} 3}$:
+        \[
+            \binv A_{\boldsymbol{\cdot} 3} =
+            \begin{pmatrix}
+                \dfrac{1}{2} & 0 & 0 \\
+                -2 & 1 & 0 \\
+                -\dfrac{3}{2} & 0 & 1 \\
+            \end{pmatrix}
+            \begin{pmatrix}
+                1 \\ 2 \\ 2
+            \end{pmatrix} =
+            \begin{pmatrix}
+                \frac{1}{2} \\ 0 \\ \frac{1}{2}
+            \end{pmatrix}
+        \]
+        Para los $j$ tales que $(\binv A_{\boldsymbol{\cdot} 3})_j>0$, calculamos $\frac{(\binv b)_j}{(\binv A_{\boldsymbol{\cdot} 3})_j}$:
+        \[
+            \begin{array}{rl}
+                \dfrac{(\binv b)_1}{(\binv A_{\boldsymbol{\cdot} 3})_1} = & 5 \\
+                \dfrac{(\binv b)_3}{(\binv A_{\boldsymbol{\cdot} 3})_3} = & 1
+            \end{array}
+        \]
+        El mínimo de los dos es $1$, que le corresponde a la tercera coordenada de $\binv A_{\boldsymbol{\cdot} 3}$.
+        Por ende, la variable que sale de la base es la tercera coordenada de $x_B$: $w_3$.
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Pivote: se realiza el cambio en la base}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+            Debemos reescribir el nuevo diccionario, donde $x_3$ es básica y $w_3$ es no básica.
+De la tercera ecuación, teníamos que:
+        \[w_3 = \frac{1}{2}+\frac{1}{2}x_2-\frac{1}{2}x_3+\frac{3}{2}w_1 \Rightarrow x_3=1+x_2+3w_1-2w_3\]
+        Reemplazando $x_3$ por esa expresión en las demás ecuaciones, nos queda el siguiente diccionario:
+        \[
+            \begin{array}{rrrrrrrrr}
+                x_3 & = & 1  & + & x_2  & + & 3w_1 & - & 2w_3 \\
+                x_1 & = & 2  & - & 2x_2 & - & 2w_1 & + & w_3  \\
+                w_2 & = & 1  & + & 5x_2 & + & 2w_1 &   &      \\\hline
+                z   & = & 13 & - & 3x_2 & - & w_1  & - & w_3  \\
+            \end{array}
+        \]
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        En $B$, la columna de $A$ correspondiente a $x_3$ reemplaza a la columna correspondiente a $w_3$, dando
+        lugar a:
+        \[
+            B = \begin{pmatrix}
+                    2 & 0 & 1 \\
+                    4 & 1 & 2 \\
+                    3 & 0 & 2 \\
+            \end{pmatrix} \quad
+            R = \begin{pmatrix}
+                    1 & 3 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 4 & 1 \\
+            \end{pmatrix} \;
+            x_B = \begin{pmatrix}
+                      x_1 \\
+                      w_2 \\
+                      x_3
+            \end{pmatrix} \;
+            x_R = \begin{pmatrix}
+                      w_1 \\
+                      x_2 \\
+                      w_3
+            \end{pmatrix}
+        \]
+
+    \end{multicols}
+
+    \begin{center}
+        \textbf{Calculamos los costos reducidos de las variables no básicas}
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        En el diccionario ya están calculados los costos reducidos, son los coeficientes de las variables no básicas
+        en el último renglón:
+        \[z    =  13  + {\color{red}(-3)} x_2  + {\color{red}(-1)} w_1   +  {\color{red}(-1)}w_3\]
+        Como no hay costos reducidos positivos, hemos alcanzado un óptimo :)
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Calculamos los costos reducidos de las variables no básicas, aplicando la fórmula:
+        \[\bar{c}_R^T =
+        (0,4,0) - (5,0,3)
+        \begin{pmatrix}
+                2 & 0 & -1 \\
+                -2 & 1 & 0 \\
+                -3 & 0 & 2 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+                1 & 3 & 0 \\
+                0 & 1 & 0 \\
+                0 & 4 & 1 \\
+        \end{pmatrix} = (-1, -3, -1)
+        \]
+        Como no hay costos reducidos positivos, hemos alcanzado un óptimo :)
+    \end{multicols}
+
+%
+    \begin{center}
+        \textbf{Valor de las variables básicas y la f.o. en el óptimo }
+    \end{center}
+    \begin{multicols}{2}
+        \raggedcolumns
+        \begin{center}
+            \textbf{Método diccionarios}
+        \end{center}
+
+        Podemos obtener esta información a partir de nuestro último diccionario. Valor de las variables básicas en el
+        óptimo:
+        \[x_1 = 2 \quad x_3 = 1 \quad w_2 = 1\]
+        Valor de la función objetivo en el óptimo: $13$
+        \columnbreak
+        \begin{center}
+            \textbf{Método matricial}
+        \end{center}
+
+        Calculamos el valor de las variables básicas
+        \[\binv b =         \begin{pmatrix}
+                2 & 0 & -1 \\
+                -2 & 1 & 0 \\
+                -3 & 0 & 2 \\
+        \end{pmatrix}
+        \begin{pmatrix}
+            5 \\
+            11 \\
+            8
+        \end{pmatrix} =
+        \begin{pmatrix}
+            2 \\
+            1 \\
+            1
+        \end{pmatrix}
+        \]
+
+        Luego, en el óptimo:
+        \[x_1 = 2 \quad x_3 = 1 \quad w_2 = 1\]
+
+        Por otro lado, para calcular el valor de la f.o.:
+        \[z = c_B^T\binv b = (5,0,3)        \begin{pmatrix}
+            2 \\
+            1 \\
+            1
+        \end{pmatrix} = 13
+    \]
+    \end{multicols}
+\end{document}

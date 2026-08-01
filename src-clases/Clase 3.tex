@@ -1,0 +1,188 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+% \documentclass[10pt, handout]{beamer}
+
+
+\usepackage{clases}
+
+\title{Investigación Operativa - Clase 3}
+\subtitle{Disyunción}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+
+%% Si es versión completa o para la clase
+\newif\ifCompleta
+
+% Descomentar para clase completa
+\Completatrue
+
+\begin{document}
+
+\maketitle
+
+% \begin{frame}{Contenidos}
+%   \setbeamertemplate{section in toc}[sections numbered]
+%   \tableofcontents[hideallsubsections]
+% \end{frame}
+
+% \section{Introducción}
+
+\begin{frame}{Para ir pensando}
+    \large
+    Sea $x$ una variable continua o entera (no necesariamente $\geq 0$) y
+    $C$ una constante positiva, ¿cómo modelarías linealmente cada una de las siguientes
+    restricciones?
+    \begin{enumerate}
+        \item $|x|\leq C$
+        \item $|x|\geq C$
+    \end{enumerate}
+
+    \centering
+    \textbf{Puesta en común a las 19:30}
+\end{frame}
+
+\begin{frame}{Módulo}
+    \begin{itemize}
+        \item
+        Puede ocurrir que agunas restricciones involucren al módulo de algunas variables.
+        $$|x|\leq C$$
+        donde $C> 0$. Debemos expresarla de manera lineal.
+
+        Modelamos esa expresión con las siguientes restricciones:
+        $$\begin{array}{l}
+            x\leq C  \\
+            x\geq -C
+        \end{array}$$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Módulo}
+    \begin{itemize}
+    \item Lo mismo sirve si tenemos una restricción con módulo en general. Sea $g$ lineal:
+    $$|g(x_1,\dots,x_n)| \leq C$$
+    Se puede modelar con las restricciones:
+    $$\begin{array}{rl}
+        g(x_1,\dots,x_n) &\leq C  \\
+        -g(x_1,\dots,x_n) &\leq C
+    \end{array}$$
+
+    \item O todavía más en general, si $g$ y $h$ son lineales:
+    $$|g(x_1,\dots,x_n)| + h(x_1,\dots,x_n)  \leq C$$
+    Se puede modelar con:
+    $$\begin{array}{rl}
+        g(x_1,\dots,x_n) + h(x_1,\dots,x_n)  &\leq C  \\
+        -g(x_1,\dots,x_n) + h(x_1,\dots,x_n) &\leq C
+    \end{array}$$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Módulo}
+    ¿Qué ocurre si la restricción es $|x| \geq c$?
+    \pause
+    \begin{itemize}
+        \item Recordar que:
+        \[ |x|\geq c \quad \Leftrightarrow \quad x\geq c \,\lor\, x\leq -c
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    Podemos añadir una variable binaria $\theta$, una constante $M$ lo suficientemente grande y las siguientes
+    restricciones:
+        \[
+        \begin{array}{rl}
+            x & \geq c - \theta M  \\
+            x & \leq -c + (1-\theta)M \\
+            \multicolumn{2}{c}{\theta\in\{0,1\}}
+        \end{array}
+        \]
+\end{frame}
+
+
+\begin{frame}{Módulo}
+    \begin{itemize}
+        \item En general, para modelar una restricción del tipo:
+        $$|g(x_1,\dots,x_n)| \geq C $$
+        Consideramos una variable binaria $\theta$ que nos sirva de indicadora, $M$ un número lo suficientemente grande y a\~nadimos las siguientes restricciones:
+        $$\begin{array}{rl}
+            g(x_1,\dots,x_n) &\geq C  - \theta M  \\
+            g(x_1,\dots,x_n)  &\leq -C + (1-\theta)M \\
+            \multicolumn{2}{c}{\theta\in\{0,1\}}
+        \end{array}
+        $$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Disyunción}
+    \begin{itemize}
+        \item En general, cuando queremos modelar una disyunción del tipo:
+        \[ g_1(x_1,\dots, x_n) \leq b_1 \; \vee \; g_2(x_1,\dots, x_n) \geq b_2
+        \]
+        con $g_1$ y $g_2$ funciones lineales. Tomando $M$ lo suficientemente grande como para que las condiciones de
+        $\leq$ queden satisfechas automáticamente si sumamos $M$ al lado derecho y que las condiciones de $\geq$
+        queden automáticamente satisfechas si restamos M del lado derecho, se modela la disyunción de la siguiente
+        manera:
+        \[\begin{array}{rl}
+            g_1(x_1,\dots, x_n) \leq & b_1 + M(1-\theta) \\
+            g_2(x_1,\dots, x_n) \geq & b_2 - M\theta \\
+            \multicolumn{2}{c}{\theta\in\{0,1\}}
+        \end{array}
+        \]
+        % \textbf{Obs:} $p\Rightarrow q \equiv \lnot p\lor q$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejercicio}
+    Una planta de producción de MicroApple cuenta con $N$ operarios para realizar $T$ tareas
+    distintas. A cada tarea $t$ deben ser asignados una cantidad de operarios en el intervalo
+    $[\ell_t, u_t]$ y ningún operario puede quedar sin ser asignado a una tarea.
+    Además, debemos tener en cuenta los siguientes requerimientos propios de la producción:
+    \begin{enumerate}
+        \item hay un conjunto de tareas $\Gamma\subseteq T$, tales que para cada $t\in \Gamma$, el valor absoluto de la
+        diferencia entre la cantidad de operarios asignados a las tareas $t$ y $t+1$ debe ser menor o igual que
+        un número conocido $m_t$.
+        \item debe ocurrir alguna de las siguientes situaciones:
+            \begin{enumerate}
+                \item la cantidad de operarios asignados a la tarea 1 debe ser al menos el 25\% de los
+                asignados a la tarea 2.
+                \item se asignan a lo sumo $E$ empleados al conjunto de tareas $\{3,4,5\}$.
+            \end{enumerate}
+    \end{enumerate}
+
+    Escribir un modelo que permita hallar cuántos operarios pueden asignarse a cada tarea. ¿Cuál es la función
+    objetivo?
+\end{frame}
+
+\ifCompleta
+
+\begin{frame}
+    \textbf{Variables:}
+
+    \begin{tabularx}{\textwidth}{lX}
+        $x_t\colon$ & cantidad de operarios asignados a la tarea $t$ ($x_t\in\mathbb{Z}_{\geq 0}$) \\
+        $\theta\colon$ & variable auxiliar para la disyunción ($\theta\in\{0,1\}$)
+    \end{tabularx}
+\end{frame}
+
+\begin{frame}
+    \[
+        \begin{array}{lrlr}
+        \max & 0 &  & \\
+        \text{s.a.:} & \displaystyle\sum_{i=1}^{|T|} x_t =& N \\
+          & x_t \leq& u_t & t\in T\\
+          & x_t \geq & \ell_t & t\in T\\
+          & x_t - x_{t+1} \leq & m_t & t\in\Gamma \\
+          & x_{t+1} - x_t \leq & m_t & t\in\Gamma \\
+          & x_1 \geq & 0.25x_2 - M\theta \\
+          & x_3+x_4+x_5 \leq & E + M(1-\theta)\\
+          & x_t\in &\mathbb{Z_{\geq 0}} & t\in T \\
+          & \theta\in&\{0,1\} \\
+        \end{array}
+    \]
+\end{frame}
+\fi
+
+\end{document}
+
+
+

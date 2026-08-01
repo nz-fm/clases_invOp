@@ -1,0 +1,394 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% handout
+% \documentclass[handout, 10pt]{beamer}
+
+\usepackage{clases}
+
+\title{Investigación Operativa}
+\subtitle{Métodos Fase I y Big-M}
+\date{}
+\author{Nazareno Faillace Mullen}
+\institute{Departamento de Matemática - FCEN - UBA}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+    \maketitle
+
+    \begin{frame}{Encontrar solución factible inicial}
+        Las clases pasadas vimos cómo funciona SIMPLEX una vez que le proporcionamos un solución básica factible
+        inicial, la cual necesitamos para construir el diccionario inicial. Por ejemplo, con tomar las variables de
+        decisión iguales a cero (problemas donde el origen es solución básica factible) nos alcanzó para poder empezar a
+        correr SIMPLEX.
+        \vskip 0.2cm
+        Sin embargo, otras veces, encontrar una solución básica factible inicial no es trivial (ni siquiera es trivial
+        que exista alguna solución factible). \\
+        \vskip 0.5cm
+        Veremos tres formas sortear este obstáculo.
+    \end{frame}
+
+    \begin{frame}{Encontrar solución factible inicial}
+        \textbf{Forma 1:}\pause
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.5]{imagenes/galerazo.jpg}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Encontrar solución factible inicial - Galerazo}
+        A partir del problema estandarizado uno puede encontrar \textquotedblleft a ojo\textquotedblright
+        una solución básica factible.
+        \vskip 0.2cm
+        \textbf{Obs.:}
+        no basta con hallar una solución factible cualquiera, sino que hay que asegurarse que sea una
+        \textbf{solución básica factible}.
+        En otras palabras, tenemos que asegurarnos de que la solución inicial sea un vértice del poliedro factible.
+    \end{frame}
+
+    \begin{frame}{Encontrar solución factible inicial - Galerazo}
+
+        Problema estandarizado:
+        \[
+            \begin{array}{rrrrrrrrrrrrrr}
+                \max & 5x_1 & + & 4x_2 & + & 3x_3 & \\
+                \text{s.a:} & 2x_1 & + & 3x_2 & + & x_3  & + & w_1 &   &     &   &     & = & 15 \\
+                & 4x_1 & + & x_2  & + & 2x_3 &   &     & - & w_2 &   &     & = & 10 \\
+                & 3x_1 & + & 4x_2 & + & 2x_3 &   &     &   &     & - & w_3 & = & 5  \\
+                & \multicolumn{11}{r}{x_1,x_2,x_3,w_1,w_2,w_3} & \geq & 0 \\
+            \end{array}
+        \]
+        En este caso:
+        \[ A= \left[ {\begin{array}{cccccc}
+                          2 & 3 & 1 & 1 & 0  & 0  \\
+                          4 & 1 & 2 & 0 & -1 & 0  \\
+                          3 & 4 & 2 & 0 & 0  & -1
+        \end{array} } \right]  \quad \Rightarrow \quad rg(A)=3  \]
+        \begin{columns}
+            \begin{column}{0.5\linewidth}
+                % \centering
+                básicas: $(x_2,x_3,w_3)\rightarrow$\textcolor{goodgreen}{$(0, 4, 3, 0, 0, 17)$ \ding{51}} \\
+                básicas: $(x_3, w_1, w_3)\rightarrow$\textcolor{goodgreen}{$(0,0,5,10,0, 5)$ \ding{51}}\\
+                básicas: $(x_1, x_2, w_3)\rightarrow$
+                \textcolor{goodgreen}{$(\frac{3}{2},4,0,0,0, \frac{31}{2})$ \ding{51}}\\
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \textcolor{red}{$(2,0,1,10,0,3)$ \ding{55} (es factible, pero no es un vértice)}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Método de las dos fases y método Big-M}
+        Hay dos otras maneras (más metódicas) de chequear si un PL tiene alguna solución factible y, de ser así, hallar
+        una solución básica factible inicial para correr el algoritmo.
+        \vskip 0.2cm
+        \textbf{Método de dos fases:}
+        se plantea un problema auxiliar (Fase I) que, al resolverlo, otorga una solución básica factible. La Fase II
+        consiste en resolver el problema original utilizando la solución hallada, como vimos en clases anteriores.
+        \vskip 0.2cm
+        \textbf{Método Big-M:}
+        se plantea un problema auxiliar introduciendo variables artificiales que permiten obtener un solución factible
+        básica para el problema auxiliar. Se resuelve y, si en el óptimo las variables auxiliares son nulas, se obtiene
+        el óptimo del problema original.
+
+    \end{frame}
+
+    \begin{frame}{Método de dos fases}
+
+        \label{slide2}
+        Para utilizar este método, se estandariza el problema original de la siguiente manera:
+        \begin{itemize}
+            \item \textbf{Objetivo de maximizar}
+            \item Los $b_i$ deben ser no negativos
+            \item Se suman variables slack para transformar a los $\leq$ en =
+            \item Se restan variables slack para transformar los $\geq$ en =
+            \item Se suman \textbf{variables artificiales} $a_i$ para las desigualdades $\geq$ y para las igualdades
+            \item Todas las variables deben ser no negativas
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Método de dos fases}
+        \textbf{Ejemplo:}
+        \[
+            \begin{array}{rrl}
+                \max & \multicolumn{2}{l}{x_1-x_2+x_3} \\
+                \text{s.a:} & 2x_1-x_2+2x_3 \leq & 4  \\
+                & 2x_1-3x_2+x_3 \leq & -5 \\
+                & -x_1+x_2-2x_3 \leq & -1 \\
+                & x_1,x_2,x_3 \geq   & 0
+            \end{array}
+        \]
+        Pasa a escribirse como:
+        \[
+            \begin{array}{rrl}
+                \max & \multicolumn{2}{l}{x_1-x_2+x_3} \\
+                \text{s.a:} & 2x_1-x_2+2x_3 +w_1=                  & 4 \\
+                & -2x_1+3x_2-x_3-w_2+a_1 =             & 5 \\
+                & x_1-x_2+2x_3-w_3+a_2 =               & 1 \\
+                & x_1,x_2,x_3,w_1,w_2,w_3,a_1,a_2 \geq & 0
+            \end{array}
+        \]
+        Las $x$ son las variables de decisión, las $w$ las variables slack y las $a$ las variables artificiales.
+    \end{frame}
+
+    \begin{frame}{Método de dos fases - Fase I}
+        \small
+        La Fase I consiste en plantear y resolver el \textbf{problema auxiliar} (PA)
+        que tiene como objetivo lograr que la suma de las variables auxiliares sea nula. En nuestro ejemplo:
+        \[
+            \begin{array}{rrl}
+                \max & \multicolumn{2}{l}{-a_1-a_2} \\
+                \text{s.a:} & 2x_1-x_2+2x_3 +w_1=                  & 4 \\
+                & -2x_1+3x_2-x_3-w_2+a_1 =             & 5 \\
+                & x_1-x_2+2x_3-w_3+a_2 =               & 1 \\
+                & x_1,x_2,x_3,w_1,w_2,w_3,a_1,a_2 \geq & 0
+            \end{array}
+        \]
+        Se resuelve el problema auxiliar. Para eso tomamos como variables básicas a $w_1$, $a_1$ y $a_2$
+        y se tienen las siguientes igualdades:
+        \[
+            \begin{array}{rrrrrrrrrrrrr}
+                & \\
+                w_1 & = & 4 & - & 2x_1 & + & x_2  & - & 2x_3 &   &     &   &     \\
+                a_1 & = & 5 & + & 2x_1 & - & 3x_2 & + & x_3  & + & w_2 &   &     \\
+                a_2 & = & 1 & - & x_1  & + & x_2  & - & 2x_3 &   &     & + & w_3 \\
+            \end{array}
+        \]
+        Llamamos $y$
+        a la función objetivo del problema auxiliar y la escribimos en función de las variables no básicas, utilizando
+        las igualdades:
+        \[ y= -6-x_1+2x_2+x_3-w_2-w_3\]
+    \end{frame}
+
+
+    \begin{frame}{Método de dos fases - Fase I}
+        \footnotesize
+        Así, nos queda planteado el diccionario inicial del problema auxiliar:
+        \[
+            \begin{array}{rrrrrrrrrrrrr}
+                & \\
+                w_1 & = & 4  & - & 2x_1 & + & x_2  & - & 2x_3 &   &     &   &     \\
+                a_1 & = & 5  & + & 2x_1 & - & 3x_2 & + & x_3  & + & w_2 &   &     \\
+                a_2 & = & 1  & - & x_1  & + & x_2  & - & 2x_3 &   &     & + & w_3 \\  \hline
+                y   & = & -6 & - & x_1  & + & 2x_2 & + & x_3  & - & w_2 & - & w_3
+            \end{array}
+        \]
+        A continuación aplicamos el procedimiento usual para resolverlo. Observar que, para lograr que $y=0$
+        , basta con que $a_1$ y $a_2$ sean no básicas. Por esa razón,\textbf
+        {si en alguna iteración alguna variable artificial compite contra otras variables por salir de la base,
+            priorizamos sacar a la variable auxiliar}.
+        \vskip 0.3cm
+        Efectuando los pivotes necesarios llegamos al diccionario óptimo del problema auxiliar:
+        \[
+            \begin{array}{rrrrrrrrrrrrr}
+                w_1 & = & 3   & - & x_1    &   &        & - & w_3    &   &        & + & a_2    \\
+                x_2 & = & 2.2 & + & 0.6x_1 & + & 0.4w_2 & + & 0.2w_3 & - & 0.4a_1 & - & 0.2a_2 \\
+                x_3 & = & 1.6 & - & 0.2x_1 & + & 0.2w_2 & + & 0.6w_3 & - & 0.2a_1 & - & 0.6a_2 \\ \hline
+                y   & = &     &   &        &   &        &   &        & - & a_1    & - & a_2
+            \end{array}
+        \]
+        La solución óptima para el problema auxiliar es:
+        \[ x_1=0 \quad x_2=2.2 \quad x_3=1.6 \quad w_1=3 \quad w_2=0 \quad w_3=0 \quad a_1=0 \quad a_2=0 \]
+        Luego, es una solución básica factible del problema original, y podemos utilizarla para correr la Fase II
+    \end{frame}
+
+    \begin{frame}{Método de dos fases- Fase II}
+        \small
+        La Fase II consiste justamente en buscar el óptimo del problema original, iniciando SIMPLEX sobre la solución
+        básica factible hallada con la Fase I. \\
+        Para confeccionar el diccionario inicial del problema original, utilizamos las igualdades del diccionario óptimo
+        de la Fase I, \textbf{eliminando los términos correspondientes a las variables auxiliares}:
+        \[\begin{array}{rrrrrrrrrrrrr}
+              w_1 & = & 3   & - & x_1    &   &        & - & w_3    & & & & \\
+              x_2 & = & 2.2 & + & 0.6x_1 & + & 0.4w_2 & + & 0.2w_3 & & & & \\
+              x_3 & = & 1.6 & - & 0.2x_1 & + & 0.2w_2 & + & 0.6w_3 & & & & \\
+        \end{array}
+        \]
+        Sólo queda reescribir z expresada en función de las variables no básicas ($x_1, w_2,w_3$):
+        \[
+            \begin{split}
+                z & = x_1- x_2 +x_3 \\
+                & =  x_1-(2.2 + 0.6x_1 + 0.4w_2 + 0.2w_3) + (1.6 - 0.2x_1 + 0.2w_2 + 0.6w_3) \\
+                & = -0.6 + 0.2x_1 - 0.2w_2 -0.4w_3
+            \end{split}
+        \]
+    \end{frame}
+
+    \begin{frame}{Método de dos fases- Fase II}
+        Juntando las igualdades con la función objetivo expresada en términos de las variables no básicas, queda
+        conformado el primer diccionario de la Fase II:
+        \[\begin{array}{rrrrrrrrr}
+              w_1 & = & 3    & - & x_1    &   &        & - & w_3    \\
+              x_2 & = & 2.2  & + & 0.6x_1 & + & 0.4w_2 & + & 0.2w_3 \\
+              x_3 & = & 1.6  & - & 0.2x_1 & + & 0.2w_2 & + & 0.6w_3 \\ \hline
+              z   & = & -0.6 & + & 0.2x_1 & - & 0.2w_2 & + & 0.4w_3
+        \end{array}
+        \]
+        Luego queda resolver el problema original a partir del diccionario inicial como lo hacemos usualmente. En el
+        caso de este problema, el óptimo es:
+        \[ x_1=0 \quad x_2 = 2.8\quad x_3=3.4 \quad w_1=0 \quad w_2=0 \quad w_3=3  \]
+        Luego, (0, 2.8 , 3.4) es el óptimo del problema planteado al principio.
+    \end{frame}
+
+    \begin{frame}{Método de dos fases - Resumen}
+
+        \begin{enumerate}
+            \item Escribir el problema original estandarizado según los lineamientos de la diapo \ref{slide2}
+            \item Plantear el problema auxiliar que tiene las mismas restricciones que el original estandarizado pero su
+            objetivo es max $-\sum a_i$.
+            \item Hallar el óptimo del problema auxiliar.
+            \item \textbf{\textit{if}} en el óptimo del problema auxiliar las variables artificiales son
+            \underline{todas} nulas:
+            \begin{itemize}
+                \item
+                Pasar a Fase II (elaborar el diccionario inicial con las igualdades del diccionario óptimo de Fase I
+                ignorando los términos de las variables artificiales). Hallar el óptimo.
+            \end{itemize}
+            \textbf{\textit{else}}:
+            \begin{itemize}
+                \item El problema original no tiene soluciones factibles. No hay nada más que hacer.
+            \end{itemize}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Método Big-M}
+        El \textbf{método Big-M} (o método M)
+        en el fondo es similar al método de dos fases de SIMPLEX, salvo que, de existir soluciones factibles, resuelve
+        el problema directamente, sin necesidad de plantear problemas auxiliares.\\
+        \vskip 0.3cm
+    \end{frame}
+
+    \begin{frame}{Método Big-M}
+
+        \label{slide1}
+        Para utilizar este método, a partir del problema original, se plantea un nuevo problema de la siguiente manera:
+        \begin{itemize}
+            \item \textbf{Objetivo de maximizar}
+            \item Los $b_i$ deben ser no negativos
+            \item Se suman variables slack para transformar a los $\leq$ en =
+            \item Se restan variables slack para transformar los $\geq$ en =
+            \item Se suman \textbf{variables artificiales} $a_i$ para las desigualdades $\geq$ y para las igualdades
+            \item Todas las variables deben ser no negativas
+            \item Se resta a la función objetivo la suma de las variables $a_i$ multiplicadas por M (constante grande)
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Método Big-M - Ejemplo}
+        % \small
+        Problema original:
+        \[
+            \begin{array}{rrl}
+                \min & \multicolumn{2}{l}{4x_1+x_2} \\
+                \text{s.a:} & 3x_1+x_2 =     & 3 \\
+                & 4x_1+3x_2 \geq & 6 \\
+                & x_1+2x_2 \leq  & 3 \\
+                & x_1,x_2\geq    & 0
+            \end{array}
+        \]
+        Planteamos el problema auxiliar:
+        \[
+            \begin{array}{rrl}
+                \max & \multicolumn{2}{l}{-4x_1-x_2-Ma_1-Ma_2} \\
+                \text{s.a:} & 3x_1+x_2+\mathbf{a_1} =      & 3 \\
+                & 4x_1+3x_2\mathbf{-w_1+a_2} = & 6 \\
+                & x_1+2x_2\mathbf{+w_2} =      & 3 \\
+                & x_1,x_1,w_1,w_2,a_1,a_2 \geq & 0
+            \end{array}
+        \]
+        Y resolvemos el problema auxiliar.\\
+        Si en el óptimo del problema auxiliar $a_1=a_2=0$
+        , entonces hallamos el óptimo del problema original. De lo contrario, el problema original no tiene solución
+        factible.
+    \end{frame}
+
+
+    \begin{frame}{Método Big-M}
+        % \small
+        La gracia de agregar las variables artificiales es que me sirven para tomarlas como variables básicas. De esta
+        manera, confeccionar el diccionario inicial es sencillo.
+        De las tres restricciones tenemos que:
+        \[
+            \begin{array}{rrrrrrrrr}
+                a_1 & = & 3 & - & 3x_1 & - & x_2 \\
+                a_2 & = & 6 & - & 4x_1 & - & 3x_2 & + & w_1 \\
+                w_2 & = & 3 & - & x_1 & - & 2x_2
+            \end{array}
+        \]
+        Reescribiendo z en función de las variables no básicas:
+        \[ z= 9M + (7M-3)x_1+(4M-1)x_2-Mw_1 \]
+        El diccionario inicial es entonces:
+        \[
+            \begin{array}{rrrrrrrrr}
+                a_1 & = & 3 & - & 3x_1 & - & x_2 \\
+                a_2 & = & 6   & - & 4x_1      & - & 3x_2      & + & w_1  \\
+                w_2 & = & 3 & - & x_1 & - & 2x_2 \\ \hline
+                z   & = & -9M & + & (7M-4)x_1 & + & (4M-1)x_2 & - & Mw_1
+            \end{array}
+        \]
+    \end{frame}
+
+    \begin{frame}{Método Big-M}
+        \[
+            \begin{array}{rrrrrrrrr}
+                a_1 & = & 3 & - & 3x_1 & - & x_2 \\
+                a_2 & = & 6   & - & 4x_1      & - & 3x_2      & + & w_1  \\
+                w_2 & = & 3 & - & x_1 & - & 2x_2 \\ \hline
+                z   & = & -9M & + & (7M-4)x_1 & + & (4M-1)x_2 & - & Mw_1
+            \end{array}
+        \]
+        La variable que entra es $x_1$ y sale $a_1$. Pivotear da lugar al siguiente diccionario:
+        \[
+            \begin{array}{rrrrrrrrr}
+                x_1 & = & 1    & - & \frac{1}{3}x_2      &   &      & - & \frac{1}{3}a_1      \\
+                a_2 & = & 2    & - & \frac{5}{3}x_2      & + & w_1  & + & \frac{4}{3}a_1      \\
+                w_2 & = & 2    & - & \frac{5}{3}x_2      &   &      & + & \frac{1}{3}a_1      \\ \hline
+                z   & = & 2M-4 & + & \frac{(5M+1)}{3}x_2 & - & Mw_1 & - & \frac{(7M-4)}{3}a_1 \\
+            \end{array}
+        \]
+        En la próxima iteración $x_2$ va a entrar a la base y $a_2$ y $w_2$
+        compiten para salir de la base. Como queremos que $a_2$
+        sea no básica, la elegimos para que salga de la base. Así continuamos resolviendo hasta hallar el óptimo del
+        problema auxiliar.
+    \end{frame}
+
+    \begin{frame}{Método Big-M}
+        En este ejemplo, el óptimo del problema auxiliar es:
+        \[ x_1=\frac{3}{5} \quad x_2=\frac{6}{5} \quad w_1=0 \quad w_2=0 \quad a_1=0 \quad a_2 =0 \]
+        Como las variables auxiliares son todas nulas en el óptimo del problema auxiliar, el problema original tiene
+        soluciones factibles. Más aún, el óptimo del problema original es $(\frac{3}{5}, \frac{6}{5})$
+    \end{frame}
+
+    \begin{frame}{Método Big-M}
+        % \small
+        \textbf{Método Big-M:}
+        \begin{enumerate}
+            \item Plantear el problema auxiliar como se indica en la diapo \ref{slide1}
+            \item Confeccionar el diccionario inicial tomando como variables básicas a las variables artificiales (
+            de las restricciones $\geq$ e = ) y a las variables slack (de las restricciones $\leq$ )
+            \item Hallar el óptimo del problema auxiliar:
+            \begin{itemize}
+                \normalsize
+                \item \textbf{\textit{if}} en el óptimo del problema auxiliar las variables artificiales son no básicas:
+                \begin{itemize}
+                    \normalsize
+                    \item[] Del óptimo del problema auxiliar se deduce el óptimo del problema original
+                \end{itemize}
+                \item \textbf{\textit{else}}:
+                \begin{itemize}
+                    \normalsize
+                    \item[] el problema original es infactible
+                \end{itemize}
+            \end{itemize}
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Conclusiones}
+        Siempre necesitamos una solución básica factible inicial (SBFI) para poder correr SIMPLEX:
+        \begin{itemize}
+            \item En ciertos problemas, la SFBI se puede encontrar a ojo. [No se puede usar en el parcial]
+            \item Recurrimos al método de dos fases o al método Big-M.
+        \end{itemize}
+    \end{frame}
+\end{document}
+
+
