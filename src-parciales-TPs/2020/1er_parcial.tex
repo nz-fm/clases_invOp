@@ -1,0 +1,207 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2018}
+\newcommand{\numeroparcial}
+    { Primer Parcial }
+\newcommand{\fecha}
+    {18 de Septiembre de 2020}
+\newcommand{\numerotema}
+    {\bf 1}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\fa}[2]{\forall\,{#1}\in #2\;}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 &  Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest}
+    [Adaptado de \textit{Linear Programming Foundations and Extensions}, de J. Vanderbei] Una pequeña aerolínea ofrece vuelos entre tres ciudades: Córdoba, Río Gallegos y Neuquén. En este problema nos vamos a enfocar en el vuelo que se llevan a cabo los días Viernes: parte de Córdoba, hace una escala en Neuquén y luego continúa a Río Gallegos. Hay tres tipos de pasajeros:
+    \begin{itemize}
+        \item los que viajan de Córdoba a Neuquén.
+        \item los que viajan de Neuquén a Río Gallegos.
+        \item los que viajan de Córdoba a Río Gallegos.
+    \end{itemize}
+    El avión es pequeño y puede llevar hasta N pasajeros. La aerolínea ofrece tres tarifas distintas:
+    \begin{itemize}
+        \item A: dos equipajes en bodega y un equipaje de mano.
+        \item B: un equipaje en bodega y un equipaje de mano.
+        \item C: sólo equipaje de mano.
+    \end{itemize}
+    Los precios de cada pasaje ya fueron determinados y publicitados:
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{cccc}
+            Tarifa & Córdoba-Neuquén & Neuquén-Río Gallegos & Córdoba-Río Gallegos \\ \midrule
+            A & 300 & 160 & 360 \\
+            B & 220 & 130 & 280 \\
+            C & 100 & 80 & 140 \\
+        \end{tabular}
+    \end{table}
+    
+    Por otro lado, luego de un estudio de vuelos anteriores, se han determinado las siguientes cotas inferiores en la cantidad de potenciales clientes para cada una de las combinaciones origen-destino/tarifa:
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{cccc}
+            Tarifa & Córdoba-Neuquén & Neuquén-Río Gallegos & Córdoba-Río Gallegos \\ \midrule
+            A & 12 & 18 & 21 \\
+            B & 18 & 28 & 30 \\
+            C & 32 & 45 & 40 \\
+        \end{tabular}
+    \end{table}
+    
+    Se desea decidir cuántos pasajes vender para cada una de las nueve combinaciones origen-destino/tarifa. Tener en cuenta las siguientes restricciones:
+    \begin{enumerate}
+        \item la cantidad de pasajes puestos en venta para cada combinación origen-destino/tarifa no debe ser menor que la cota inferior de demanda.
+        \item para ninguno de los dos tramos del vuelo pueden haber más reservas que la capacidad del avión.
+        \item debido a la capacidad de carga del avión, los pasajeros de tarifa $A$ en cada tramo del viaje deben ser a lo sumo el $\%20$ de los pasajeros totales.
+        \item si para Córdoba-Neuquén se pone a la venta menos de $25$ pasajes de tarifa $B$, entonces poner a la venta al menos $40$ pasajes de tarifa $C$ para Córdoba-Neuquén.
+    \end{enumerate}
+    Diseñar un modelo de programación lineal entera cuyo objetivo sea maximizar la ganancia.
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest}
+
+    Se desea organizar un festival de música que se celebrará a lo largo de tres días. Cada jornada tendrá una duración de $14$ horas divididas en franjas de dos horas, acumulando un total de $21$ franjas horarias a lo largo de los tres días. A cada banda invitada se le asignará exactamente una de esas franjas horarias para realizar su show.
+    
+    Se cuenta con cuatro escenarios $E_1,E_2,E_3,E_4$, por lo que durante cada franja horaria pueden ocurrir a lo sumo cuatro conciertos simultáneamente. 
+
+    Se tiene un conjunto $B$ de bandas candidatas a ser invitadas a tocar en el festival. Para cada banda $i\in B$, se estima que atraerá $e_i$ espectadores a su show y se pronostica que dará una ganancia neta de $r_i$ pesos. Las bandas candidatas se categorizan en cinco conjuntos disjuntos según su género musical: $G_1, G_2, G_3, G_4, G_5$ (es decir: $\displaystyle\bigcup_{k=1}^5 G_k = B,\; G_k\cap G_r =\varnothing\;\text{si}\; k\neq r$).
+    
+    \begin{enumerate}
+        \item Teniendo en cuenta que se desea decidir qué bandas invitar y en qué escenario y franja horaria tocará cada una de las bandas invitadas, modelar linealmente las siguientes restricciones del festival definiendo las variables y conjuntos que se consideren necesarios:
+        
+        \begin{enumerate}[a)]
+            \item cada banda invitada debe tocar exactamente durante una franja horaria en exactamente un escenario.
+            \item en cada franja horaria, en cada escenario puede tocar a lo sumo una banda.
+            \item durante cada franja horaria pueden ocurrir a lo sumo cuatro conciertos simultáneamente.
+            \item para cada franja horaria, la cantidad de espectadores del escenario $E_j$ no debe superar su capacidad $\ell_j$.
+            \item la cantidad de espectadores totales en cada franja horaria no debe superar 20000.
+            \item se deben invitar al menos $g_k$ bandas del género $G_k$.
+            \item el escenario $4$ debe permanecer vacío durante la primera franja horaria de cada día.
+            \item hay un conjunto $P\subset B$ de bandas muy populares que deben ser invitadas.
+            \item cada banda del conjunto $P$ debe tocar durante alguna de las dos últimas franjas horarias de cualquiera de los días.
+            \item la ganancia neta del festival debe superar los $R$ pesos.
+            \item las bandas invitadas con menos de $S$ espectadores deben tocar durante los primeras tres franjas horarias.
+        \end{enumerate}
+        \item La empresa organizadora del festival está interesada en analizar el resultado obtenido con diferentes criterios. Utilizando las variables y conjuntos definidos en el ítem $1.$, modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes.
+        \begin{enumerate}[a)]
+            \item Maximizar el mínimo de espectadores totales diarios.
+            \item Minimizar el máximo número de espectadores totales durante la misma franja horaria.
+            \item Minimizar la suma de la diferencia absoluta de cantidad de bandas invitadas entre cada par de géneros musicales.
+        \end{enumerate}
+    \end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} 
+
+    Una empresa forestal acaba de adquirir un territorio que desea explotar responsablemente. El terreno fue dividido en $N$ secciones y se desean producir $J$ tipos de madera distintos. Se cuenta con los siguientes datos:
+    \begin{itemize}
+        \item $m_j$: el árbol con madera $j$ tarda $m_j$ meses desde que fue plantado hasta su maduración (es decir, hasta estar listo para ser talado).
+        \item $a_i$: área de la sección $i$.
+        \item $A_t$: área máxima de tierra en la que se puede plantar árboles durante el mes $t$.
+        % \item $vol_{ij\ell}$: volumen de madera $j$ obtenido al talar los árboles de la sección $i$ luego de $\ell$ meses de haber sido plantados.
+        \item $v_{ij}$: volumen de madera $j$ que se obtiene al cosechar la sección $i$.
+        % \item $d_{ij}$: cantidad de meses que debe dejarse descansar la tierra de la sección $i$ luego de talar los árboles con madera $j$.
+        \item $g_j$: ganancia por cada unidad de volumen de madera $j$.
+        \item $k_{ij}$: costo de plantar árboles de madera $j$ en la sección $i$. 
+        \item $f_{it}$: costo de cada camión de transporte desde la sección $i$ hasta el aserradero en el mes $t$.
+        \item $C_t$: cantidad de camiones de transporte disponibles durante el mes $t$.
+        \item $V$: capacidad de volumen de madera de cada camión de transporte.
+    \end{itemize}
+    
+    Cuando se cosecha la madera de una sección, se talan todos los árboles de la misma y todo el volumen de madera obtenido es transportado al aserradero. Cada camión de transporte hace a lo sumo un viaje por mes. El objetivo es planificar la producción de madera durante los próximos $\mc{T}$ meses. Plantear un modelo de programación lineal que permita decidir dónde, cuándo y qué árboles plantar y cuándo talarlos, de manera tal que se maximice la ganancia. Se deben considerar las siguientes restricciones:
+    \begin{enumerate}
+        \item en cada sección no puede haber más de una especie de árbol.
+        \item en cada sección se puede plantar a lo sumo una vez.
+        \item si se plantan árboles en una sección, deben ser talados en algún momento.
+        \item no se puede talar árboles que no han madurado.
+        \item en cada mes $t$, no se pueden plantar árboles en un área mayor que $A_t$.
+        \item no sobrepasar la disponibilidad mensual de camiones
+        \item no se puede plantar en las secciones del conjunto $\mc{S}$ durante los primeros $6$ meses.
+        \item los árboles de la madera $4$ sólo pueden plantarse a partir del mes $12$, inclusive.
+    \end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}

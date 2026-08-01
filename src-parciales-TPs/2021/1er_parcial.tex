@@ -1,0 +1,196 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{booktabs}
+% \usepackage{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2018}
+\newcommand{\numeroparcial}
+    { Primer Parcial }
+\newcommand{\fecha}
+    {3 de Septiembre de 2021}
+\newcommand{\numerotema}
+    {\bf 1}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\fa}[2]{\forall\,{#1}\in #2\;}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 &  Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest}
+    Una aerolínea desea establecer rutas áreas entre dos ciudades A y B para vuelos comerciales. La empresa ha decidido que cada avión seguirá la misma ruta en el viaje de ida y de vuelta (naturalmente, en distinto sentido) por lo que se considera que el problema se trata de establecer rutas desde A hasta B.
+    
+    Hay $R$ rutas aéreas disponibles para la adquisición. La ruta $r$ tiene un precio de adquisición de $p_r$ pesos. 
+    La empresa cuenta con tres modelos de aviones: Alfa, Beta y Gamma. La capacidad de cada modelo y la cantidad con la que cuenta la empresa se detallan a continuación:
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{cccc}
+             & Alfa & Beta & Gamma  \\\midrule
+            Capacidad de pasajeros & $815$ & $635$ & $415$ \\
+            Disponibles & $11$ & $15$ & $13$
+        \end{tabular}
+    \end{table}
+    
+    Enviar un avión por la ruta $r$ acarrea ciertos costos (mantenimiento, combustible, etc.) según su modelo: cada avión Alfa implica un costo de $a_r$ pesos, cada avión Beta $b_r$ pesos y cada avión Gamma $c_r$ pesos. Por otro lado, cada ruta $r$ tiene un límite $K_r$ de aviones que la pueden transitar mensualmente y también existe un límite de cantidad de aviones de cada modelo: a lo sumo $PA_r$ aviones alfa, $PB_r$ aviones beta y $PC_r$ aviones gamma.
+    
+    Se estima que la demanda mensual es de $10000$ pasajeros y se desea satisfacerla. Para esto, es importante tener en cuenta que, por políticas de la empresa, cada avión utilizado realiza el viaje una vez por mes y va al tope de capacidad de pasajeros. Por ejemplo, al utilizar dos aviones Alfa, se cubrirían $1630$ viajes de los $10000$ mensuales que se demandan.
+    
+    Por cuestiones de organización, la empresa también requiere que:
+    \begin{itemize}
+        \item la cantidad de aviones Gamma utilizados sea distinta de $4$.
+        \item de todos los aviones utilizados, al menos el $20\%$ sean modelo Alpha.
+    \end{itemize}
+    
+    Elaborar un modelo de Programación Lineal Entera que permita decidir qué rutas adquirir y cuántos aviones de cada modelo transitarán por cada una de ellas. El objetivo es minimizar el gasto del primer mes de operaciones.
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+\newpage
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest}
+
+    Una empresa desea abrir una nueva planta donde se elaborarán tres tipos de productos artesanales: $P_1$, $P_2$ y $P_3$, cuya fabricación implican distintos procedimientos y herramientas. Para $1\leq j\leq 3$, el precio de venta unitario de $P_j$ es $v_j$. La empresa tiene muy buena reputación y, por lo tanto, logra vender todo lo que fabrica. Por otro lado, la producción se llevará a cabo de Lunes a Sábado,  de 6 a 24hs., en tres turnos Mañana (6 a 12hs), Tarde (12 a 18hs.) y noche (18 a 24hs.)
+
+    Cada trabajador/a fabrica un sólo tipo de producto por día, pero no necesariamente debe producir el mismo tipo de producto toda la semana. Por ejemplo, podría producir $P_1$ en su turno del lunes y $P_3$ en su turno del miércoles.
+    
+    Luego de una búsqueda laboral y una serie de entrevistas, se cuenta con $N$ candidatos. No necesariamente se los contratará a todos. El departamento de Recursos Humanos recopiló la siguiente información:
+     \begin{itemize}
+         \item $e_{ij}$: el nivel de experticia del candidato/a $i$ para realizar el procedimiento que requiere la fabricación de $P_j$ ($1\leq j\leq3$). Esta medida toma valores entre $0$ y $1$, siendo $0$ novato/a y $1$ experto/a.
+         \item $g_i$: la remuneración pretendida por turno trabajado del candidato/a $i$
+         \item $t_{ij}$: la cantidad de unidades de $P_j$ que elabora $i$ por turno
+     \end{itemize}
+    Por política de la empresa, 
+    %el turno noche es remunerado con un adicional del \%$20$ y 
+    a cada trabajador contratado se le respetará la remuneración pretendida.
+    
+    Además, se deben considerar las siguientes restricciones:
+    \begin{enumerate}[i.]
+        \item cada trabajador contratado puede cubrir a lo sumo cinco turnos semanales y por lo menos tres. A lo sumo puede cubrir un turno por jornada.
+        \item si alguien cubre el turno nocturno, no puede cubrir el turno matutino del día siguiente (por ejemplo, si trabaja el turno noche del Martes no puede trabajar el turno mañana del Miércoles)
+        \item en cada turno, el promedio de experticia de la gente asignada a producir $P_j$ debe ser por lo menos $0.6$.
+        \item para $1\leq j\leq 3$, la cantidad de $P_j$ elaborado por semana debe ser por lo menos $\ell_j$ y a lo sumo $u_j$
+        %si se fabrican más de $\frac{3}{2}u_j$ unidades, se incurre en un gasto de \$$4000$ para el mantenimiento de las herramientas.
+        \item para $1\leq j\leq 3$, por una cuestión de recursos, en cada turno no pueden haber más de $E_j$ trabajadores asignados a fabricar $P_j$.
+        \item hay un grupo $\mathcal{G}$ de candidatos que han expresado que si se contrata a uno  ellos, debe contratarse al grupo entero.
+        \item a lo sumo el \%$50$ de las personas contratadas pueden ser hombres.
+        \item en cada turno, el valor absoluto de la diferencia entre la cantidad de trabajadores asignados a $P_1$ y a $P_3$ no puede ser superior a 10.
+        % \item el valor absoluto de la diferencia entre la cantidad de trabajadores contratados y la cantidad de trabajadoras contratadas no puede exceder el \%$10$ de la cantidad de gente contratada.
+        % \item nadie puede cubrir más de dos turnos noche por semana.
+    \end{enumerate}
+    \begin{enumerate}
+        \item Elaborar un modelo de programación lineal entera que permita decidir qué candidatos/as contratar y qué turnos asignarles, con el objetivo de maximizar la ganancia semanal.
+        \item A la empresa le interesa conocer otras opciones de contratación y asignación de turnos  relacionados a otros criterios. Utilizando las variables y conjuntos definidos en el ítem $1.$, modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes:
+        \begin{enumerate}[a)]
+            % \item Maximizar el mínimo de la experticia de los trabajadores asignados a producir $P_3$
+            \item Maximizar el mínimo de la experticia de todos los turnos de la semana, considerando como la experticia de un turno a la suma de la experticia de sus trabajadores.
+            \item Minimizar la diferencia entre quien más turnos noche cubre y quien menos turnos noche cubre.
+        \end{enumerate}
+    \end{enumerate}  
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+\newpage
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} 
+Se cuenta con un capital inicial de $C$ pesos. La financiera O.K. Morgan sugiere invertir dicho capital a lo largo de los siguientes $48$ meses. Para esto, se cuenta con un conjunto ${A=\{1, \dots, N\}}$ de actividades de inversión. Cuando se invierte en alguna de estas actividades, ese dinero no está disponible hasta que la actividad finalice y se recauden las ganancias. Estas ganancias pasan a formar parte del capital disponible para inversión. Participar en una actividad comenzando en el mes $j$ y finalizando en el mes $k$ ($k\geq j$), significa que se invierte el primer día del mes $j$ y se obtienen las ganancias el último día del mes $k$. Por ejemplo, invertir $\$100$ en la actividad $i_0$ desde el mes $2$ hasta el mes $3$, significa que esos $\$100$ dejan de estar disponibles el primer día del mes $2$ y que se recauda la ganancia de la inversión el último día del mes $3$. 
+
+En cada actividad se puede participar a lo sumo una vez. Cada actividad $i$ tiene una duración 
+% de $m_i$ meses.
+mínima de $\ell_i$ meses. Hay un conjunto $B\subset A$ de actividades donde cada $i\in B$ tiene una duración máxima de $u_i$ meses. 
+Por otro lado, si se quiere participar en $i\in A$, al menos deben invertirse $m_i$ pesos.
+% Al final del mes $48$ la participación en todas las actividades debe haber finalizado (es decir, por ejemplo, no se puede iniciar una actividad por cinco meses al comienzo del mes $47$). 
+Cada $i\in A$ tiene un retorno de $r_i$ pesos por cada peso invertido y esto se multiplica por los meses que duró la participación en la actividad. Por ejemplo, si $i_0\in A$ tiene un retorno de $\$2.5$ y se invierten $\$100$ en una participación por dos meses, al finalizar la actividad, se obtienen $\$500$.
+
+Por otro lado, el primer día de cada mes hay que pagar un impuesto cuyo monto depende del capital disponible (es decir, del capital que no está siendo utilizado en ese momento en alguna actividad). Este impuesto se paga antes de comenzar a participar en las actividades del mes. Sea $c$ el capital disponible a comienzo de mes, el impuesto a abonar viene dado por la siguiente función conitnua monótona creciente:
+
+\[f(c)=\begin{cases}
+0.01c \quad 0\leq c \leq 2000 \\
+0.015c - 10 \quad 2000 < c \leq 5000 \\
+0.02c - 35 \quad 5000 < c \leq 500000
+\end{cases}\]
+
+Se está exceptuado de pagar el impuesto al comienzo del mes $1$.
+
+Elaborar un modelo de programación lineal entera mixta que permita decidir en qué actividades invertir, por cuánto tiempo y cuánto invertir para maximizar la cantidad de capital al finalizar el mes $48$.    
+
+\textbf{Sugerencia:} entre otras, podría ser útil considerar variables que indiquen si se invierte en la actividad $i$ desde el mes $j$ hasta el mes $k$ ($j,k\in\{1,\dots, 48\}$) y variables que representen cuánto se invierte en la actividad $i$ desde el mes $j$ hasta el mes $k$ ($j,k\in\{1,\dots, 48\}$).
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}

@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage[a4 paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{scrextend}
+\usepackage{bm}
+\usepackage{diagbox}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{booktabs,caption}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{adjustbox}
+\usepackage{pifont}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{tikz-network}
+\usepackage{listings}
+\newcommand\pythonstyle{\lstset{
+       language=Python,
+       otherkeywords={self},
+       showstringspaces=false,
+       backgroundcolor=\color{gray!20},
+}}
+\lstnewenvironment{python}[1][]{
+    \pythonstyle
+    \lstset{#1}
+}{}
+\usetikzlibrary{positioning}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\definecolor{shadecolor}{gray}{0.8}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\newcommand{\cpiv}[1]{\colorbox{red!50!white}{#1}}
+\newcommand{\rpiv}[1]{\colorbox{blue!50!white}{#1}}
+\newcommand{\npiv}[1]{\colorbox{purple!65!white}{#1}}
+
+\title{Trabajo Práctico de Optimización no Lineal \\
+\large Investigación Operativa - Segundo Cuatrimestre 2022}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\textit{El trabajo puede ser resuelto en grupos de hasta tres personas. La fecha límite de entrega es el 02/12 a las 23:59. En el caso de haber errores graves, podrán contar con una fecha de reentrega.}
+
+\vspace*{\baselineskip}
+
+No se pueden utilizar librerías de Python, salvo \verb|numpy|, \verb|matplotlib|, \verb|plotly| y librerías nativas.
+
+\vspace*{\baselineskip}
+
+\textbf{Ejercicio 1.}
+\begin{enumerate}
+    \item Para funciones cuadráticas $f(x) = \frac{1}{2}x^T A x$ con matrices $A\in\mathbb{R}^{10\times 10}$ definidas positivas y diagonales, elaborar una serie de tests tales que muestren las dificultades del Método del Gradiente con longitud de paso óptima a medida que aumenta el orden de diferencia entre el menor y el mayor autovalor. Sea $t_k^*$ la longitud del paso óptimo en la $k$-ésima iteración, comparar en cada caso con los resultados obtenidos tomando:
+    \begin{itemize}
+        \item $\frac{3}{4}t_k^*$
+        \item $\frac{1}{2}t_k^*$
+        \item $\frac{1}{4}t_k^*$
+        \item $\gamma_k t_k^*$ donde $\gamma_k$ es un número aleatorio en $(0,1]$
+    \end{itemize}
+    \item Para los tests elaborados anteriormente, comprar el desempeño del método entre tomar:
+    \begin{itemize}
+        \item $t_k^*$
+        \item $0.9t_k^*$
+        \item $0.99t_k^*$
+    \end{itemize}
+    \item Las direcciones del Método del Gradiente con longitud de paso óptima son ortogonales entre sí en iteraciones consecutivas: $\langle -\nabla f(x_k), -\nabla f(x_{k+1})\rangle = 0$. Utilizando la longitud de paso óptima, intentar quebrar esta ortogonalidad rotando la dirección con un ángulo de:
+    \begin{itemize}
+        % \item $-60^{\circ}$
+        % \item $-30^{\circ}$
+        % \item $30^{\circ}$
+        % \item $60^{\circ}$
+        \item $\theta = -\frac{1}{3}\pi$
+        \item $\theta = -\frac{1}{6}\pi$
+        \item $\theta = \frac{1}{6}\pi$
+        \item $\theta = \frac{1}{3}\pi$
+    \end{itemize}
+    La dirección vendría dada por la siguiente fórmula:
+    \[ d_k = \begin{bmatrix}\cos\theta & -\sin\theta &\\\sin\theta & \cos\theta \end{bmatrix}\frac{-\nabla f(x_{k})}{|\nabla f(x_{k})|}
+\]
+    Al realizar la rotación, debe chequearse que $d_k$ sea de descenso. En caso contrario, en esa iteración tomar como dirección $d_k = -\nabla f(x_k)$. 
+    Para este ítem, generar tests como los del ítem 1. pero con $A\in\mathbb{R}^{2\times 2}$. 
+    Para cada valor de $\theta$ y para cada test, comparar con el Método de Gradiente con longitud de paso óptima.
+
+\end{enumerate}
+
+\textbf{Ejercicio 2.}
+
+\begin{enumerate}
+    \item Para funciones cuadráticas $f(x) = \frac{1}{2}x^T A x$ con matrices $A\in\mathbb{R}^{n\times n}$ definidas positivas y diagonales, elaborar una serie de tests para corroborar las siguientes dos propiedades de Gradiente Conjugado: terminación cuadrática y terminación en tantos pasos como autovalores distintos de $A$.
+    \item Sea $t_k^\ast$ la longitud del paso óptimo en la $k$-ésima iteración y sea $\beta_k$ el coeficiente de corrección, experimentar qué sucede si en vez de utilizar $(t_k^\ast, \beta_k)$ se utiliza:
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item $(0.9t_k^\ast, \beta_k)$
+            \item $(0.99t_k^\ast, \beta_k)$
+            \item $(t_k^\ast, 0.9\beta_k)$
+            \item $(t_k^\ast, 0.99\beta_k)$
+            \item $(0.9t_k^\ast, 0.9\beta_k)$
+            \item $(0.99t_k^\ast, 0.99\beta_k)$
+        \end{itemize}
+    \end{multicols}
+    Comentar cómo el desempeño de Gradientes Conjugados depende de la exactitud de la búsqueda lineal.
+    \item Comparar el desempeño de Gradiente Conjugado con el Método del Gradiente para funciones cuadráticas con matrices muy mal condicionadas (es decir, que $\frac{\lambda_{MAX}}{\lambda_{MIN}}$ sea muy grande). 
+\end{enumerate}
+
+\textbf{Ejercicio 3.}
+Para la matriz $A$ que se encuentra en el archivo \texttt{matriz.npy}, hallar el minimizador de ${f(x) = \frac{1}{2}x^T A x}$ con el Método de Newton y con cada uno de los Métodos Cuasi-Newton (Broyden Mala, DFP, BFGS, BBR). Para que este experimento sea relevante, el Método de Newton debe estar modificado de manera tal que la dirección de descenso se calcule utilizando la función \texttt{eq\_lineal\_chol} en vez de \texttt{np.linalg.solve}. La implementación de \texttt{eq\_lineal\_chol} está en el Notebook con código complementario.
+
+Comparar la cantidad de iteraciones y los tiempos de ejecución. ¿A qué se debe la diferencia en la cantidad de tiempo requerido?
+\vspace*{\baselineskip}
+
+\textbf{Detalles sobre implementación:}
+Utilizar \texttt{A = np.load('matriz.npy')} para cargar la matriz desde el archivo (el cual debe encontrarse en la misma carpeta que el Notebook).
+Para medir el tiempo de ejecución de una parte del código: 
+
+\vspace*{\baselineskip}
+\begin{python}
+from time import time
+
+s = time()
+
+#########################################################
+# CODIGO AL CUAL SE LE DESEA MEDIR EL TIEMPO DE EJECUCION
+#########################################################
+
+print('Tiempo de ejecucion: ', time() - s)
+\end{python}
+
+\vspace*{\baselineskip}
+\textbf{Ejercicio 4.} 
+
+\begin{enumerate}
+    \item Comparar el desempeño (en cantidad de iteraciones) del Método del Gradiente y sus variantes del Ejercicio 1 Item 1 con el Método de Barzilai-Borwein-Raydan. Se pueden utilizar los tests del Ejercicio 1 Item 1.
+    \item Sea $\{x_k\}_k$ la secuencia generada por BBR, realizar experimentos que permitan mostrar que la secuencia $\{f(x_k)\}_k$ no es necesariamente monótona decreciente. Para mostrar esto, realizar un gráfico de $k$ contra $f(x_k)$.
+
+    Para realizar un gráfico básico utilizando \texttt{matplotlib}, pueden referirse a esta plantilla:
+    \begin{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+ktop = # Cantidad de iteraciones de BBR
+ks = np.arange(ktop)
+fs = # Lista con los valores de cada f(x_k)
+plt.plot(ks, np.array(fs))
+plt.show()
+    \end{python}
+\end{enumerate}
+
+\textbf{Ejercicio 5.} Los métodos estudiados en la materia, en general, convergen a un mínimo local. Dada una función $f\in C^2$, la heurística más sencilla para intentar hallar un mínimo global (o al menos un \textit{buen} mínimo local) consiste en correr repetidas veces el método comenzando desde distintos puntos aleatorios. 
+
+La función Bird está definida como:
+\[{\displaystyle f(x,y)=\sin(y)e^{\left[(1-\cos x)^{2}\right]}+\cos(x)e^{\left[(1-\sin y)^{2}\right]}+(x-y)^{2}}\]
+y tiene dos minimizadores globales:
+\[\begin{array}{l}
+    (4.701055751981055;\; 3.152946019601391) \\ 
+    (- 1.582142172055011;\; -3.130246799635430)   \\
+\end{array}\]
+
+\begin{enumerate}
+    \item Graficar la función Bird con \texttt{plot\_fun} en $[-10, 10]\times [-10, 10]$
+    \item Implementar la función \texttt{random\_restart} que lleve a cabo la heurística para funciones $\mathbb{R}^2\rightarrow \mathbb{R}$, comenzando con puntos aleatorios en el cuadrado $[-c, c]\times [-c, c]$. La función debe tomar como input la función \texttt{f} a minimizar, \texttt{N} la cantidad de puntos aleatorios a generar y \texttt{c} que describe el dominio donde se desean inicializar aleatoriamente los puntos. La función debe generar $N$ puntos iniciales aleatorios, y a partir de cada uno de ellos, correr un Método de Cuasi-Newton (el mismo para todos los puntos iniciales). Debe devolver la mejor solución obtenida.
+
+        Un punto aleatorio en $[-c,c]\times[-c,c]$ se puede obtener con:
+    \begin{python}
+x = 2 * c * np.random.random(2) - c
+    \end{python}
+    \item Testear la función del ítem anterior a la función Bird en $[-15, 15]\times [-15, 15]$ con distintos valores de $N$. ¿Qué tan buena es la solución obtenida? 
+\end{enumerate}
+
+\end{document}
+

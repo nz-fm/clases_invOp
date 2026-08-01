@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper, total={16cm, 26.5cm}]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{parskip} 
+\usepackage{xcolor}
+\usepackage{enumerate}
+\title{SOLUCIONES 1ER PARCIAL 2021\vspace{-3em}}
+% \author{Nazareno Faillace}
+\date{}
+
+\newcommand{\mr}{\mathcal{R}}
+\newcommand{\mm}{\mathcal{M}}
+\newcommand{\dsum}{\displaystyle\sum}
+
+\begin{document}
+
+\maketitle
+% \large{\textbf{}}
+
+\textbf{Ejercicio 1.}
+
+\textbf{Conjuntos:}
+
+Rutas: $\mr=\{1,\dots,R\}$
+
+Modelos de aviones: $\mm=\{\text{Alfa}, \text{Beta}, \text{Gamma}\}=\{1,2,3\}$
+
+$cap_i$: capacidad del avión de modelo $i$
+
+\textbf{Variables:}
+\[y_r=\begin{cases} 1\quad \text{si se adquiere la ruta $r$} \\
+    0 \quad \text{c.c.} \end{cases}\]
+\[x_{ir}\colon \text{ cantidad de aviones del modelo $i$ que usan la ruta $r$ ($x_{ir}\in\mathbb{Z}$)}\]
+\textbf{Modelo:}
+
+\[
+\begin{array}{rrcll}
+    \min & \multicolumn{4}{l}{\dsum_r(a_rx_{1r} + b_rx_{2r} +c_rx_{3r}) + \dsum_r p_ry_r}  \\[1.5em]
+    \text{s.a:} & \dsum_r x_{1r} & \leq & 11 & \text{(Disponibilidad aviones Alfa)}\\[1.5em]
+     & \dsum_r x_{2r} & \leq & 15 & \text{(Disponibilidad aviones Beta)}\\[1.5em]
+     & \dsum_r x_{3r} & \leq & 13 & \text{(Disponibilidad aviones Gamma)}\\[1.5em]
+     & \dsum_{i}x_{ir} & \leq & K_r \quad\;\forall\,1\leq r\leq R & \text{(Límite de tránsito total)} \\[1.2em]
+     & x_{1r} & \leq & PA_r \quad\;\forall\,1\leq r\leq R& \text{(Límite de tránsito Alfa)}\\
+     & x_{2r} & \leq & PB_r \quad\;\forall\,1\leq r\leq R& \text{(Límite de tránsito Beta)}\\
+     & x_{3r} & \leq & PC_r \quad\;\forall\,1\leq r\leq R& \text{(Límite de tránsito Gamma)}\\[1em]
+     & \dsum_{i}\dsum_r cap_ix_{ir} & \geq & 10000 & \text{(Satisfacer demanda)} \\[1em]
+     & \dsum_{r} x_{3r} & \leq & 3 + M(1-\theta) & \text{(Cant. de Gamma $\neq 4$)} \\[1em]
+     & \dsum_{r} x_{3r} & \geq & 5 - M\theta & \text{(Cant. de Gamma $\neq 4$)} \\[1em]
+     & \dsum_{r} x_{1r} & \geq & 0.2\left(\dsum_{r}\dsum_{i} x_{ir}\right) & \text{(Al menos el \%$20$ es Alfa)} \\[1em]
+     & \dsum_{i} x_{ir} & \leq & My_r \quad \forall\,1\leq r\leq R& \text{(Si uso $r$, tengo que comprarla)} \\
+     & x_{ir}& \in & \mathbb{Z} \quad \forall\,i\in\mm\,\forall\,r\in\mr & \\
+     & y_r & \in & \mathbb{Z} \quad \forall\,r\in\mr & \\
+     & \theta & \in & \{0,1\} & \\
+\end{array}
+\]
+\newpage
+
+\textbf{Ejercicio 2.}
+
+\textbf{Conjuntos:}
+
+Conjunto de candidatos: $\mathcal{C}=\{1,\dots, N\}$
+
+Conjunto de candidatos hombres: $\mathcal{H}\subset \mathcal{C}$
+
+Conjunto de candidatas mujeres: $\mathcal{M}\subset \mathcal{C}$
+
+Conjunto de turnos de trabajo: $\mathcal{T}=\{1,\dots, 18\}$
+
+% Conjunto de turnos mañana: $TM=\{t\in\mathcal{T}\colon t\equiv 1\pmod{3}\}$
+
+% Conjunto de turnos tarde: $TT=\{t\in\mathcal{T}\colon t\equiv 2\pmod{3}\}$
+
+Conjunto de turnos noche: $TN=\{t\in\mathcal{T}\colon t\equiv 0\pmod{3}\}$
+
+Conjunto de productos: $\mathcal{P}=\{1,2,3\}$
+
+\textbf{Variables:}
+
+\[x_{ijk}=\begin{cases}
+1 \quad \text{si $i$ elaborará el producto $j$ en el turno $k$}\\
+0 \quad \text{c.c.}
+\end{cases} \quad i\in\mathcal{C},\,j\in\mathcal{P},\,k\in\mathcal{T}\]
+
+\[y_i=\begin{cases}
+1 \quad \text{si se contrata a $i$}\\
+0 \quad \text{c.c.}
+\end{cases} \quad i\in \mathcal{C}\]
+
+\textbf{Modelo:}
+
+\[\begin{array}{rrcll}
+    \max & \multicolumn{4}{l}{\dsum_i\dsum_j\dsum_k v_jt_{ij}x_{ijk} - \dsum_i\dsum_j\dsum_{k} g_ix_{ijk}}   \\
+    \text{s.a:} & \dsum_j\dsum_k x_{ijk} & \leq & My_i \quad \forall\,i\in\mathcal{C}&  \\
+     & \dsum_j\dsum_{k=s}^{s+2} x_{ijk} & \leq & 1 \quad \forall\,i\;\forall s\in\{1,4,7,10,13,16\} & \text{(I)} \\
+     & \dsum_j\dsum_k x_{ijk} & \leq & 5 \quad \forall\,i\in\mathcal{C}& \text{(I)}  \\
+     & \dsum_j\dsum_k x_{ijk} & \geq & 3y_i \quad \forall\,i\in\mathcal{C} & \text{(I)}  \\
+     & \dsum_j \left(x_{ijk} + x_{ij(k+1)}\right)& \leq & 1 \quad \forall\,i\;\forall\,j\;\forall k\in TN & \text{(II)} \\
+     & \dsum_i e_{ij}x_{ijk}& \geq & 0.6\dsum_i x_{ijk} \quad \forall\,j\;\forall\,k & \text{(III)}  \\
+     & \dsum_i\dsum_k x_{ijk}& \geq & \ell_j \quad \forall\,j & \text{(IV)}  \\
+     & \dsum_i\dsum_k x_{ijk}& \leq & u_j \quad \forall\,j & \text{(IV)}  \\
+     & \dsum_i x_{ijk} & \leq & E_j \quad \forall\,j\;\forall\, k & \text{(V)}  \\
+     & |\mathcal{G}|y_s & \leq & \dsum_{i\in\mathcal{G}} y_i \quad \forall\,s\in\mathcal{G}  & \text{(VI)}  \\
+     & \dsum_{i\in \mathcal{H}} y_i& \leq & 0.5\dsum_i y_i &  \text{(VII)}\\
+     & \dsum_{i} (x_{i1k} - x_{i3k}) & \leq & 10 \quad \forall\,k & \text{(VIII)}  \\
+     & \dsum_{i} (-x_{i1k} + x_{i3k}) & \leq & 10 \quad \forall\,k & \text{(VIII)}  \\
+     & x_{ijk} & \in & \{0,1\} \quad \forall\,i\;\forall\,j\;\forall\,k & \\
+     & y_{i} & \in & \{0,1\} \quad \forall\,i & \\
+\end{array}\]
+
+Funciones objetivo del ítem 2:
+
+a) \textbf{Función objetivo:} $\max t$
+
+\textbf{Restricciones adicionales:}
+% \[
+% \begin{array}{rcl}
+%     t & \leq & e_{i3}x_{i3k} \quad \forall\,i\;\forall\,k  \\
+%     t & \in & \mathbb{R}
+% \end{array}
+% \]
+\[
+\begin{array}{rcl}
+    t & \leq & \dsum_{i}\dsum_j e_{ij}x_{ijk} \quad \forall\,k  \\
+    t & \in & \mathbb{R}
+\end{array}
+\]
+
+
+
+b) \textbf{Función objetivo:} $\min t$
+
+\textbf{Restricciones adicionales:}
+\[
+\begin{array}{rcl}
+    z_i & = & \dsum_{j}\dsum_{k\in TN} x_{ijk} \quad \forall\,i \quad \text{(opcional)} \\ 
+    t & \geq & z_i - z_s \quad \forall\,i,s\in\mathcal{C} \\
+    z_i & \in & \mathbb{Z} \quad \forall\,i\\ 
+    t & \in & \mathbb{Z}\\ 
+\end{array}
+\]
+
+Otra posibilidad:
+
+\textbf{Función objetivo:} $\min t - w$
+
+\textbf{Restricciones adicionales:}
+\[
+\begin{array}{rcl}
+    z_i & = & \dsum_{j}\dsum_{k\in TN} x_{ijk} \quad \forall\,i \quad \text{(opcional)} \\ 
+    t & \geq & z_i \quad \forall\,i \\
+    w & \leq & z_i + M(1-y_i) \quad \forall\,i \\
+    z_i & \in & \mathbb{Z} \quad \forall\,i\\ 
+    t & \in & \mathbb{Z}\\ 
+    w & \in & \mathbb{Z}\\ 
+\end{array}
+\]
+
+\newpage
+
+\textbf{Ejercicio 3.}
+
+\textbf{Conjuntos:}
+
+$A=\{1,\dots, N\}$ conjunto de actividades
+
+$B$: conjunto de actividades con duración máxima
+
+$M=\{1,\dots, 48\}$ conjunto de meses
+
+\textbf{Variables:}
+\[
+x_{ijk}= \begin{cases}
+% 1 \quad \text{si se invierte en la actividad $i$ al comienzo del mes $j$ hasta el final del mes $k$}\\
+1 \quad \text{si se invierte en la actividad $i$ desde el comienzo del mes $j$ hasta el fin del mes $k$}\\
+0 \quad \text{c.c.}\end{cases}
+\]
+\[
+y_{ijk}\colon \text{dinero invertido en la actividad $i$ desde el comienzo del mes $j$ hasta el fin del mes $k$, $y_{ijk}\in\mathbb{R}$}
+\]
+\[
+z_j\colon \text{ cantidad de dinero disponible al comenzar el mes $j$ (previo pago de impuestos), $z_j\in\mathbb{R}$}
+\]
+\[
+w_j\colon \text{ cuánto hay que deducir de impuestos al comienzo del mes $j$, $w_j\in\mathbb{R}$}
+\]
+
+\textbf{Modelo:}
+
+\[
+\begin{array}{rrcll}
+    \max & \multicolumn{4}{l}{z_{48} - w_{48} - \dsum_i\dsum_{k}y_{i(48)k} + \dsum_{i}\dsum_{j}r_i(48-j+1)y_{ij(48)}}  \\
+    \text{s.a:} & x_{ijk} & = & 0 \quad\forall\,k<j & \text{(1)} \\
+     & \dsum_j\dsum_k x_{ijk} & \leq & 1 \quad \forall\,i & \text{(2)} \\
+    % \text{s.a:} & \dsum_j x_{ij} & \leq & 1 \quad \forall\,i & \text{(a lo sumo se participa una vez)} \\
+     & ((k-j+1) - \ell_i)x_{ijk} & \geq & 0 \quad \forall\,i & \text{(3)} \\
+     & (u_i - (k-j+1))x_{ijk} & \geq & 0 \quad \forall\,i\in B & \text{(4)} \\
+    %  & (48-(j+m_i-1))x_{ij} & \geq & 0 \quad \forall\,i\;\forall\, j & \text{(finalizar a lo sumo a fin del mes $48$)} \\
+     & m_i x_{ijk} & \leq & y_{ijk} \quad \forall\,i\;\forall\,j\;\forall\,k  & \text{(5)} \\
+     & y_{ijk} & \leq & Mx_{ijk} \quad \forall\,i\;\forall\,j\;\forall\,k & \text{(6)} \\
+     & z_1 & = & C  & \text{(7)} \\
+     & w_1 & = & 0 & \text{(8)} \\
+     & \dsum_{s=1}^3 \delta_{sj} & = & 1  \quad \forall\,j\geq 2& \text{(9)} \\
+     & \lambda_{1j} + \lambda_{2j} & = & \delta_{1j} \quad \forall\,j\geq 2 & \text{(9)} \\
+     & \lambda_{3j} + \lambda_{4j} & = & \delta_{2j} \quad \forall\,j\geq 2 & \text{(9)} \\
+     & \lambda_{5j} + \lambda_{6j} & = & \delta_{3j} \quad \forall\,j\geq 2 & \text{(9)} \\
+     & z_j & = & 2000\lambda_{2j} + 2000\lambda_{3j} + 5000\lambda_{4j} + 5000\lambda_{5j} + 500000\lambda_{6j} \quad \forall\,j\geq 2& \text{(9)} \\
+     & w_j & = & 20\lambda_{2j} + 20\lambda_{3j} + 65\lambda_{4j} + 65\lambda_{5j} + 9965\lambda_{6j} \quad \forall\,j\geq 2& \text{(9)} \\
+     & z_j & = & z_{j-1} - w_{j-1} - \dsum_i\dsum_{k}y_{i(j-1)k} + \dsum_{i}\dsum_{k}r_i((j-1)-k+1)y_{ik(j-1)} \quad \forall\,j\geq 2& \text{(10)} \\
+     & \dsum_i y_{ijk} & \leq  & z_j - w_j \quad \forall\,j& \text{(11)} \\
+     & y_{ikj} & \in & \mathbb{R} \quad \forall\,i\;\forall\,j\;\forall\,k & \\
+     & x_{ikj} & \in & \{0,1\} \quad \forall\,i\;\forall\,j\;\forall\,k & \\
+     & z_j & \in & \mathbb{R} \quad \forall\,j &  \\
+     & w_j & \in & \mathbb{R} \quad \forall\,j &  \\
+     & \delta_{sj} & \in & \{0,1\} \quad \forall\,j\forall\, s & \\
+     & \lambda_{tj} & \in & \mathbb{R}_{\geq 0} \forall\,j\forall\,t & \text{()} \\
+\end{array}
+\]
+
+\begin{enumerate}[(1)]
+    \item no se puede terminar antes de iniciar
+    \item a lo sumo se participa una vez en cada actividad
+    \item respetar la duración mínima de la actividad
+    \item respetar la duración máxima de la actividad
+    \item si se participa, se invierte menos el monto mínimo
+    \item si se invierte, entonces se participa
+    \item capital inicial
+    \item exceptuado de impuestos el primer mes
+    \item modela $f$
+    \item capital a comienzo del mes $j$ (previo pago de impuestos)
+    \item monto máximo a invertir durante el mes $j$
+\end{enumerate}
+
+\end{document}

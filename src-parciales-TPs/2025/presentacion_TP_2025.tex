@@ -1,0 +1,358 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+\usepackage{clases}
+\usepackage[linesnumbered, noend, spanish, onelanguage]{algorithm2e}
+\usepackage{bm}
+\newcommand{\super}[1]{^{(#1)}}
+\newcommand{\framet}[1]{\Large
+#1
+\vspace{1em} \\
+\normalsize}
+\newcommand{\dsum}{\displaystyle\sum}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%% These macros specify information about the presentation
+\title{Presentación TP de Optimización No Lineal}
+\subtitle{Investigación Operativa - 2C 2025}
+\author{Nazareno Faillace Mullen}
+\date{}
+
+
+\usefonttheme{professionalfonts} % required for mathspec
+% \usepackage{mathspec}
+% \setsansfont[BoldFont={Fira Sans},
+% Numbers={OldStyle}]{Fira Sans Light}
+% \setmathsfont(Digits)[Numbers={Lining, Proportional}]{Fira
+% Sans Light}
+
+\begin{document}
+
+%   \shorthandoff{-}
+    \frame[c]{\maketitle}
+
+%   \AtBeginSection[]{% Print an outline at the beginning of sections
+%     \begin{frame}<beamer>
+%       \frametitle{Outline for Section \thesection}
+%       \tableofcontents[currentsection]
+%     \end{frame}}
+
+
+    \AtBeginSection[]{% Print an outline at the beginning of sections
+        \begin{frame}
+            <beamer>
+            \vfill
+            \centering
+            \Huge{\insertsectionhead}
+            \vfill
+        \end{frame}}
+
+
+    \section{Regresión Lineal}
+
+    \begin{frame}
+        % \fontsize{22pt}{10pt}\selectfont
+        \huge
+        \[\underbrace{\text{\textbf{Regresión}}}_{\substack{\text{Queremos predecir} \\ \text{un valor continuo}}}
+            {\color{red}\underbrace{\text{ \textbf{Lineal}}}_{\text{con una recta}}}\]
+    \end{frame}
+
+    \begin{frame}
+        \textbf{Modelo matemático:} $Y = \beta_0 + \beta_1 X_1 + \beta_{2}X_2 + \dots + \beta_{m}X_m$
+        \begin{itemize}
+            \item $\beta_0$ es la ordenada al origen
+            \item $\beta_1,\dots, \beta_m$ son los coeficientes
+            \item $X_1,\dots, X_m$ son las variables predictoras
+            \item $Y$ es la variable dependiente
+        \end{itemize}
+        \textbf{Modelo de regresión lineal:} $y_i = \beta_0 + \sum_{j=1}^m \beta_j x_{ij} + \varepsilon_i$
+        \begin{itemize}
+            \item $(x_i, y_i)$ son los datos observados
+            \item $\varepsilon\super{i}$ es un error aleatorio (variación de $Y$ no explicada por $X$)
+            \item $\beta_0, \beta_1, \dots, \beta_m$ son \textbf{los parámetros del modelo}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \begin{columns}
+            \column{0.4\textwidth}
+            \textbf{Residuo:} dado $\beta$,
+            definimos al residuo como la diferencia entre el valor observado ($y_i$) y el valor predicho ($\hat{y}_i$):
+            \[y\super{i} - \underbrace{\left(\beta_0 + \sum_{j=0}^m\beta_j x_{ij}\right)}_{\textstyle \hat{y}_i}\]
+
+            \centering
+            \visible<2>{
+                \alert{$\rightarrow$ Queremos encontrar valores para $\beta_0, \beta_1, \dots, \beta_m$
+                    que \underline{minimicen} los residuos}}
+            \column{0.6\textwidth}
+            \includegraphics[width=\textwidth]{imagenes/regresion_ej_residuos}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}
+        \vspace{1em}
+
+        \normalsize
+        \textbf{Objetivo:} minimizar la suma de los residuos al cuadrado:
+        \[
+            RSS(\beta) = \displaystyle\sum_{i=1}^n \left(y_i - \left(\beta_0 + \sum_{j=1}^m\beta_j x_{ij}\right)
+            \right)^2
+        \]
+
+        \textbf{Teorema:} si $\overline{y} = 0\Rightarrow \beta_0 = 0$.
+        \vspace{1em}
+
+        Luego, si $\overline{y} = 0$, queremos minimizar:
+
+                \[
+            RSS(\beta) = \displaystyle\sum_{i=1}^n \left(y_i - \sum_{j=1}^m\beta_j x_{ij} \right)^2
+        \]
+    \end{frame}
+
+    \begin{frame}
+        Sea $X = (X_1 | \dots | X_m)\in \mathbb{R}^{n\times m}$.
+
+        Bajo algunas hipótesis, se puede probar que:
+        \[
+            \begin{array}{rl}
+                \hat{\beta} \text{ es minimizador de } RSS(\beta) & \iff \hat{\beta} \text{ es minimizador de } \lVert X\beta - {y}\rVert_2^2 \\
+                & \iff X^{T}X\hat{\beta} = X^{T}{y} \\
+                & \iff \hat{\beta} \text{ es un minimizador de } \frac{1}{2}\beta^T X^{T}X\beta - X^{T}{y}\beta
+            \end{array}
+        \]
+
+        Entonces para hallar $\hat{\beta}$ basta minimizar $f(\beta) = \frac{1}{2}\beta^T (X^{T}X)\beta - X^{T}y\beta$
+    \end{frame}
+
+    \begin{frame}
+        \Large
+        ¿Qué tan bien ajusta el modelo?
+        \vspace{1em}
+
+        \normalsize
+        \textbf{Error cuadrático medio:}
+        \[ECM(\beta) = \frac{1}{n}\displaystyle\sum_{i=1}^n \left(y_i - \sum_{j=1}^m\beta_j x_{ij} \right)^2\]
+        \vspace{1em}
+
+        \textbf{Coeficiente de determinación:}
+        \[R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}
+        {\sum_{i=1}^n (y_i - \overline{y})^2}\]
+        Mientras más cercano a $1$ esté $R^2$, mejor.
+    \end{frame}
+
+    \begin{frame}
+        \Large
+        Overfitting
+        \vspace{1em}
+
+        \normalsize
+        Para medir si el modelo incurre en \textit{overfitting}, dividimos a los datos en conjuntos de entrenamiento
+        y de testeo.
+
+        Si el modelo ajusta bien a los datos de entrenamiento y muy mal a los datos de testeo, entonces hay overfitting.
+
+    \end{frame}
+
+    \begin{frame}
+        \framet{Para el TP}
+        \begin{itemize}
+            \item en la sección ``Carga de datos'', la función \texttt{datos\_posicion} directamente procesa la matriz
+            $X$ y el vector $y$. Todos los datos de $X, y$ ya están centrados y escalados, también divididos en
+            entrenamiento y testeo.
+            \item la función \texttt{calcular\_errores} calcula el $R^2$ para el conjunto de entrenamiento y testeo.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \framet{Problemas con Regresión Lineal Ordinaria}
+
+        \centering
+        \includegraphics[scale=0.6]{imagenes/beta_ols}
+    \end{frame}
+
+    \begin{frame}
+        \framet{Regresión Lasso}
+
+        Nueva función objetivo:
+        \[f_\lambda(\beta) = \underbrace{\displaystyle\sum_{i=1}^n \left(y_i - \sum_{j=1}^m\beta_j X_{ij}
+        \right)^2}_{RSS(\beta)} +
+        \lambda\underbrace{\lVert\beta\rVert_1}_{L_1(\beta)}\]
+
+        Añade un parámetro de regularización $\lambda$ para controlar la magnitud de $\beta$
+        \vspace{1em}
+
+        \textbf{Problema: } $f_\lambda$ no es diferenciable en todo punto $\Rightarrow$ $\nabla f_\lambda$ no está
+        definida en todo punto.
+    \end{frame}
+
+    \begin{frame}
+        Como $L_1(\beta)$ es una función convexa en $\beta$, podemos considerar las sub-derivadas:
+        \[
+            \partial_{\beta_j} L_1(\beta) =
+            \begin{cases}
+                -1 & \beta_j < 0 \\
+                [-1,1] & \beta_j = 0 \\
+                1 & \beta_j > 0
+            \end{cases}\; \rightarrow \;
+            \partial_{\beta_j} L_1(\beta) =
+            \begin{cases}
+                -1 & \beta_j < 0 \\
+                0 & \beta_j = 0 \\
+                1 & \beta_j > 0
+            \end{cases}
+            \Rightarrow  \partial_{\beta_j} L_1(\beta) = sg(\beta_j)
+        \]
+
+        Y podemos adaptar los métodos que estudiamos, considerando el sub-gradiente de $f_\lambda$:
+        \[\partial f_\lambda(\beta) = \nabla RSS(\beta) + \lambda(\partial_{\beta_1} L_1(\beta), \dots,\partial_{\beta_m} L_1(\beta)) \]
+    \end{frame}
+
+    \begin{frame}
+        \centering
+        \includegraphics[scale=0.6]{imagenes/beta_l1}
+    \end{frame}
+
+    \begin{frame}
+        \framet{Optimización por coordenadas}
+
+        {\fontfamily{serif}\selectfont
+        \centering
+        \begin{algorithm}[H]
+            \DontPrintSemicolon
+            \KwIn{$f$, $\beta$, $k\_max$}
+            \KwOut{$\beta$: aproximación al óptimo}
+            $k\leftarrow 0$\;
+            $idx \leftarrow$ índices de $\beta$ (i.e. $[0,1,\dots,m-1]$)\;
+            Mezclar $idx$ \texttt{(np.random.shuffle(idx))}\;
+            \While{$k < k\_max$}{
+                \For{$j \in idx$}{
+                    $\beta_j = \argmin_{w\in\mathbb{R}} f(\beta_1,\beta_2,\dots, \beta_{j-1}, w, \beta_{j+1}, \dots, \beta_m)$ \;
+                    }
+                    Mezclar $idx$\;
+                    $k \leftarrow k + 1$ \;
+            }
+            \Return $\beta$
+            \caption{Minimización por coordenadas}
+        \end{algorithm}}
+    \end{frame}
+
+    \begin{frame}
+        \framet{Optimización por coordenadas - Regresión Lasso}
+
+        \textbf{Teorema: } sea $f$ convexa, $x_0$ es un minimizador de $f$ si y sólo si $0\in\partial f$.
+        \vspace{1em}
+
+        Sea $1\leq j\leq m$ y sea
+        \[g(w) = f_\lambda(\beta_1,\beta_2,\dots, \beta_{j-1}, w, \beta_{j+1}, \dots, \beta_m)\]
+        para minimizar $g$ basta hallar dónde se anula $\partial_{\beta_j}f_\lambda$.
+        \vspace{1em}
+    \end{frame}
+
+    \begin{frame}
+        Probamos que:
+        \[\argmin_{w\in\mathbb{R}}
+        f_\lambda(\beta_1,\beta_2,\dots, \beta_{j-1}, w, \beta_{j+1}, \dots, \beta_m) = \frac{S(\rho_j, \lambda)}{z_j}\]
+        donde:
+        \[
+            \begin{array}{l}
+                \rho_j=\dsum_{i=1}^n
+                \left(y_i - \dsum_{\substack{k= 1 \\ k\neq j}}^m \beta_k x_{ik} \right)x_{ij}   \\[1em]
+                z_j = \dsum_{i=1}^{n} x_{ij}^2   \\[1em]
+                S(\rho_j, \lambda) =
+                \begin{cases}
+                    \rho_j + \lambda & \text{si $\rho_j < -\lambda$} \\
+                    0 & \text{si $-\lambda \leq \rho_j \leq \lambda$} \\
+                    \rho_j - \lambda & \text{si $\rho_j > \lambda$} \\
+                \end{cases}
+            \end{array}
+        \]
+    \end{frame}
+
+    \section{Support Vector Machines}
+
+    \begin{frame}
+        \framet{SVM - Clasificación}
+
+        \centering
+        \includegraphics[scale=0.6]{imagenes/svm_1}
+    \end{frame}
+
+    \begin{frame}
+        \framet{SVM - Clasificación}
+
+        \centering
+        \includegraphics[scale=0.6]{imagenes/svm_2}
+    \end{frame}
+
+    \begin{frame}
+        Queremos predecir la categoría de cada individuo $y_i\in\{-1, 1\}$ a partir de sus características
+        $x_i=(x_{i1}, \dots, x_{im})$.
+
+        \textbf{Idea del método:} hallar $w\in\mathbb{R}^{m}, b\in\mathbb{R}$ para determinar el hiperplano:
+        \[wx + b = 0\]
+        que divida a las categorías con margen máximo.
+        \vspace{1em}
+
+        Queremos que:
+        \[\begin{cases}
+        (w^Tx_i + b) \leq -1 & \text{si $y_i = -1$} \\
+        (w^Tx_i + b) \geq 1 & \text{si $y_i = 1$}
+        \end{cases} \iff y_i(w^Tx_i + b) \geq 1\]
+
+    \end{frame}
+
+    \begin{frame}
+        Nuestra función a minimizar:
+        \[f(w,b) = \underbrace{\lambda\frac{1}{2}\lVert w\rVert_2^2}_{L_2(w)} +
+        \frac{1}{n}\underbrace{\sum_{i=1}^n \max(0, 1-y_i(wx_i+b))}_{H(w,b)}\]
+        \vspace{1em}
+    \end{frame}
+
+    \begin{frame}
+        \centering
+        \includegraphics[height=0.9\textheight]{imagenes/meme-sub-deriv}
+    \end{frame}
+
+    \begin{frame}
+        En particular, tenemos que:
+        \[
+            \begin{array}{l}
+                \partial_{w_j} \max(0, 1-y_i(w^Tx_i+b)) =
+                \begin{cases}
+                    0 & \text{si $y_i(w^Tx_i + b) \geq 1$} \\
+                    -y_{i}x_i^{(j)} & \text{c.c.}
+                \end{cases} \\[1em]
+            \end{array}
+        \]
+        donde $x_i^{(j)}$ es la $j$-ésima coordenada de $x_i$
+
+        \textbf{Ejercicio:} calcular $\partial_b \max(0, 1-y_i(w^Tx_i+b))$
+        \vspace{1em}
+
+        Por lo tanto, podemos aplicar los métodos que estudiamos, utilizando el sub-gradiente en vez del gradiente:
+        \[
+            \begin{array}{l}
+                \partial_w f(w,b) = \nabla L_2(w) + \frac{1}{n}(\partial_{w_1}H(w,b),\dots, \partial_{w_j}H(w,b)) \\
+                \partial_b f(w,b) = \frac{1}{n}\partial_{b}H(w,b)
+            \end{array}
+        \]
+    \end{frame}
+
+    \begin{frame}
+        \framet{Para el TP}
+
+        \begin{itemize}
+            \item implementaremos Método de Gradiente con paso fijo $\alpha$ (parámetro) y ADAM.
+            \item pueden decidir cómo implementarlos: pensar en $f(w,b)$ (diferenciando a los pesos del bias) o
+            considerando todo en un vector de pesos $W=(W_0,W_1,\dots, W_j)$ donde $W_0$ sería el bias:
+            \[f(W) = \lambda \frac{1}{2}\lVert (W_1,\dots, W_j)\rVert_2 ^2 + \frac{1}{n}\sum_{i=1}^n
+            \max(0, 1-y_i((W_1,\dots, W_j)^Tx_i + W_0))\]
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \framet{¿Qué tan bien ajusta el modelo?}
+
+        \textbf{Precisión (\textit{accuracy score}): }
+        \[\dfrac{\text{clasificaciones correctas}}{n}\]
+    \end{frame}
+\end{document}

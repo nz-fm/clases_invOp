@@ -1,0 +1,241 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2018}
+\newcommand{\numeroparcial}
+    { Segundo Parcial }
+\newcommand{\fecha}
+    {9 de Octubre de 2018}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & 5 & Calificaci\'on \\ \hline \hline
+\hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1.3 cm} \\
+\hspace{1 cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1.3 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest}{\tiny .}
+
+
+
+\begin{itemize}
+    \item[(a)] Utilizar la primera fase del método de dos fases de SIMPLEX para  hallar una solución básica factible inicial de:
+    \[\begin{array}{rrrrrrrr}
+        \max & 2x_1 & + & 3x_2 & + & x_3  \\
+        \text{s.a:} & x_1 & + & x_2 & + & x_3 & \leq & 40 \\
+          & -2x_1 & - & x_2 & + & x_3 & \leq & -10 \\
+          &   & - & x_2 & + & x_3 & \geq & 10 \\
+         & \multicolumn{5}{r}{x_1,x_2,x_3} & \geq & 0
+    \end{array}
+    \]
+    
+    \item[(b)] Escribir el diccionario inicial de la Fase II. ¿Es la solución básica inicial encontrada en (a) la solución óptima del problema? Justificar. 
+ 
+\end{itemize}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest}
+El siguiente diccionario corresponde a una iteración de SIMPLEX para resolver un problema lineal de maximización:
+\[
+\begin{array}{rrrrrrrrr}
+    x_6 & = & 4 & - & 7x_1 & + & 2x_3 & - & x_4  \\
+    x_2 & = & 2+a & - & bx_1 &  & & - & 2x_4  \\
+    x_5 & = & 5 & - & x_1 & + & cx_3 & - & x_4  \\ \hline
+    z & = & 13 & + & dx_1 & + & ex_3 & - & 7x_4  \\
+\end{array}
+\]
+Hallar condiciones sobre $a,b,c,d,e\in\mathbb{R}$ para que se cumpla que:
+\begin{itemize}
+    \item[(a)] el problema tiene al menos una solución factible, pero el problema dual asociado es infactible.
+    \item[(b)] la próxima iteración es degenerada.
+    \item[(c)] $x_6$ salga de la base en la próxima iteración
+    \item[(d)] el valor óptimo del problema dual asociado sea 13.
+\end{itemize}
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest}
+El siguiente modelo de programación lineal busca maximizar la ganancia obtenida al elaborar distintos tipos de productos, sujeto a la cantidad de materia prima y de horas hombre disponibles:
+\[\begin{array}{rrrrrrrrc}
+    \max & 6x_1 & + & 14x_2 & + & 13x_3 & & & (Ganancia)  \\
+     & \frac{1}{2}x_1 & + & 2x_2 & + & x_3 & \leq & 24 & (Materia\; prima) \\
+     & x_1 & + & 2x_2 & + & 4x_3 & \leq & 60 & (Horas \; hombre) \\
+     & \multicolumn{5}{r}{x_1,x_2,x_3} & \geq & 0
+\end{array}
+\]
+\begin{itemize}
+    % \item[(a)] Plantear y resolver el problema dual.
+    \item[(a)] Si se modifica en cantidades pequeñas la cantidad de materia prima disponible, ¿hasta cuánto conviene pagar por cada unidad extra de ella para aumentar la ganancia?
+    \item[(b)] Resolver el problema para decidir cuánto elaborar de cada producto.
+    \item[(c)] Hallar todos los $\alpha\in\mathbb{R}$ tales que la solución óptima obtenida en (b) siga siéndolo para el problema con función objetivo: $6x_1+(14+\alpha )x_2+13x_3$
+    \item[(d)] ¿Cuánto pueden aumentarse las horas hombre de manera tal que la base óptima siga siéndolo?
+\end{itemize}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} 
+Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de programaci\'on lineal entera, detallando cada divisi\'on en subproblemas durante el algoritmo mediante el esquema de \'arbol visto en clase.   
+
+\[\begin{array}{rrrrrrrrc}
+\min & -4x_1 & + & 5x_2 &  &   \\
+\text{s.a:}	 & 5x_1 & - & 2x_2 & \geq & -2  \\
+			 & 2x_1 & - & 4x_2 & \leq & 5 \\
+			 &	    &   & x_1 & \leq & 5 \\
+			 &	    &   & x_2 & \leq & 4 \\
+			 & \multicolumn{3}{r}{x_1,x_2} & \in & \mathbb{Z}_{\geq 0}
+\end{array}
+\]
+
+
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% EMPIEZA EL EJERCICIO 5 %%%
+
+
+\begin{quest}
+\textbf{(Sólo si debe recuperar el primer parcial)} Un avión de carga tiene tres compartimentos para transportar mercadería: uno en la parte delantera, uno en la parte central y otro en la parte trasera. Cada uno tiene la siguiente capacidad tanto de peso como de espacio:\\
+
+\begin{tabular}{lcc} \toprule
+    Compartimento & Capacidad de peso (Tn.) & Capacidad espacial ($m^3$)  \\ \midrule
+    Delantero & 10 & 6800 \\
+    Central & 16 & 8700 \\
+    Trasero & 8 & 5300 \\ \bottomrule
+\end{tabular} \\
+
+Los siguientes tipos de mercancía están disponibles para el siguiente vuelo: \\
+
+\begin{tabular}{lccc} \toprule
+    Mercancía & Peso (Tn.) & Volumen ($m^3/Tn.$) & Ganancia ($\$/Tn.$) \\ \midrule
+    $M_1$ & 18 & 480 & 310 \\
+    $M_2$ & 15 & 650 & 380 \\
+    $M_3$ & 23 & 580 & 350 \\
+    $M_4$ & 12 & 390 & 285 \\ \bottomrule
+\end{tabular} \\
+
+Se puede transportar cualquier proporción de las mercancías, incluso podría no transportarse alguna de ellas. También se deben tener en cuenta los  siguientes requerimientos:
+\begin{itemize}
+    \item[(a)] El peso que carga el compartimento trasero debe ser proporcional al que carga el compartimento delantero.
+    \item[(b)] La diferencia entre lo que se carga de $M_1$ y de $M_4$ en el compartimento central debe ser de al menos 3 Tn.
+    \item[(c)] Al menos el $10\%$ de lo que se decida transportar de $M_2$ debe ser ubicado en el compartimento delantero.
+    \item[(d)] En el compartimento trasero se puede ocupar una cantidad de espacio estrictamente menor que $1000m^3$ para $M_3$.
+    \item[(e)] Si se transportan $6$ Tn. o más de $M_2$ entonces deben transportarse como mucho $16$ Tn. de $M_3$.
+\end{itemize}
+
+El objetivo es determinar cuánto de cada mercancía $M_1, M_2, M_3$ y $M_4$ debe transportarse y cómo distribuirla en los compartimentos del avión de manera tal que se maximice la ganancia. 
+% La construcción de un barco requiere llevar a cabo las siguientes operaciones (la tabla también muestra cuántos días se requieren para cada operación):
+% \begin{table}[htbp!]
+%     \centering
+%     \begin{tabular}{ccc} \toprule
+%         Operaciones & Duración & Precedentes  \\ \midrule
+%         A & 2 & ninguna\\ 
+%         B & 4 & A \\ 
+%         C & 2 & A \\ 
+%         D & 5 & A \\ 
+%         E & 3 & B o C \\ 
+%         F & 3 & E \\ 
+%         G & 2 & E \\ 
+%         H & 7 & D, E y G \\ 
+%         I & 4 & F o G \\ 
+%     \end{tabular}
+% \end{table}
+
+
+% Algunas operaciones son alternativas a otras. En particular:
+% \begin{enumerate}
+%     \item sólo una entre B y C debe ser ejecutada
+%     \item sólo una entre F y G debe ser realizada
+% \end{enumerate}
+% Además, 
+% \begin{enumerate}
+%     \setcounter{enumi}{2}
+%     \item si se ejecutan las operaciones C y G, la duración de I incrementa 2 días
+% \end{enumerate} 
+% La tabla muestra también qué operaciones deben ser completadas antes del comienzo de una nueva operación. Por ejemplo, H puede comenzar sólo después de haber completado E, D y G (si G es ejecutada).\\
+% Escribir un modelo de programación lineal que pueda ser utilizado para decidir qué operaciones ejecutar de manera tal que el tiempo de construcción del barco sea mínimo.
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 5 %%%
+
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

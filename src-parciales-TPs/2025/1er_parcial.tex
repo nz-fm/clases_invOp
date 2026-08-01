@@ -1,0 +1,231 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[spanish]{cleveref}
+\usepackage{tikz}
+\usetikzlibrary{patterns} % Load the patterns library
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa (M) \\ Introducción a la Investigación Operativa y Optimización (LCD)}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2025}
+\newcommand{\numeroparcial}
+    { Primer Parcial }
+\newcommand{\fecha}
+    {5 de Septiembre de 2025}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+    \begin{minipage}[t]{0.55\textwidth}
+    \begin{tabularx}{\textwidth}{Xl}
+        Nombre: & LU: \hphantom{5cm}\\[0.5em]
+        Nombre: & LU: \\[0.5em]
+        Nombre: & LU: \\[0.5em]
+    \end{tabularx}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.35\textwidth}
+        \begin{tabular}[c]{|c|c|c|}
+            \hline
+            1 & 2 & Calificación \\ \hline \hline
+            \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\
+            \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\ \hline
+        \end{tabular}
+    \end{minipage}
+%\hfill \hfill
+
+%\vspace{-1cm}
+%
+%\noindent Nombre y apellido:
+%
+%\vspace{0.2cm}
+%
+%\noindent Número de libreta:
+
+%\noindent
+\hrulefill
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+\begin{center}
+    \emph{Entregar el Ejercicio 1 y el Ejercicio 2 en hojas separadas.}
+\end{center}
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+    \texttt{[5 pts.]}En un barrio con forma de grilla de $n\times n$ manzanas, se desean instalar cabinas de
+    seguridad en las
+    esquinas.
+    \begin{enumerate}[label=\alph*)]
+        \item \texttt{[2 pts.]} Decimos que una esquina está vigilada si hay una cabina en ella o en alguna esquina
+        adyacente. Por
+        ejemplo, en la \Cref{fig:1a}, si se instala una cabina en la esquina negra, esa esquina y las esquinas
+        sombreadas están vigiladas.
+        Elaborar un modelo de Programación Lineal Entera para decidir dónde instalar las cabinas, de manera tal que
+        todas las esquinas estén vigiladas y se minimice la cantidad de cabinas instaladas.
+        \item \texttt{[1 pt.]}Utilizando SCIP, resolver el modelo para la instancia de una grilla de $4\times 4$
+        manzanas. En la hoja, escribir el valor de las variables en la solución obtenida, graficar la grilla y marcar
+        dónde se ubican las cabinas de seguridad.
+        \item \texttt{[2 pts.]}Decimos que una cuadra está vigilada si al menos en una de sus esquinas hay una
+        cabina instalada. Por ejemplo, en la \Cref{fig:1b}, si se instala una cabina en la esquina negra,
+        las cuadras punteadas están vigiladas.
+        Elaborar un modelo de Programación Lineal Entera para decidir dónde instalar las cabinas, de manera tal que
+        todas las cuadras estén vigiladas  y se minimice la cantidad de cabinas instaladas.
+        \item \texttt{[1 pt.]}Utilizando SCIP, resolver el modelo para la instancia de una grilla de $4\times 4$
+        manzanas. En la hoja, escribir el valor de las variables en la solución obtenida, graficar la grilla y marcar
+        dónde se ubican las cabinas de seguridad.
+    \end{enumerate}
+
+    \begin{figure}[h!]
+        \centering
+        \begin{subfigure}[t]{0.48\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \tikzstyle{normal}=[fill=white, draw=black, shape=circle]
+                \tikzstyle{marked}=[pattern=north east lines, draw=black, shape=circle]
+%                \tikzstyle{marked}=[fill=blue, draw=black, shape=circle]
+                \tikzstyle{marked 2}=[fill=black, draw=black, shape=circle]
+                \draw[step=1cm] (0,0) grid (4,4);
+                \foreach \x in {0, 1, 2, 3, 4}
+                    \foreach \y in {0,1,2,3,4}
+                        \node[style=normal] () at (\x, \y) {};
+                \node[style=marked 2] () at (1,3) {};
+                \node[style=marked] () at (1,4) {};
+                \node[style=marked] () at (0,3) {};
+                \node[style=marked] () at (2,3) {};
+                \node[style=marked] () at (1,2) {};
+
+            \end{tikzpicture}
+            \caption{Si se instala una cabina en la esquina negra, esa esquina y las esquinas sombreadas están vigiladas.}
+            \label{fig:1a}
+        \end{subfigure} \hfill
+        \begin{subfigure}[t]{0.48\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \tikzstyle{normal}=[fill=white, draw=black, shape=circle]
+                \tikzstyle{marked 2}=[fill=black, draw=black, shape=circle]
+%                \draw[step=1cm] (0,0) grid (4,4);
+                \draw[step=1cm] (2,0) grid (4,4);
+                \draw[step=1cm] (0,0) grid (2,2);
+                \draw[ultra thick, dashed] (1,3) to (1,2);
+                \draw[ultra thick, dashed] (1,3) to (1,4);
+                \draw[ultra thick, dashed] (1,3) to (0,3);
+                \draw[ultra thick, dashed] (1,3) to (2,3);
+                \draw (0,2) to (0,3);
+                \draw (0,3) to (0,4);
+                \draw (0,4) to (1,4);
+                \draw (1,4) to (2,4);
+                \foreach \x in {0, 1, 2, 3, 4}
+                    \foreach \y in {0,1,2,3,4}
+                        \node[style=normal] () at (\x, \y) {};
+                \node[style=marked 2] () at (1,3) {};
+            \end{tikzpicture}
+            \caption{Si se instala una cabina en la esquina negra, las cuadras punteadas están vigiladas.}
+            \label{fig:1b}
+        \end{subfigure}
+    \caption{}
+    \end{figure}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest}
+    \texttt{[5 pts.]} La compañía cervecera Cantares fabrica tres tipos de cerveza: $C_1$, $C_2$ y $C_3$.
+    Opcionalmente, puede producir una nueva variedad de cerveza $C_4$. Si elabora esta nueva
+    variedad, configurar las máquinas cuesta $\$1750$ semanales.
+
+    El centro de distribución requiere que semanalmente se produzcan al menos cierta cantidad de litros de cada tipo
+    de cerveza. Si decide producir $C_4$, se requerián al menos $75$ lts semanales.
+    Como la empresa tiene un depósito con capacidad limitada, se puede almacenar cierta cantidad de cada
+    tipo de cerveza por semana. Si se excede esa cantidad, la empresa debe alquilar lugar en otro depósito, pagando
+    $k_i$ pesos por cada litro excedente de $C_i$. La empresa no desea gastar más de $\$2000$
+    en alquiler de espacio para almacenamiento semanalmente.
+
+    La elaboración de cada litro de cada variedad de cerveza requiere cierta cantidad de tiempo.
+    Como la empresa cuenta con máquinas que operan en paralelo, dispone de hasta $700$ horas semanales para
+    producir cerveza. Finalmente, por razones de marketing, el valor absoluto de la diferencia entre las
+    cantidades de $C_2$ y de $C_3$ producidas debe ser mayor o igual que $75$ lts.
+
+    Los datos del problema se encuentran en la siguiente tabla:
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{lccccc}
+         & $C_1$ & $C_2$ & $C_3$ & $C_4$ \\\midrule
+        Precio de venta (por lt.) & 8 & 19 & 30 & 52 \\
+        Demanda del centro de distribución (en lts.) & 250 & 210 & 150 & 75 \\
+        Capacidad de almacenamiento (en lts.) & 275 & 210 & 250 & 0 \\
+        Costo de almacenamiento extra (por lt.) & 2 & 5 & 8 & 10 \\
+        Horas de elaboración (por lt.) & 0.18 & 0.25 & 0.45 & 0.65 \\\bottomrule
+    \end{tabular}
+\end{table}
+
+    \begin{enumerate}[label=\alph*)]
+        \item \texttt{[3 pts.]} Formular un modelo de Programación Lineal Entera Mixta cuyo objetivo sea maximizar la
+        ganancia semanal
+        de la empresa, considerando los gastos que podrían implicar la producción de $C_4$ y el alquiler de espacio
+        en un depósito.
+        Como se vende la cerveza en botellas de distintos tamaños, la cantidad producida de cada variedad puede ser
+        una magnitud real.
+        \item \texttt{[2 pts.]} Resolver el modelo utilizando SCIP. En la hoja, responder cuántos litros de cada
+        tipo de cerveza deben producirse para maximizar la ganancia.
+    \end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

@@ -1,0 +1,169 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[spanish]{cleveref}
+\usepackage{printsudoku}
+\usepackage{tikz}
+\usetikzlibrary{patterns} % Load the patterns library
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa (M) \\ Introducción a la Investigación Operativa y Optimización (LCD)}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2025}
+\newcommand{\numeroparcial}
+    { Recuperaotrio del Primer Parcial }
+\newcommand{\fecha}
+    {9 de Diciembre de 2025}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+    \begin{minipage}[t]{0.55\textwidth}
+    \begin{tabularx}{\textwidth}{Xl}
+        Nombre: & LU: \hphantom{5cm}\\[0.5em]
+        Nombre: & LU: \\[0.5em]
+        Nombre: & LU: \\[0.5em]
+    \end{tabularx}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.35\textwidth}
+        \begin{tabular}[c]{|c|c|c|}
+            \hline
+            1 & 2 & Calificación \\ \hline \hline
+            \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\
+            \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\ \hline
+        \end{tabular}
+    \end{minipage}
+%\hfill \hfill
+
+%\vspace{-1cm}
+%
+%\noindent Nombre y apellido:
+%
+%\vspace{0.2cm}
+%
+%\noindent Número de libreta:
+
+%\noindent
+\hrulefill
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+\begin{center}
+    \emph{Entregar el Ejercicio 1 y el Ejercicio 2 en hojas separadas.}
+\end{center}
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+    \texttt{[5 pts.]} El juego Sudoku consiste en completar una cuadrícula de $9\times 9$ con números del $1$ al $9$ de
+    manera tal que no se repita ningún número en cada columna, en cada fila y en cada uno de los nueve bloques de
+    $3\times 3$. En cada instancia, algunas casillas vienen completadas.
+    \begin{enumerate}[label=\alph*)]
+        \item \verb|[2.5 pts]| Elaborar un modelo de Programación Lineal Entera para resolver el Sudoku, respetando
+        las casillas que ya vienen completadas.
+        \item \verb|[1.5 pts]| Implementar el modelo en SCIP para resolver la siguiente instancia de Sudoku:
+        \begin{figure}[h]
+            \centering
+            \cluefont{\normalsize}\cellsize{1.5\baselineskip}
+            \sudoku{sudoku.txt}
+            \caption{Sudoku}\label{fig:ans1}
+        \end{figure}
+
+        Interpretando el resultado obtenido, completar la instancia de Sudoku en esta hoja.
+        \item \verb|[1 pt]| Utilizando SCIP, decidir si la solución obtenida en el ítem anterior es única.
+    \end{enumerate}
+
+
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest}
+    \texttt{[5 pts.]} Una empresa de logística quiere construir un modelo lineal para predecir el tiempo de entrega
+    $t_i$ (en horas) a partir de varias características de cada envío: $a_i$ la distancia en km., $b_i$ la cantidad de
+    paradas intermedias, $c_i$ si el envío es nocturno (0/1) y $d_i$ la cantidad de objetos frágiles en el envío. Se
+    desea ajustar el siguiente modelo:
+    \[t_i \approx \beta_0 + \beta_1 a_i + \beta_2 b_i + \beta_3 c_i + \beta_4 d_i\]
+    con el objetivo de minimizar el error absoluto medio:
+    \[\frac{1}{n}\sum_{i=1}^n |t_i - (\beta_0 + \beta_1 a_i + \beta_2 b_i + \beta_3 c_i + \beta_4 d_i)|\]
+    sujeto a ciertas restricciones propias del problema:
+    \begin{enumerate}
+        \item $\beta_1\geq 0$, $\beta_2\geq 0$ y $\beta_4\geq 0$ pues el tiempo de entrega debe aumentar
+        proporcionalmente a la distancia recorrida, la cantidad de paradas intermedias y la cantidad de objetos
+        frágiles que se entregan. Por otro lado, como
+        durante la noche hay menos tránsito, debe valer que $\beta_3 \leq 0$.\footnote{En SCIP, al definir la variable
+            $\beta_3$, se pueden ingresar los argumentos \texttt{ub=0, lb=None} para determinar que es no positiva.}
+        \item para mejorar la interpretabilidad, a lo sumo tres de los coeficientes $\beta_1, \beta_2, \beta_3, \beta_4$
+        pueden ser no nulos.
+        \item para garantizar precisión, se busca que al menos el $75\%$ de las observaciones tengan un error
+        absoluto menor o igual a una hora.
+    \end{enumerate}
+
+    Teniendo en cuenta la formulación del problema:
+    \begin{enumerate}[label=\alph*)]
+        \item \verb|[3 pts.]| proponer un modelo de Programación Lineal Entera Mixta que, dados un conjunto de datos
+        $\{(t_i, a_i,b_i,c_i,d_i)\}_{i=1}^n$, calcule los coeficientes óptimos para la regresión lineal considerando
+        las restricciones.
+        \item \verb|[2 pts.]| utilizando SCIP, resolver el modelo para hallar los coeficientes óptimos para el
+        conjunto de datos
+        proporcionados en el notebook. Escribir en la hoja el valor de la función objetivo en el óptimo y los valores
+        hallados para $\beta_0, \beta_1,\beta_2,\beta_3,\beta_4$.
+    \end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

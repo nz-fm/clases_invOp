@@ -1,0 +1,197 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2021}
+\newcommand{\numeroparcial}
+    { Recuperatorio del Segundo Parcial }
+\newcommand{\fecha}
+    {3 de Diciembre de 2021}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & Calificaci\'on \\ \hline \hline
+\hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1.3 cm} \\
+\hspace{1 cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1.3 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+% \vspace{.1cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+Utilizar el Método de Dos Fases para hallar una solución óptima del siguiente problema lineal:
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = x_1+x_2-3x_3} \\
+s.a: & x_1-x_2+x_3 & \leq & -4 \\
+ & 2x_1+2x_2-x_3 & \leq & 13 \\
+ & x_1+x_2+x_3 & = & 6 \\
+ & x_1,x_2,x_3 & \geq & 0
+\end{array}
+\]
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest} 
+Cada uno de los siguientes diccionarios corresponden a soluciones básicas de distintos problemas de Programación Lineal. Para cada uno, decidir y justificar cuál de las siguientes situaciones ocurre:
+\begin{enumerate}[label=\alph*)]
+    \item Problema no acotado
+    \item Única solución óptima
+    \item Solución óptima pero no única
+    \item Solución básica degenerada
+\end{enumerate}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\Roman*)]
+    \item Objetivo: minimizar
+    \[\begin{array}{rrrrrrrrr}
+                x_1 & = & 3 & + & 5x_4 & - & 2x_3 & + & x_6 \\
+                x_2&=& 1&+&x_4&+&x_3&-&x_6\\ 
+                x_5&=&2&&&-&\frac{1}{2}x_3&&\\ \hline
+                z&=&2&+&\frac{1}{2}x_4&&&+& x_6
+    \end{array}\]
+    \item Objetivo: maximizar 
+    \[\begin{array}{rrrrrrr}
+                x_3 & = &  & - & 2x_4 & - & x_1\\
+                x_2&=& 1&+&x_4&+&x_1\\ 
+                x_5&=&4&&&-&\frac{1}{2}x_1\\ \hline
+                z&=&6&+&\frac{1}{2}x_4&&
+    \end{array}\]
+    
+    \item Objetivo: maximizar
+    \[\begin{array}{rrrrrrr}
+                x_3 & = & 3 & - & x_2 & - & x_5\\
+                x_4&=& 1&+&3x_2&+&2x_5\\ 
+                x_1&=&4&-&x_2&-&\frac{1}{2}x_5\\ \hline
+                z&=&12&-&\frac{1}{2}x_2&-&2x_5
+    \end{array}\]
+    \item Objetivo: minimizar
+    \[\begin{array}{rrrrrrr}
+                x_3 & = & 1 & + & x_2 & - & x_5\\
+                x_4&=& 1&+&\frac{1}{3}x_2&+&2x_5\\ 
+                x_1&=&2&+&x_2&-&\frac{1}{2}x_5\\ \hline
+                z&=&1&-&\frac{1}{2}x_2&+&\frac{1}{2}x_5
+    \end{array}\]
+    
+\end{enumerate}
+\end{multicols}
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest}
+Dado el siguiente problema de programación lineal:
+
+\[\begin{array}{rrrrrrrrrrrrrrrl}
+    \max & 3x_1 & + & x_2 & - & 2x_3 & + & x_4 & - & x_5 & + & 4x_6 & + & 5x_7 & &\\
+    \text{s.a.} & -x_1 & + & 2x_2 & - & x_3 & - & x_4 & + & 2x_5 & + & 6x_6 & - & x_7 & \leq & 5 + \alpha\\
+    &  &  & x_2 & + & 2x_3 & - & 2x_4 & - & x_5 & + & 2x_6 & & &\leq & 5 + \beta \\
+    & 4x_1 & - & 2x_2 & - & x_3 & + & 3x_4 & + & x_5 & - & x_6 & + &\frac{1}{2}x_7 & \leq & 4 +\alpha + \gamma\\
+    & 3x_1 & - & x_2  &  &  & + & x_4 &  &  & + & 2x_6 & -&x_7 &\leq & 9 + \alpha + \beta \\
+    & \multicolumn{15}{l}{x_1,x_2,x_3,x_4,x_5,x_6,x_7\geq 0}
+\end{array}
+\]
+
+\begin{enumerate}[label=\alph*)]
+    \item Considerando $\alpha,\beta,\gamma=0$, plantear el problema dual y utilizarlo para mostrar que \newline {$(2,3,0,0,0,0,0)$} \textbf{no} es solución óptima del problema primal.
+    \item Sabiendo que $x^\ast = (0,51,0,23,0,0,74)$ es solución óptima del problema primal, mediante un análisis de sensibilidad dar condiciones sobre $\alpha,\beta, \gamma\in \mathbb{R}$ para que esa base siga siendo factible.
+    \textbf{Aclaración:} es suficiente llegar a cuatro condiciones que involucren a $\alpha,\beta,\gamma$, no es necesario expresar condiciones individuales para cada parámetro.
+\end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} 
+Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de programaci\'on lineal entera, detallando cada divisi\'on en subproblemas durante el algoritmo mediante el esquema de \'arbol visto en clase. Resolver gráficamente la relajación lineal de cada subproblema.
+
+\textbf{Sugerencia:} comenzar ramificando por $x_2$.
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = 6x_1+7x_2} \\
+s.a: & 2x_1+4x_2 & \leq & 37 \\
+ & 3x_1-4x_2 & \leq & 40 \\
+ & x_1, x_2 & \in & \mathbb{Z}_{\geq 0}
+\end{array}
+\]
+
+
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

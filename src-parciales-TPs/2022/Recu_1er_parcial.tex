@@ -1,0 +1,172 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-network}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2022}
+\newcommand{\numeroparcial}
+    {Recuperatorio del Primer Parcial }
+\newcommand{\fecha}
+    {6 de Diciembre de 2022}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|}
+\hline 
+1 & 2 & 3 & Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+\noindent\textit{Para aprobar el parcial deberá obtenerse un puntaje mayor o igual que 4.}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+
+\verb|[2.5 pts.]|Una empresa de logística transporta granos desde la ciudad productora $p_1$ hasta la ciudad capital $p_n$. No hay una ruta que conecte directamente a ambas ciudades, sino que hay rutas que conectan ciudades intermedias $p_2, \dots, p_{n-1}$, descriptas en el conjunto $\mathcal{R}$. Es decir, $(i,j)\in\mathcal{R}$ si y sólo si existe una ruta de un solo sentido desde $p_i$ a $p_j$. La cantidad de toneladas transportadas mensualmente por una ruta puede ser una magnitud real.
+
+Elaborar un modelo de Programación Lineal Entera Mixta que permita planificar el transporte mensual de granos desde $p_1$ hasta $p_n$, es decir, que determine cuántas toneladas deben transportarse  a lo largo de cada ruta. La empresa requiere tener en cuenta las siguientes restricciones:
+\begin{enumerate}
+    \item \verb|[0.25]| Para cada $(i,j)\in\mathcal{R}$ , la empresa puede transportar a lo largo de esa ruta a lo sumo $T_{ij}$ toneladas mensuales (el costo de transporte por tonelada es de $c_{ij}$ pesos).
+    \item \verb|[0.25]| A $p_n$ deben llegar por lo menos $D$ toneladas de granos
+    \item \verb|[1.0]| Si la empresa utiliza la ruta $(5,8)$ ($T_{58}=10$), debe abonar un impuesto fijo definido por la siguiente función continua:
+    \[
+    f(t) = \begin{cases}
+        \frac{1}{4} t \quad \text{si $0\leq x\leq 4$} \\
+        t - 3 \quad \text{si $4 < t\leq 7$} \\
+        2t - 10 \quad \text{si $7 < t\leq 10$} \\
+    \end{cases}
+    \]
+    donde t es la cantidad de toneladas transportadas mensualmente.
+    \item \verb|[0.25]| Para $p_i$ ($2\leq i \leq n-1$) la cantidad de toneladas que ingresan a la ciudad debe ser igual a la cantidad saliente.
+    \item \verb|[0.25]| Por $p_i$ pueden transitar a lo sumo $K_i$ toneladas por mes (el costo de tránsito es de $w_i$ pesos por tonelada).
+\end{enumerate}
+
+El objetivo es:
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item \verb|[0.5]| Minimizar el costo mensual.
+\end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} 
+
+\verb|[4.5 pts.]| Se desean organizar los horarios de las exposiciones para un congreso científico internacional. Se llevará a cabo a lo largo de cinco días, simultáneamente en tres salas de la universidad. Cada día está dividido en $18$ franjas de $20$ minutos. Cada exposición dura $20$ minutos, excepto las charlas plenarias, que duran $60$ minutos. El conjunto de exposiciones viene dado por el conjunto $\mathcal{E}$ mientras que el conjunto de charlas plenarias viene dado por $\mathcal{P}$ ($\mathcal{P}\subset \mathcal{E}$). Como $|\mathcal{E}|<90$, pueden haber franjas libres.
+\begin{enumerate}[A)]
+   \item Teniendo en cuenta que se desea planificar en qué día, sala y franja horaria ocurrirá cada exposición, modelar linealmente las restricciones básicas del congreso:
+   \begin{enumerate}[1.]
+        \item \verb|[0.3]| En cada cada sala y franja horaria puede haber a lo sumo una exposición y cada exposición de $\mathcal{E}$ debe ser asignada a exactamente una franja horaria de algún día en alguna sala.
+        \item \verb|[0.5]| Cada charla plenaria ocupa $3$ franjas horarias en esa sala.
+        \item \verb|[0.5]| Durante una charla plenaria, no pueden haber exposiciones en las demás salas.
+        \item \verb|[0.5]| Durante la tarde (franjas horarias $10$ a $18$ inclusive) del día $3$ o del día $4$ no deben haber exposiciones (disyunción excluyente)
+        \item \verb|[1.0]| Salvo en el caso del ítem anterior y en el de las charlas plenarias, no puede ocurrir que las tres salas tengan una franja horaria libre simultáneamente.
+        \item \verb|[0.7]| Las exposiciones del conjunto $\mathcal{E}_1\subset \mathcal{E}$ no pueden superponerse dos a dos, pero deben ser programadas para el mismo día.
+   \end{enumerate}
+   \item Utilizando las variables definidas en el ítem A), modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes:
+    \begin{enumerate}[1.]
+        \item \verb|[0.5]| Minimizar $\ds\max_{1\leq d\leq 5} E_d$ donde $E_d$ es la cantidad total de charlas del día $d$.
+        \item \verb|[0.5]| Maximizar la cantidad de exposiciones a la mañana (franjas horarias $1$ a $9$ inclusive) 
+    \end{enumerate}
+\end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} \verb|[3 pts]| Labyrinthroid es un videojuego en el cual, en cada nivel, se debe llegar a la meta atravesando un laberinto y derrotando enemigos inmóviles. Tanto el mapa del nivel como la posición de los enemigos son conocidos: $\mathcal{O}$ es el conjunto de casilleros con obstáculos y $\mathcal{E}$ el conjunto de casilleros donde hay enemigos. 
+
+Las reglas son las siguientes:
+\begin{itemize}
+    \item \verb|[0.5]| La protagonista puede moverse a un casillero adyacente en las direcciones $\uparrow, \rightarrow, \downarrow$ o  $\leftarrow $, siempre y cuando no haya un obstáculo (casillero gris). Cada movimiento consume $1$ unidad de tiempo.
+    \item \verb|[0.25]| Moverse a un casillero donde se encuentra un enemigo y derrotarlo consume $2$ unidades de tiempo. 
+    \item \verb|[0.5]| La protagonista tiene la habilidad especial de transformar un obstáculo en un casillero común, pero puede utilizar esta habilidad a lo sumo una vez por nivel. Usar la habilidad consume $3$ unidades de tiempo (desplazarse al nuevo casillero habilitado cuesta $1$ unidad de tiempo).
+    \item \verb|[1.0]| Si la protagonista transita por dos casilleros consecutivos con monstruos, pierde $5$ puntos de vida. Al comenzar el nivel tiene $50$ puntos de vida. Debe llegar a la meta con al menos $5$ puntos de vida.
+\end{itemize}
+\begin{enumerate}[A)]
+    \item Modelar linealmente las reglas de movimiento, casilleros de monstruos, habilidad especial y puntos de vida.
+    \item Dado un nivel, modelar la función objetivo para cada uno de los siguientes logros:
+    \begin{enumerate}[1.]
+        \item \verb|[0.5]| Terminar el nivel en la menor cantidad de tiempo
+        \item \verb|[0.25]| Terminar el nivel derrotando a la mayor cantidad de monstruos
+    \end{enumerate}
+\end{enumerate}
+\textbf{Observación:} se debe resolver el problema corriendo el modelo \underline{una sola vez} en cada nivel. 
+
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+
+

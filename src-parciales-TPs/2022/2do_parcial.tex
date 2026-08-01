@@ -1,0 +1,174 @@
+\documentclass[a4paper,oneside,11pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2022}
+\newcommand{\numeroparcial}
+    { Segundo Parcial }
+\newcommand{\fecha}
+    {11 de Octubre de 2022}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & Calificaci\'on \\ \hline \hline
+\hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1.3 cm} \\
+\hspace{1 cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1.3 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\noindent\textit{Para aprobar el parcial deberá obtenerse un puntaje mayor o igual que 4. \textbf{Entregue todos los ejercicios en hojas separadas.}}
+% \vspace{.1cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+\fontsize{10.5pt}{0.4cm}\selectfont
+\begin{quest} \verb|[4 pts.]| Considerar el siguiente modelo de Programación Lineal:
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = -x_1+2x_2-x_3+x_4} \\
+s.a: & -x_1-x_3 & \leq & -2 \\
+ & 3x_2-x_3+x_4 & \leq & 6 \\
+ & x_1+2x_2-x_4 & = & 10 \\
+ & x_1,x_2,x_4 & \geq & 0 \\
+ & x_3 & \leq & 0 \\
+ 
+\end{array}
+\]
+\begin{enumerate}[label=\alph*)]
+    \item \verb|[2.5 pts.]| Hallar una solución óptima del problema mediante el Método de Dos Fases.
+    \item \verb|[1.5 pt.]| Plantear el problema dual y hallar su óptimo.
+\end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} \verb|[1 pt.]| El siguiente diccionario corresponde a un problema de Programación Lineal con objetivo de \textbf{minimizar}:
+    \[
+    \begin{array}{rrrrrrrrr}
+        x_3 & = & 1   & - & 2x_1 & + & 2x_5 & - & x_6   \\
+        x_2 & = & 1+a & - & bx_1 & - &  x_5 & - & 2x_6  \\
+        x_4 & = & 1   & + & x_1  & + & x_5 & - & x_6   \\ \hline
+        z   & = & -1  & + & cx_1 &   &      & + & 2ax_6  \\
+    \end{array}
+    \]
+    con $a,b,c\in\mathbb{R}$. Utilizando el criterio usual de elección de qué variable entra a la base, decidir si cada una de las siguientes afirmaciones son verdaderas o falsas y justificar la respuesta.
+    \begin{enumerate}[label=\alph*)]
+    \item \verb|[0.25 pts.]| Si $c> 0$ y $a> 0$, la base actual es la única base óptima.
+    \item \verb|[0.25 pts.]| Si $a=-1$ y $c< -2$, la próxima iteración es degenerada.
+    \item \verb|[0.25 pts.]| Si $c < -2$, $x_1$ entra a la base en la siguiente iteración.
+    \item \verb|[0.25 pts.]| Si $a=1$, $c=0$ y $b=-2$, entonces $(\frac{1}{4}, \frac{5}{2}, \frac{1}{2},\frac{5}{4}, 0, 0)$ es una solución óptima.  
+    \end{enumerate}
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} \verb|[2.5 pts.]| Para $\alpha=\beta=\gamma=0$, se sabe que una solución óptima del siguiente problema es $x^\ast = (4,2,0)$:
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{3x_1+(2+\beta)x_2+(1+\gamma)x_3} \\
+s.a: & x_1+2x_2+x_3 & \leq & 8+\alpha \\
+ & -x_1+x_2-x_3 & \leq & 6 \\
+ & 2x_1+x_3 & \leq & 8 \\
+ & x_1, x_2, x_3 & \geq & 0
+\end{array}
+\]
+
+    \begin{enumerate}[label=\alph*)]
+    \item \verb|[1 pt.]| Fijando $\beta=\gamma=0$, hallar todos los $\alpha\in\mathbb{R}$ para los cuales la base óptima siga siendo factible. Calcular el valor de $x^\ast$ para $\alpha=2$. 
+    \item \verb|[1.5 pts.]| Fijando $\alpha=0$, hallar un conjunto $S\subseteq \mathbb{R}^2$ tal que si $(\beta,\gamma)\in S$, entonces $x^\ast$ sigue siendo solución óptima.
+    \end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} \verb|[2.5 pts.]| Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de Programación Lineal Entera, detallando cada división en subproblemas mediante el esquema de árbol visto en clase. Comenzar ramificando por $x_2$.
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{3x_1+2x_2} \\
+s.a: & -2x_1+x_2 & \leq & 4 \\
+ & 2x_1+x_2 & \geq & 4 \\
+ & 2x_1+4x_2 & \leq & 17 \\
+ & -3x_1+3x_2 & \geq & -11 \\
+ & x_1, x_2 & \geq & 0 \\
+ & x_1, x_2 & \in & \mathbb{Z}
+\end{array}
+\]
+\end{quest}
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

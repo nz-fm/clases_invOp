@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage[a4 paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{scrextend}
+\usepackage{bm}
+\usepackage{diagbox}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{booktabs,caption}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{adjustbox}
+\usepackage{pifont}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{tikz-network}
+\usepackage{listings}
+\newcommand\pythonstyle{\lstset{
+       language=Python,
+       otherkeywords={self},
+       showstringspaces=false,
+       backgroundcolor=\color{gray!20},
+}}
+\lstnewenvironment{python}[1][]{
+    \pythonstyle
+    \lstset{#1}
+}{}
+\usetikzlibrary{positioning}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\definecolor{shadecolor}{gray}{0.8}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\newcommand{\cpiv}[1]{\colorbox{red!50!white}{#1}}
+\newcommand{\rpiv}[1]{\colorbox{blue!50!white}{#1}}
+\newcommand{\npiv}[1]{\colorbox{purple!65!white}{#1}}
+
+\title{Trabajo Práctico de Aplicaciones \\
+\large Investigación Operativa - Segundo Cuatrimestre 2022}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\textit{El trabajo puede ser resuelto en grupos de hasta tres personas. La fecha límite de entrega es el 30/12 a las 23:59. En el caso de haber errores graves, podrán contar con una fecha de reentrega.}
+
+\vspace*{\baselineskip}
+
+Cada grupo deberá elegir una de las siguientes consignas. Cada consigna debe ser elegida por, al menos, un grupo. En todos los casos, cerrar con un informe que cuente bien todo lo que se hace.
+\vspace*{\baselineskip}
+
+
+\textbf{Consigna 1: Licitación }
+
+Generar tres instancias para las 709 escuelas con varias ofertas para un conjunto de empresas ficticias (A, B, C, etc). Geolocalizar las escuelas en algún rectángulo pre-definido. Correr el modelo básico de la licitación para cada una de las instancias. Correr también el modelo que permite saber si hay más de un óptimo alternativo. Asegurar que alguna de las instancias tiene más de una empresa ganadora en alguna de las unidades de competencia generadas y correr ahí el algoritmo greedy de asignación de las escuelas en esa UC.
+
+\vspace*{\baselineskip}
+
+\textbf{Consigna 2: Master }
+
+Generar tres instancias de 100 estudiantes con sus puntajes y sus características (M/H, clase alta/no clase alta, BA/Interior), de los cuales hay que seleccionar 50 con los porcentajes que define el paper. Correr los 3 modelos y el algoritmo que junta todo para cada instancia. Generar otra propuesta diferente y comparar con la propuesta del paper (da similar, cuantos difieren, etc). Para la propuesta alternativa incorporar otro modelo que se sume o reemplace a los 3 del paper y/o generar algún otro algoritmo de selección.
+
+\vspace*{\baselineskip}
+
+\textbf{Consigna 3: Eliminatorias}
+
+Correr todos los modelos propuestos con números en la plantilla y hacer una asignación después de números a países. Correr ambas opciones, la que distingue a ARG y BRA para que no estén en la doble-fecha de nadie y la que no la tiene. Para el min-max ver en que opción consiguen solución (probablemente tengan que ir a la que pone 5-13 como cotas).
+
+
+
+
+\end{document}
+

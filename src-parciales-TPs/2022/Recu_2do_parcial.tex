@@ -1,0 +1,200 @@
+\documentclass[a4paper,oneside,11pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2022}
+\newcommand{\numeroparcial}
+    {Recuperatorio del Segundo Parcial}
+\newcommand{\fecha}
+    {14 de Diciembre de 2022}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & Calificaci\'on \\ \hline \hline
+\hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1.3 cm} \\
+\hspace{1 cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1.3 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\noindent\textit{Para aprobar el parcial deberá obtenerse un puntaje mayor o igual que 4. \textbf{Entregue todos los ejercicios en hojas separadas.}}
+% \vspace{.1cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+\fontsize{11pt}{0.4cm}\selectfont
+\begin{quest} \verb|[2. pts.]| Utilizar la Fase I del Método de las Dos Fases para hallar una solución básica factible inicial del siguiente Problema Lineal:
+\[
+\begin{array}{rrcl}
+\min & \multicolumn{3}{l}{z = 2x_1-2x_2-x_3+x_4} \\
+s.a: & x_1+x_2+x_3 & = & 8 \\
+ & x_2-x_3+x_4 & \leq & -4 \\
+ & -x_2-2x_4 & \geq & -2 \\
+ & x_4 & \leq & 0 \\
+ & x_1, x_2, x_3 & \geq & 0
+\end{array}
+\]
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} \verb|[1 pt.]|Los siguientes diccionarios corresponden a una iteración de SIMPLEX de diferentes problemas lineales con objetivo de maximizar.
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item[1)]
+            \[
+            \begin{array}{rrrrrrr}
+                x_2&=&2&-&\frac{1}{2}x_1&-&x_5\\
+                x_3&=&3&-&x_1&+&x_5\\
+                x_4&=&\frac{1}{3}&+&x_1&&\\ \hline
+                z&=&-3&&&-&\frac{1}{2}x_5
+            \end{array}
+            \]
+        \item[3)]
+            \[
+            \begin{array}{rrrrrrr}
+                x_1&=&1&&&+&\frac{1}{2}x_5\\
+                x_4&=&1&&&-&x_3\\
+                x_3&=&2&&&-&\frac{4}{3}x_5\\ \hline
+                z&=&&-&\frac{1}{4}x_2&-&3x_3
+            \end{array}
+            \]
+        \item[2)]
+            \[
+            \begin{array}{rrrrrrr}
+                x_3&=&7&&&-&x_4\\
+                x_1&=&\frac{2}{3}&+&\frac{1}{2}x_2&+&\frac{1}{4}x_5\\
+                x_4&=&&&2x_2&-&4x_5\\ \hline
+                z&=&-4&+&\frac{3}{4}x_2&-&2x_5
+            \end{array}
+            \]
+        \item[4)]            \[
+            \begin{array}{rrrrrrr}
+                x_4&=&&&2x_1&+&x_5\\
+                x_2&=&1&+&x_1&-&3x_5\\
+                x_3&=&\frac{3}{2}&-&x_1&-&x_5\\ \hline
+                z&=&2&-&x_1&-&x_5
+            \end{array}
+            \]
+
+    \end{itemize}
+\end{multicols}
+Indicar y justificar a qué situación corresponde cada uno de ellos:
+\begin{multicols}{2}
+\begin{enumerate}[label=\alph*)]
+    \item Solución única no degenerada.
+    \item Solución única degenerada.
+    \item No acotado.
+    \item Infinitas soluciones.
+\end{enumerate}    
+\end{multicols}
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} \verb|[4.5 pts.]| 
+    Considerar el siguiente Problema Lineal:
+    \[
+    \begin{array}{rrcl}
+    \max & \multicolumn{3}{l}{(3+\beta)x_1+x_2-4x_3+(2+\beta)x_4} \\
+    s.a: & 2x_1+x_2-2x_3+x_4 & \geq & 10+\alpha \\
+     & -x_2+3x_3-2x_4 & \leq & -8-\gamma \\
+     & x_1, x_2, x_3, x_4 & \geq & 0\\
+    \end{array}
+    \]
+    \begin{enumerate}[label=\alph*)]
+        \item\verb|[1.5]| Para $\alpha =\beta=\gamma=0$, hallar la solución óptima mediante la solución de su problema dual.
+        \item\verb|[1.0]| Para el problema primal, fijando $\alpha=\gamma=0$, hallar todos los valores de $\beta$ para las cuales la base óptima sigue siendo factible.
+        \item\verb|[1.5]| Para el problema primal, fijando $\beta=0$, hallar todos los $(\alpha, \gamma)\in\mathbb{R}^2$ para los cuales la solución hallada en el ítem 1 sigue siendo óptima. 
+    \end{enumerate}  
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} \verb|[2.5 pts.]| Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de Programación Lineal Entera, detallando cada división en subproblemas mediante el esquema de árbol visto en clase. 
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{\frac{1}{3}x_1+x_2} \\
+s.a: & 2x_1-2x_2 & \geq & -5 \\
+ & 2x_1+4x_2 & \leq & 31 \\
+ & 2x_1+2x_2 & \leq & 27 \\
+ & x_2 & \geq & 0 \\
+ & x_1, x_2& \in & \mathbb{Z}\\
+\end{array}
+\]
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}

@@ -1,0 +1,167 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2021}
+\newcommand{\numeroparcial}
+    { Segundo Parcial }
+\newcommand{\fecha}
+    {12 de Octubre de 2021}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & Calificaci\'on \\ \hline \hline
+\hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1 cm} & \hspace{1.3 cm} \\
+\hspace{1 cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1  cm} & \hspace{1.3 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+% \vspace{.1cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} Para el siguiente problema lineal, hallar una solución básica factible mediante la Fase I del Método de Dos Fases y decidir si dicha solución es óptima:
+    \[
+    \begin{array}{rrcl}
+    \max & \multicolumn{3}{l}{z = x_1+2x_2-x_3} \\
+    s.a: & x_1+x_2+x_3 & = & 4 \\
+     & 2x_1-x_3 & \leq & 5 \\
+     & 2x_1-x_2 & \geq & 2 \\
+     & x_1,x_2 & \geq & 0 \\
+     & x_3 & \leq & 0
+    \end{array}
+    \]
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest}
+Dado el siguiente problema lineal:
+    \[
+    \begin{array}{rrcl}
+    \max & \multicolumn{3}{l}{z = x_1+x_2-2x_3+2x_4} \\
+    s.a: & -x_1+x_2+x_3+2x_4 & \leq & -2 \\
+     & x_1+x_2+x_4 & \leq & 8 \\
+     & x & \geq & 0 \\
+    \end{array}
+    \]
+    \begin{enumerate}[label=\alph*)]
+        \item Plantear su problema dual.
+        \item Sabiendo que el óptimo del problema primal es $(6, 0, 0, 2)$, hallar el óptimo del problema dual mediante el Teorema de Holgura Complementaria.
+        \item Calcular cuál sería el valor óptimo en la función objetivo del primal si se considerara $b=(-\frac{3}{2}, \frac{17}{2})^t$ en vez de $b=(-2, 8)^t$.
+    \end{enumerate}
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest}
+Dado el siguiente problema de programación lineal:
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = (1+\alpha)x_1+(2+\alpha+\beta)x_2+\frac{1}{2}x_3+2x_5} \\
+s.a: & x_1+x_2+x_3 & = & 4 + \delta \\
+ & 2x_1-x_3+x_4 & = & 5 + \delta\\
+ & 2x_1-x_2+\frac{1}{2}x_4-x_5 & = & 2 \\
+ & x & \geq & 0
+\end{array}
+\]
+
+se sabe que, si $\alpha=\beta=\delta=0$, su solución óptima es $x^\ast = (3, 0, 1, 0, 4)$.
+\begin{enumerate}[label=\alph*)]
+    \item Fijando $\delta = 0$, hallar los valores que pueden tomar $\alpha,\beta\in \mathbb{R}$ para que la base óptima siga siéndolo.
+    \item Suponiendo que $\alpha, \beta$ cumplen con las condiciones del ítem anterior, hallar qué valores puede tomar $\delta\in\mathbb{R}$ para que la base óptima no deje de ser factible.
+\end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} 
+Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de programaci\'on lineal entera, detallando cada divisi\'on en subproblemas durante el algoritmo mediante el esquema de \'arbol visto en clase. Resolver gráficamente la relajación lineal de cada subproblema. 
+
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = x_1+x_2} \\
+s.a: & 9x_1+5x_2 & \leq & 45 \\
+ & x_1+3x_2 & \leq & 16 \\
+ & x_1, x_2 & \in & \mathbb{Z}_{\geq 0}
+\end{array}
+\]
+
+
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

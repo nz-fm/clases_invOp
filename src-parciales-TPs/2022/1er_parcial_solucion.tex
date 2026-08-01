@@ -1,0 +1,168 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\def \ds{\displaystyle}
+
+\begin{document}
+
+\section*{Soluciones 1er Parcial 2022}
+
+\textbf{Ejercicio 1.}
+\vspace{0.2cm}
+
+Variables:
+\[
+\begin{array}{rl}
+    x_{ik}\colon & \text{ cantidad de $P_i$ que se le vende al supermercado $k$, $x_{ik}\in\mathbb{R}_{\geq 0}$ } \\
+     \theta_j \colon & \text{ indica si se compra el extra de producto $j$, $\theta_j\in\{0,1\}$} \\
+     \eta \colon & \text{ indica si se producen $\leq 100$ lts. de $P_1$, $\eta\in\{0,1\}$}
+\end{array}
+\]
+
+Modelo:
+
+\[\def\arraystretch{1.4}
+    \begin{array}{rrcllr}
+         \max & \multicolumn{4}{l}{\ds\sum_{k=1}^2\sum_{i=1}^3 g_{ik}x_{ik} - \sum_{j=1}^4 c_j\theta_j} & (5) \\
+         \text{s.a:} & \ds\sum_{i=1}^4\sum_{k=1}^2  q_{ij}x_{ik} & \leq & \ell_j + m_j\theta_j & \forall\;j=1,\dots,4 & (1) \\ 
+         & x_{ik} & \leq & d_{ik} & \forall\; i=1,2,3 \;\forall\;k=1,2 & (2) \\
+         & x_{11} + x_{12} & \leq & 100 + M(1-\eta) & & (3) \\
+         & x_{11} + x_{12} & \geq & 160 - M\eta & & (3) \\
+         & x_{21} + x_{22} & \geq & 0.2\left( \ds\sum_{k=1}^2\sum_{i=1}^3 x_{ik} \right) & & (4) \\
+         & x_{21} + x_{22} & \leq & 0.4\left( \ds\sum_{k=1}^2\sum_{i=1}^3 x_{ik} \right) & & (4) \\
+         & x_{ik} & \in & \mathbb{Z}_{\geq 0} & \forall\; (i,k) & \\
+         & \theta_{j} & \in & \{0,1\} & \forall\; j=1,\dots,4 & \\
+         & \eta & \in & \{0,1\} & & \\
+    \end{array}
+\]
+
+
+\vspace{2cm}
+Una alternativa es definir las variables
+\[ y_i\colon \text{ cantidad de litros de $P_i$ producidos}\]
+vincularlas con las $x$:
+\[ \ds\sum_{k=1}^2 x_{ik} = y_i \quad \forall\; i=1,2,3\]
+y usar eso en (1), (3) y (4).
+
+\newpage
+
+\textbf{Ejercicio 2.}
+
+A) Conjuntos:
+\[
+\begin{array}{ll}
+    I= & \{1,\dots,N\} \text{ equipos} \\
+    B= & \{1,\dots, N+1\} \text{ fechas} \\
+    H = & \{1,2,3\} \text{ franjas horarias} \\
+    P_i= & \{p\in\mathcal{P}\colon\; i\in p\}
+\end{array}
+\]
+
+Variables:
+\[
+\begin{array}{rl}
+    x_{pkh}\colon & \text{ vale 1 si y sólo si el partido $p$ se juega en la fecha $k$ en la franja horaria $h$} \\
+     & 
+\end{array}
+\]
+
+Modelo:
+
+\[\def\arraystretch{1.4}
+\begin{array}{rcllr}
+    \ds\sum_{k \in B}\ds\sum_{h\in H} x_{pkh} & = & 1 & \forall\; p\in \mathcal{P} & (1) \\
+    \ds\sum_{p\in P_i}\ds\sum_{h\in H} x_{pkh} & \leq & 1 &  \forall\;i \in I \;\;\forall\;k\in B & (2) \\
+    \ds\sum_{p\in P_i}\ds\sum_{h\in H} x_{pkh} + \ds\sum_{p\in P_i}\ds\sum_{h\in H} x_{p(k+1)h} & \geq & 1 & \forall\;i \in I \;\;\forall\;k\in B-\{N+1\} & (3) \\ 
+    \ds\sum_{i\in\{1,4,7\}}\sum_{p\in P_i}\sum_{h\in H} x_{pkh} & = & 3\theta_k & \forall\; k\in B & (4) \\ 
+    \ds \sum_{p\in P_3}\sum_{h\in H} x_{pkh} + \sum_{p\in P_4}\sum_{h\in H} x_{pkh} & \leq & 2\eta_k & \forall\; k\in B & (5) \\  
+    \ds \sum_{p\in P_3}\sum_{h\in H} x_{pkh} + \sum_{p\in P_4}\sum_{h\in H} x_{pkh} & \geq & \eta_k & \forall\; k\in B & (5) \\  
+    \ds \sum_{p\in P_9}\sum_{h\in H} x_{pkh} + \sum_{p\in P_{10}}\sum_{h\in H} x_{pkh} & = & 2\sigma_k & \forall\; k\in B & (5) \\
+    \sigma_k + \eta_k & = & 1 & \forall\; k\in B & (5) \\
+    \ds\sum_{p\in\mathcal{P}} x_{pkh} & \leq & C_h & \forall\;k\in B\;\;\forall\; h \in H & (6) \\
+    \ds\sum_{p\in P_i}\sum_{k\in B} x_{pk3} - \ds\sum_{p\in P_j}\sum_{k\in B} x_{pk3} & \leq & L & \forall\;\{i,j\}\in\mathcal{P} & (7) \\
+    - \ds\sum_{p\in P_i}\sum_{k\in B} x_{pk3} + \ds\sum_{p\in P_j}\sum_{k\in B} x_{pk3} & \leq & L & \forall\;\{i,j\}\in\mathcal{P} & (7) \\
+    x_{pkh} & \in & \{0,1\} & & \\
+    \theta_{k} & \in & \{0,1\} & & \\
+    \eta_{k} & \in & \{0,1\} & & \\
+    \sigma_{k} & \in & \{0,1\} & & \\
+\end{array}
+\]
+
+B) 1. Sea $s_{ih}$ la cantidad de hinchas del equipo $i$ que van a alentar en la franja $h$
+
+Nuevas restricciones:
+\[
+\begin{array}{rclr}
+    z & \leq & \ds\sum_{\{i,j\}\in\mathcal{P}}\ds\sum_{h\in H}(s_{ih} + s_{jh})x_{\{i,j\}kh} & \forall k\in K \\
+     & 
+\end{array}
+\]
+
+Función objetivo:
+\[\max z\]
+
+2. Función objetivo:
+\[ \min \ds\sum_{p\in\mathcal{P}}\sum_{k\in K} x_{pk1}\]
+
+\newpage
+
+\textbf{Ejercicio 3.}
+
+Conjuntos:
+\[
+\begin{array}{rl}
+    I= & \{1,\dots, N\} \text{ ciudades} \\
+    B= & \{1, \dots, K\} \text{ buques} \\
+    E= & \{1, \dots, 24\} \text{ meses}\\
+\end{array}
+\]
+
+Variables:
+\[
+\begin{array}{rl}
+    x_{ijkm}= & \text{ cantidad de productos que el buque $k$ transporta desde $i$ hasta $j$ en el mes $m$}  \\
+    z_{ijkm} = & \text{ indica si el buque $k$ viaja desde $i$ hasta $j$ en el mes $m$} \\
+    y_{ikm}= & \text{ indica si el buque $k$ se queda anclado en $i$ durante el mes $m$} 
+\end{array}
+\]
+
+Modelo:
+
+% \resizebox{\linewidth}{    
+\[
+\begin{array}{rrclr}
+     \max &  \multicolumn{3}{l}{\ds\sum_{i}\sum_{\substack{j \\ j\neq i \\ j\neq 5}}\sum_{k}\sum_{m}g_jx_{ijkm} + f - \ds\sum_{i}\sum_{\substack{j \\ j\neq i}}\sum_{k}c_{ijk}\left(\sum_{m}z_{ijkm}\right) - \ds\sum_{i}\sum_k d_{ik}\left(\sum_{m}y_{ikm}\right) } & (1) \\
+     \text{s.a:} & \ds\sum_{j\in I-\{i\}}z_{ijkm} & \leq & 1 \quad \forall\;m\in E, \forall\;k\in B, \forall i\in I  & (2) \\ 
+     & \ds\sum_{i\in}\ds\sum_{j\in I-\{i\}}z_{ijkm} + \ds\sum_{i\in I}y_{ikm} & = & 1 \quad \forall\;m\in E, \forall\;k\in B  & \\
+     & 1- y_{ikm} & \geq & \ds\sum_{j\in I-\{i\}}z_{ijkm} \quad \forall\;m\in E, \forall\;k\in B, \forall i\in I  & \\
+      & x_{ijkm} & \leq & CAP_k\cdot z_{ijkm} \quad \forall\;m\in E, \forall\;k\in B, \forall i,j\in I, i\neq j  & (3) \\ 
+     & \ds\sum_{j\in I-\{i\}} x_{ijkm} & \leq & M(y_{ik(m-1)} + \ds\sum_{j\in I-\{i\}}z_{jik(m-1)})\quad \forall\;m\geq 2, \forall\;k\in B, \forall i\in I  & (4) \\
+     & \ds\sum_{j\in I-\{i\}} y_{jkm} & \leq & 1-y_{ik(m-1)}\quad \forall\;m\geq 2, \forall\;k\in B, \forall i\in I  & (4) \\
+     & \ds\sum_{\substack{i \in I \\ i \neq s_k}}\sum_{\substack{j\in I \\ j\neq i} } z_{ijk1} & = & 0 \quad \forall\;k\in B & (4) \\
+     & \ds\sum_{\substack{i \in I \\ i \neq s_k}} y_{ik1} & = & 0 \quad  \forall\;k\in B & (4) \\
+     & \ds\sum_{i\in I-\{j\}}\sum_{k\in B}\sum_{m\in E} x_{ijkm} & \geq & \ell_j \quad \forall\; j\in I & (5)\\
+     & \ds\sum_{i\in I-\{j\}}\sum_{k\in B}\sum_{m\in E} x_{ijkm} & \leq & u_j \quad \forall\; j\in I & (5)\\
+     & \ds\sum_{j\in I-\{i\}}\sum_{k\in B}\sum_{m\in E} x_{ijkm} & \leq & T_i \quad \forall\; i\in I & (6)\\
+     & \ds\sum_{s=1}^3 \delta_s & = & 1 &  (1) \\
+     & \lambda_1 + \lambda_2 & = & \delta_1 &  (1) \\
+     & \lambda_3 + \lambda_4 & = & \delta_2 &  (1) \\
+     & \lambda_5 + \lambda_6 & = & \delta_3 &  (1) \\
+     & \ds\sum_{i\in I-\{5\}}\sum_{k\in B}\sum_{m\in E} x_{i5km} & = & 200\lambda_2 + 200\lambda_3 + 400\lambda_4 + 400\lambda_5 + 600\lambda_6 &  (1)  \\
+     & f & = & 600\lambda_2 + 600\lambda_3 + 700\lambda_4 + 700\lambda_5 + 750\lambda_6 & (1) \\
+     & x_{ijkm} & \in & \mathbb{R}_{\geq 0} & \\
+     & z_{ijkm} & \in & \{0,1\} & \\
+     & y_{ikm} & \in & \{0,1\} & \\
+     & \lambda_r & \in & \mathbb{R}_{\geq 0} & \\
+     & \delta_s & \in & \{0,1\} & \\
+\end{array}
+\]
+\end{document}

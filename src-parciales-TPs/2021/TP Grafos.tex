@@ -1,0 +1,259 @@
+\documentclass{article}
+
+\usepackage[a4 paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{scrextend}
+\usepackage{bm}
+\usepackage{diagbox}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{booktabs,caption}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{adjustbox}
+\usepackage{pifont}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{tikz-network}
+\usetikzlibrary{positioning}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\definecolor{shadecolor}{gray}{0.8}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\newcommand{\cpiv}[1]{\colorbox{red!50!white}{#1}}
+\newcommand{\rpiv}[1]{\colorbox{blue!50!white}{#1}}
+\newcommand{\npiv}[1]{\colorbox{purple!65!white}{#1}}
+
+\title{Trabajo Práctico de Grafos y Optimización \\
+\large Investigación Operativa - Segundo Cuatrimestre 2021}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\textit{El trabajo puede ser resuelto en grupos de una o dos personas. La fecha límite de entrega es el Martes 07/12 a las 23:59. En el caso de haber errores graves, podrán contar con una fecha de reentrega.}
+
+\vspace*{\baselineskip}
+\textbf{Consigna - Para Licenciatura en Matemática/Doctorado/Optativa}
+\vspace*{\baselineskip}
+
+\textit{No se pueden utilizar librerías de Python que no vengan integradas.}
+
+La empresa MicroApple planea construir una nueva planta de fabricación para elaborar nuevos productos tecnológicos. Si bien todavía no determinó cuáles, tiene varios posibles candidatos. Para cada uno de ellos, se solicita a un equipo de expertes que diagramen cómo se deben realizar las tareas de las distintas etapas de su fabricación y cuánto tarda el procedimiento en cada una de ellas. No importa el tipo de producto, la última etapa es siempre el control de calidad.
+
+De esta manera, para cada producto candidato, el equipo entrega un grafo dirigido pesado $G=(V,E)$, donde los vértices $1,\dots, N$ son las tareas, $(i,j)\in E$ si iniciar la tarea $j$ requiere haber completado la tarea $i$ y el peso $w(i,j)$ viene dado por cuánto tarda el procedimiento en la tarea $j$ si el producto acaba de terminar con la tarea $i$. Además, el vértice $N$, que representa al control de calidad, es el único vértice con grado de salida nulo.
+
+\begin{enumerate}
+    \item Dado un grafo correspondiente a la elaboración de cierto producto, su esquema de fabricación es correcto si el grafo no tiene ciclos dirigidos (es decir, si es un DAG). En ese caso, también se desea tener un orden en el que se pueden llevar adelante las tareas de fabricación. 
+    
+    Para esto, implementar en Python una función \texttt{orden\_topologico} cuya entrada sea un grafo dirigido pesado y que detecte si es un DAG. En caso afirmativo, debe devolver un orden topólogico; de lo contrario, debe imprimir en pantalla ``El grafo no es un DAG''.
+    
+    Ejemplo 1:
+    
+    \begin{center}
+    \begin{tikzpicture}
+            \SetVertexStyle[FillColor=white]
+            \Vertex[label=$3$, x=0, y=3]{3}
+            \Vertex[label=$4$, x=2, y=3]{4}
+            \Vertex[label=$2$, x=4, y=3]{2}
+            \Vertex[label=$8$, x=0, y=1.5]{8}
+            \Vertex[label=$5$, x=2, y=1.5]{5}
+            \Vertex[label=$1$, x=0, y=0]{1}
+            \Vertex[label=$6$, x=2, y=0]{6}
+            \Vertex[label=$7$, x=4, y=0]{7}
+            \Vertex[label=$9$, x=2, y=-1.5]{9}
+            
+            \Edge[Direct=true, label=1, position=left](3)(8)
+            \Edge[Direct=true, label=2, position=left](4)(5)
+            \Edge[Direct=true, label=2, position=above left](4)(8)
+            \Edge[Direct=true, label=3, position=above left](2)(5)
+            \Edge[Direct=true, label=2, position=left](2)(7)
+            \Edge[Direct=true, label=4, position= left](8)(1)
+            \Edge[Direct=true, label=2, position= left](6)(9)
+            \Edge[Direct=true, label=1, position=below left](8)(6)
+            \Edge[Direct=true, label=2, position=below left](1)(9)
+            \Edge[Direct=true, label=3, position=below right](7)(9)
+            \Edge[Direct=true, label=4, distance=0.2, position=right](5)(6)
+            \Edge[Direct=true, label=1, distance=0.8, position=above right](8)(7)
+    \end{tikzpicture}
+\end{center}
+
+% \begin{shaded}
+\begin{verbatim}
+G = Grafo()
+lista_aristas = [(3, 8, 1), (4, 5, 2), (4, 8, 2), (2, 5, 3), (2, 7, 2),
+                 (8, 1, 4), (8, 6, 1), (8, 7, 1), (5, 6, 4), (1, 9, 2),
+                 (6, 9, 2), (7, 9, 3)]
+G.agregar_lista_aristas(lista_aristas)
+T = orden_topologico(G)
+print(T)
+\end{verbatim}
+% \texttt{[(0, 1, 0.9), (0, 2, 0.95), (1, 2, 0.8), (1, 3, 0.9), (3, 1, 0.99), (2, 3, 0.85)]}
+% \end{shaded}
+
+
+Como es un DAG, debe imprimir en pantalla un orden topológico, por ejemplo:
+% \begin{shaded}
+\begin{verbatim}
+[2, 3, 4, 5, 9, 1, 6, 7, 10]
+\end{verbatim}
+% \end{shaded}
+\underline{Observación:} el orden topológico no necesariamente es único.
+\newpage
+Ejemplo 2: 
+\begin{center}
+    \begin{tikzpicture}
+            \SetVertexStyle[FillColor=white]
+            \Vertex[label=$3$, x=0, y=3]{3}
+            \Vertex[label=$4$, x=2, y=3]{4}
+            \Vertex[label=$2$, x=4, y=3]{2}
+            \Vertex[label=$8$, x=0, y=1.5]{8}
+            \Vertex[label=$5$, x=2, y=1.5]{5}
+            \Vertex[label=$1$, x=0, y=0]{1}
+            \Vertex[label=$6$, x=2, y=0]{6}
+            \Vertex[label=$7$, x=4, y=0]{7}
+            \Vertex[label=$9$, x=2, y=-1.5]{9}
+            
+            \Edge[Direct=true, label=1, position=left](3)(8)
+            \Edge[Direct=true, label=2, position=left](4)(5)
+            \Edge[Direct=true, label=2, position=above left](4)(8)
+            \Edge[Direct=true, label=3, position=above left](2)(5)
+            \Edge[Direct=true, label=2, position=left](2)(7)
+            \Edge[Direct=true, label=4, position= left](8)(1)
+            \Edge[Direct=true, label=2, position= left](6)(9)
+            \Edge[Direct=true, label=1, position=below left](6)(8)
+            \Edge[Direct=true, label=2, position=below left](1)(9)
+            \Edge[Direct=true, label=2, position=below](1)(6)
+            \Edge[Direct=true, label=3, position=below right](7)(9)
+            \Edge[Direct=true, label=4, distance=0.2, position=right](5)(6)
+            \Edge[Direct=true, label=1, distance=0.8, position=above right](8)(7)
+    \end{tikzpicture}
+\end{center}
+
+% \begin{shaded}
+\begin{verbatim}
+G = Grafo()
+lista_aristas = [(3, 8, 1), (4, 5, 2), (4, 8, 2), (2, 5, 3), (2, 7, 2),
+                 (8, 1, 4), (6, 8, 1), (8, 7, 1), (5, 6, 4), (1, 9, 2),
+                 (1, 6, 2), (6, 9, 2), (7, 9, 3)]
+G.agregar_lista_aristas(lista_aristas)
+T = orden_topologico(G)
+print(T)
+\end{verbatim}
+% \end{shaded}
+
+Como no es un DAG, debe imprimir en pantalla:
+
+% \begin{shaded}
+\begin{verbatim}
+El grafo no es un DAG
+\end{verbatim}
+% \end{shaded}
+
+\item Llamaremos \textit{tarea inicial} a aquellas representadas por vértices a los que no les llega ninguna arista. Dado un DAG, implementar en Python una función \texttt{distancia\_control\_de\_calidad} que para cada tarea principal imprima en pantalla la tarea, el camino mínimo al control de calidad y la distancia del mismo.
+Debe recibir como input a un DAG y un orden topológico.
+
+En el primer ejemplo:
+
+
+% \begin{shaded}
+\begin{verbatim}
+G = Grafo()
+lista_aristas = [(3, 8, 1), (4, 5, 2), (4, 8, 2), (2, 5, 3), (2, 7, 2),
+                 (8, 1, 4), (8, 6, 1), (8, 7, 1), (5, 6, 4), (1, 9, 2), 
+                 (6, 9, 2), (7, 9, 3)]
+G.agregar_lista_aristas(lista_aristas)
+T = orden_topologico(G)
+
+# Hay que volver a definir el grafo porque en orden_topologico se eliminan las aristas
+G = Grafo()
+lista_aristas = [(3, 8, 1), (4, 5, 2), (4, 8, 2), (2, 5, 3), (2, 7, 2),
+                 (8, 1, 4), (8, 6, 1), (8, 7, 1), (5, 6, 4), (1, 9, 2), 
+                 (6, 9, 2), (7, 9, 3)]
+G.agregar_lista_aristas(lista_aristas)
+distancia_control_de_calidad(G, T)
+\end{verbatim}
+% \end{shaded}
+
+Debe imprimir en pantalla:
+% \begin{shaded}
+\begin{verbatim}
+2 [2, 7, 9] 5
+3 [3, 8, 6, 9] 4
+4 [4, 8, 6, 9] 5
+\end{verbatim}
+% \end{shaded}
+\end{enumerate}
+
+\newpage
+
+\vspace*{\baselineskip}
+
+\textbf{Consigna - Para Licenciatura en Ciencias de Datos}
+
+\vspace*{\baselineskip}
+
+\textit{No se pueden utilizar librerías de Python que no vengan integradas, salvo \texttt{numpy} y librerías para graficar.}
+
+Hemos visto que el resultado de métodos como el de Descenso por Gradiente dependen de su punto de partida. Además, en general, suelen estancarse en mínimos locales. Una manera sencilla de utilizar estos métodos para hallar soluciones de \textit{buena} calidad es una heurística conocida como \textit{Random Restart}. Consiste en correr el método muchas veces, aleatorizando los puntos iniciales. De esta manera se espera dar con el mínimo global o, al menos, con un mínimo local cuyo valor se aproxime bastante.
+
+\begin{enumerate}
+    \item Implementar en Python una función que implemente el método del gradiente cuyos criterios de parada sean tolerancia de $10^{-5}$ y/o un máximo de $1000$ iteraciones. Debe utilizar el método de Armijo para determinar la longitud del paso.
+    \item Probemos el desempeño de Random Restart para hallar óptimos de algunas funciones. 
+    
+    Implementar en Python una función \texttt{random\_restart} que lleve a cabo la heurística para funciones $\mathbb{R}^2\rightarrow \mathbb{R}$, comenzando con puntos aleatorios en el cuadrado $[-c, c]\times [-c, c]$. La función debe tomar como input una función, su valor en el óptimo global y $c$ que describe el dominio donde se desean inicializar aleatoriamente los puntos. La función debe generar $25$ puntos aleatorios, y a partir de cada uno de ellos, correr Descenso por Gradiente. Debe devolver la mejor solución obtenida y la diferencia de su valor en la función objetivo con el valor óptimo.
+    
+    Aplicar a las siguientes funciones con los parámetros que se muestran en la siguiente tabla:
+    \begin{center}
+        \begin{tabular}{ccc}
+        Nombre de la función & Valor óptimo & $c$  \\\midrule
+        Ackley & $0$ & $5$ \\
+        Bird & $-106.764$ & $7$ \\
+        Levy & $0$ & $10$ 
+        \end{tabular}
+    \end{center}
+    
+    Pueden importar las funciones de Ackley, de Bird y de Levy desde el archivo con \href{https://gist.github.com/nz-angel/2ccfa60e45962e1732150575f8cf0983}{funciones de prueba}.
+
+    Un punto aleatorio en $[-c,c]\times[-c,c]$ se puede obtener con:
+    \begin{verbatim}
+        x = 2 * c * np.random.random(2) - c
+    \end{verbatim}
+    
+    Ejemplo:
+    \begin{verbatim}
+    random_restart(ackley, 0, 5)
+    \end{verbatim}
+    Devuelve:
+    \begin{verbatim}
+    [4.45370809e-08 1.54513843e-07] 4.548244274538149e-07
+    \end{verbatim}
+    
+    \textbf{Observación:} al haber aleatoriedad involucrada, cada vez que se corre puede dar un resultado distinto. No necesariamente tiene que dar el resultado del ejemplo para que el código esté bien.
+\end{enumerate}
+
+\end{document}

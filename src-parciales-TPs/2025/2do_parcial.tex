@@ -1,0 +1,204 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\xopt}{x^{*}}
+\newcommand{\yopt}{y^{*}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2025}
+\newcommand{\numeroparcial}
+    { Segundo Parcial }
+\newcommand{\fecha}
+    {3 de Octubre de 2025}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|}
+\hline 
+1 & 2 & 3 & Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+%\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+%\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+%\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+\begin{center}
+    \textbf{Entregar todos los ejercicios en hojas separadas.}
+\end{center}
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+\verb|[5.5 pts.]| Dado el siguiente problema de Programación Lineal:
+    \[
+        \begin{array}{rrcrcrcr}
+            \max & 3x_1 & + & 2x_2 & + & 2x_3 & & \\
+            \text{s.a:} & x_1 & + & 2x_2 & + & x_3 & \leq & -4\\
+            & & - & x_2 & - & x_3 & \leq & -2\\
+            & x_1 & + & x_2 &  & & \leq & -1\\
+            & \multicolumn{5}{r}{x_1,x_3} & \leq & 0 \\
+            & \multicolumn{5}{r}{x_2} &  & \text{libre} \\
+
+        \end{array}
+    \]
+    \begin{enumerate}[label=\alph*)]
+        \item \verb|[1 pt.]| Plantear el problema dual.
+        \item \verb|[3 pts.]| Resolver el problema dual con el Método de Dos Fases.
+        \item \verb|[1.5 pts.]| A partir de la solución óptima obtenida en el ítem anterior, hallar una solución
+        óptima del problema
+        primal.
+    \end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest}
+    \verb|[1 pt.]| El siguiente diccionario corresponde a una solución básica factible de un problema de
+    Programación Lineal con objetivo de \textbf{maximizar}:
+    \[
+    \begin{array}{rrrrrrrrr}
+        x_4&=&a&-&2x_1&+&x_2&-&\frac{1}{2}x_3\\
+        x_5&=&1&-&bx_1&+&x_2&+&cx_3\\
+        x_6&=&2&&&-&x_2&-&3x_3\\ \hline
+        z&=&&&dx_1&-&2x_2 &+&ex_3
+    \end{array}
+    \]
+    con $a,b,c,d,e\in \mathbb{R}$ y $a\geq 0$. Utilizando el criterio usual de elección de qué variable entra a la
+    base, decidir si cada una de las siguientes afirmaciones son verdaderas o falsas y
+    \underline{justificar la respuesta}.
+    \begin{enumerate}[label=\alph*)]
+        \item \verb|[0.25 pts.]| Para que $x_1$ entre a la base y salga $x_5$ basta pedir:
+        \[d>e>0 \;\wedge\; b>0 \;\wedge\; \frac{1}{b} < \frac{a}{2} \]
+        \item \verb|[0.25 pts.]| Si $a=0$, la próxima iteración dará lugar a una solución degenerada.
+        \item \verb|[0.25 pts.]| Si $a\neq 0$, $d=0$ y $e\leq0$, el problema tiene infinitas soluciones óptimas.
+        \item \verb|[0.25 pts.]| Si $e>d>0$ y $c > 0$, se puede afirmar que el problema es no acotado.
+    \end{enumerate}
+
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+\begin{quest} 
+\verb|[3.5 pts.]| Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de Programación Lineal
+Entera, detallando cada división en subproblemas mediante el esquema de árbol visto en clase.
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{x_1+3x_2} \\
+s.a: & 2x_1+x_2 & \leq & 8 \\
+ & 4x_1+9x_2 & \leq & 24 \\
+ & 4x_1-5x_2 & \geq & -4 \\
+% & -3x_1+3x_2 & \geq & -11 \\
+ & x_1, x_2 & \geq & 0 \\
+ & x_1, x_2 & \in & \mathbb{Z}
+\end{array}
+\]
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+\newpage
+
+   \begin{tabular}{|l|l|} \hline
+        \multicolumn{1}{|c|}{Primal} & \multicolumn{1}{c|}{Dual}  \\ \hline
+        Obj: Minimizar & Obj: Maximizar \\ \hline
+        % Obj: Minimizar & Obj: Maximizar \\ \hline
+        $\imath$-ésima restricción $\leq$ & $\imath$-ésima variable $\leq 0$ \\
+        $\imath$-ésima restricción $\geq$ & $\imath$-ésima variable $\geq 0$ \\
+        $\imath$-ésima restricción $=$ & $\imath$-ésima variable libre \\
+        $\jmath$-ésima variable $\geq 0$ & $\jmath$-ésima restricción $\leq$ \\
+        $\jmath$-ésima variable $\leq 0$ & $\jmath$-ésima restricción $\geq$ \\
+        $\jmath$-ésima variable libre & $\jmath$-ésima restricción $=$ \\ \hline
+    \end{tabular}
+    \begin{tabular}{|l|l|} \hline
+        \multicolumn{1}{|c|}{Primal} & \multicolumn{1}{c|}{Dual}  \\ \hline
+        Obj: Maximizar & Obj: Minimizar \\ \hline
+        % Obj: Minimizar & Obj: Maximizar \\ \hline
+        $\imath$-ésima restricción $\leq$ & $\imath$-ésima variable $\geq 0$ \\
+        $\imath$-ésima restricción $\geq$ & $\imath$-ésima variable $\leq 0$ \\
+        $\imath$-ésima restricción $=$ & $\imath$-ésima variable libre \\
+        $\jmath$-ésima variable $\geq 0$ & $\jmath$-ésima restricción $\geq$ \\
+        $\jmath$-ésima variable $\leq 0$ & $\jmath$-ésima restricción $\leq$ \\
+        $\jmath$-ésima variable libre & $\jmath$-ésima restricción $=$ \\ \hline
+    \end{tabular}
+    \vspace{1cm}
+
+    \textbf{Teorema débil de dualidad:} Para un problema con objetivo de maximizar, sean $(x_1,\cdots,x_n)$ solución
+factible del primal e $(y_1,\cdots, y_m)$ solución factible del dual, entonces:
+    \[ \displaystyle \sum_{j=1}^n c_jx_j \leq \sum_{i=1}^m b_iy_i\]
+    (si el objetivo del primal es minimizar, se invierte la desigualdad).
+
+    \textbf{Teorema fundamental de dualidad}: Si el problema primal tiene solución óptima $(x_1^{\ast},\cdots,x_n^{\ast})$, entonces el dual
+    tiene solución óptima $(y_1^{\ast},\cdots,y_m^{\ast})$ tal que:
+    \[ \displaystyle \sum_{j=1}^n c_jx_j^{\ast} = \sum_{i=1}^m b_iy_i^{\ast}\]
+
+    \textbf{Teorema de Holgura Complementaria:} Sean $x^{*}=(x_1^{\ast},\cdots,x_n^{\ast})$ solución del primal e
+        $y^{*}=(y_1^{\ast},\cdots,y_m^{\ast})$ solución del dual, las siguientes son condiciones necesarias y
+suficientes para la optimalidad simultánea de $\xopt$ e $\yopt$:
+    \[
+    \begin{array}{ccccc}
+        \displaystyle \sum_{i=1}^m a_{ij}\yopt_i=c_j & \text{o} & \xopt_j = 0 & \; \text{(o ambos)} \quad & \forall j=1,\cdots,n  \\
+        \displaystyle \sum_{j=1}^m a_{ij}\xopt_j=b_i & \text{o} & \yopt_i = 0 & \; \text{(o ambos)} \quad & \forall i=1,\cdots,m  \\
+    \end{array} \]
+\end{document}
+

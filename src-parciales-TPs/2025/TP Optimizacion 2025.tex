@@ -1,0 +1,152 @@
+\documentclass{article}
+
+\usepackage[a4 paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{scrextend}
+\usepackage{bm}
+\usepackage{diagbox}
+\usepackage{dsfont}
+\usepackage{xspace}
+\usepackage{booktabs,caption}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage{adjustbox}
+\usepackage{pifont}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{tikz-network}
+\usepackage{listings}
+\newcommand\pythonstyle{\lstset{
+    language=Python,
+    otherkeywords={self},
+    showstringspaces=false,
+    backgroundcolor=\color{gray!20},
+}}
+\lstnewenvironment{python}[1][]{
+    \pythonstyle
+    \lstset{#1}
+}{}
+\usetikzlibrary{positioning}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue}
+
+\definecolor{shadecolor}{gray}{0.8}
+
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+\newcommand{\cpiv}[1]{\colorbox{red!50!white}{#1}}
+\newcommand{\rpiv}[1]{\colorbox{blue!50!white}{#1}}
+\newcommand{\npiv}[1]{\colorbox{purple!65!white}{#1}}
+
+\title{Trabajo Práctico de Optimización no Lineal \\
+\large Introducción a Investigación Operativa y Optimización - Segundo Cuatrimestre 2025}
+\author{}
+\date{}
+
+\begin{document}
+
+    \maketitle
+
+    La fecha límite de entrega es el 05/12 a las 23:59. En el caso de haber errores graves,
+        podrán contar con una fecha de reentrega. Se recomienda utilizar como base el documento de Colab que se
+        encuentra en este
+        \href{https://colab.research.google.com/drive/1c-Ume72H4fAdg0eKE0YiovByL9ZI_Dxh?usp=sharing}{\textbf{link}}.
+
+    \vspace*{\baselineskip}
+
+    \subsection*{Regresión Lasso}
+
+    En esta sección utilizaremos el dataset \texttt{transfermarkt\_fbref\_201920.csv} con datos sobre gran variedad
+    de atributos de jugadores de fútbol, para la temporada 2019-2020. El objetivo será implementar un modelo de
+    regresión lineal para predecir el valor de un jugador a partir de sus atributos.
+
+    \textbf{Ejercicio 1.}
+    Regresión Lineal Ordinaria.
+    \begin{enumerate}
+        \item Elegir dos métodos entre: método de gradiente con mitad de paso óptimo, gradiente conjugado o ADAM.
+        Utilizarlos para hallar $\beta$ y comparar su desempeño en relación a cantidad de iteraciones y tiempo de
+        ejecución. Utilizar \texttt{k\_max=5000} o inferior.
+        \item Para $\beta$ hallado en el punto anterior, calcular el cociente de determinación ($R^2$) para los datos
+        de entrenamiento y de testeo. ¿Qué se observa? ¿Cómo lo interpretarían?
+        \item Interpretar $\beta$: ¿qué atributos benefician el valor del jugador? ¿Qué atributos lo perjudican?
+        ¿Cuánta variabilidad hay entre las coordenadas de $\beta$?. Se pueden utilizar las
+        funciones \texttt{etiquetas\_beta} y \texttt{graficar\_betas} de la plantilla del Colab.
+    \end{enumerate}
+
+    \textbf{Ejercicio 2.} Regresión Lasso.
+
+    \begin{enumerate}
+        \item Primera adaptación de ADAM a Lasso: implementar una función \texttt{adam\_penalizado} que aplique el
+        método ADAM general, siguiendo el pseudocódigo visto en clase,
+        añadiendo un argumento obligatorio \texttt{lamda} para el valor de regularización $\lambda$ y que, en cada
+        iteración, sume a \texttt{d} el subgradiente de $\lambda\lVert\beta\rVert_1$.
+        \item Aplicar \texttt{adam\_penalizado} a la función:
+        \[f(\beta) = \sum_{i=1}^N \left(y^{(i)} - \sum_{j=1}^M\beta_k x_k^{(i)}\right)^2\]
+        con $\lambda=10$, $\alpha=0.01$ y $2000$ iteraciones. ¿Es satisfactorio el tiempo de cómputo?
+        \item Segunda adaptación de ADAM a Lasso: identificar un cuello de botella en el desempeño de
+        \texttt{adam\_penalizado}. Implementar \texttt{lasso\_adam}, que mejore el desempeño. Probar
+        \texttt{lasso\_adam} con $\lambda=10$, $\alpha=0.01$ y $2000$ iteraciones. Comparar el tiempo de cómputo con
+        la versión del item anterior. \\
+        \textbf{Pista:} ¿podríamos aprovechar que nos interesa minimizar una función en particular?
+        \item Para el $\beta$ obtenido usando \texttt{lasso\_adam} con $\lambda=10$, calcular el cociente de determinación
+        ($R^2$) para los datos de entrenamiento y de testeo. ¿Qué diferencia se observa respecto a Regresión Lineal?
+        \item Interpretar el $\beta$ obtenido usando \texttt{lasso\_adam} con $\lambda=10$. ¿Qué atributos benefician y
+        perjudican el valor de un defensor? ¿Cuánta variabilidad hay entre las coordenadas de $\beta$? Comparar con la
+        interpretación del $\beta$ obtenido con Regresión Lineal. En cada método, ¿cuántos atributos tienen un peso
+        con valor absoluto mayor que $0.05$? (para esto se puede usar la función \texttt{etiquetas\_beta\_umbral}).
+        \item Implementar la función \texttt{lasso\_coordenadas} que aplique minimización por coordenadas para hallar
+        $\beta$ de la Regresión Lasso, con $\lambda=10$. Comparar la interpretación de $\beta$ con la obtenida en el
+        ejercicio anterior y el coeficiente de determinación para el conjunto de testeo.
+    \end{enumerate}
+
+    \textbf{Ejercicio 3.} Realizar una Regresión Lasso para predecir el valor de los jugadores de otra(s) posición(es).
+    Para esto, utilizar \texttt{lasso\_adam} o \texttt{lasso\_coordenadas}.
+    Observar qué sucede para distintos valores de $\lambda$ y, a partir de los $\beta$ hallados,
+    interpretar cuáles son las características que más influyen en el valor de los jugadores de esa posición.
+
+    \subsection*{Máquina de soporte vectorial (\textit{Support Vector Machine})}
+
+    En esta sección, el objectivo es implementar SVM  para clasificación, adaptando algunos de los métodos de
+    optimización que hemos visto en la cursada.
+    Utilizaremos el dataset \texttt{fifa\_players.csv} que contiene los atributos de jugadores de
+    fútbol, extraídos del FIFA 18.
+
+    \textbf{Ejercicio 4.} Clasificando la posición de los jugadores.
+
+    \begin{enumerate}
+        \item Implementar \texttt{subgradiente\_svm}, que calcule el subgradiente de:
+        \[f(w,b) = \lambda\frac{1}{2}\lVert w\rVert^2 + \frac{1}{n}\sum_{i=1}^n \max(0, 1-y_i(wx_i+b))\]
+        tomando como argumentos la matriz de atributos $X$, el vector de target $y$, $w$, $b$ y el parámetro de
+        redularización $\lambda$.
+        \item Implementar \texttt{metodo\_gradiente\_svm} y \texttt{adam\_svm} que apliquen el Método del Gradiente
+        con paso fijo y ADAM, respectivamente, para hallar los valores de $w$ y $b$. El Método del Gradiente con
+        paso fijo debe tomar como argumento la longitud del paso $\alpha$, con valor por defecto $0.01$.
+        \item Aplicar ambos métodos para clasificar arqueros y delanteros en base de los atributos \textit{dribbling} y
+        \textit{penalties}, utilizando \texttt{k\_max} por lo menos $500$. Para cada uno, visualizar el resultado del
+        método y calcular la precisión de la clasificación para los conjuntos de entrenamiento y testeo. Probar con
+        distintos valores para los parámetros. ¿ADAM converge siempre a la solución esperada? ¿Por qué creen que sucede esto?
+        \item Elegir otras dos posiciones\footnote{En este \href{https://www.fifplay.com/encyclopedia/position/}{link}
+        pueden encontrar las definiciones de las posiciones} y otro par de atributos y repetir el ítem anterior.
+        Para filtrar las posiciones y los atributos elegidos, pueden utilizar la función
+        \texttt{filtrar\_posicion\_atributos}. Para visualizar los atributos
+        elegidos, pueden usar \texttt{graficar}. No es necesario que los datos sean estrictamente linealmente
+        separables. Pueden probar con distintas elecciones de posiciones y atributos.
+    \end{enumerate}
+
+\end{document}
+

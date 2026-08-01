@@ -1,0 +1,186 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2022}
+\newcommand{\numeroparcial}
+    { Primer Parcial }
+\newcommand{\fecha}
+    {6 de Septiembre de 2022}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\theoremstyle{definition}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|}
+\hline 
+1 & 2 & 3 & Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+\noindent\textit{Para aprobar el parcial deberá obtenerse un puntaje mayor o igual que 4.}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+\verb|[3 pts.]|Una firma de artículos de limpieza comenzará a elaborar tres nuevos productos  $P_1$, $P_2$ y $P_3$. Esto requiere el uso de cuatro componentes químicos: $q_{ij}$ es la cantidad (en litros) de componente $j$ que se requiere para elaborar un litro de $P_i$ ($q_{ij}\geq 0$). Mensualmente la fábrica dispone de $\ell_j$ litros de componente $j$. Sin embargo, puede comprar una cantidad fija de $m_j$ litros más de componente $j$ a precio $c_j$. Comprar la cantidad extra afecta la ganancia.
+
+Por otro lado, hay dos supermercados que quieren comprar su producción. Se sabe que el supermercado $k$ ($k\in\{1,2\}$), está dispuesto a comprar mensualmente hasta $d_{ik}$ litros de producto $i$ pagando $g_{ik}$ por litro.
+
+Como se venderá a granel, la cantidad de cada producto puede ser un número real. Elaborar un modelo de Programación Lineal que permita planificar la producción mensual de la fábrica, es decir, que permita decidir cuánto vender a cada supermercado. La empresa requiere tener en cuenta las siguientes restricciones:
+\begin{enumerate}
+    \item \verb|[1.0]| Respetar la disponibilidad de cada componente químico.
+    \item \verb|[0.2]| Respetar el límite de cada producto que está dispuesto a comprar cada supermercado.
+    \item \verb|[1.0]| Por una cuestión de logística, debe producirse una cantidad de $P_1$ menor o igual a $100$ litros o una cantidad mayor o igual a $160$ litros.
+    \item \verb|[0.3]| la cantidad total de $P_2$ producida debe estar entre el $20\%$ y el $40\%$ de la producción total, inclusive.
+\end{enumerate}
+El objetivo es:
+\begin{enumerate}
+    \setcounter{enumi}{4}
+    \item \verb|[0.5]| Maximizar la ganancia mensual
+\end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} 
+
+\verb|[3 pts.]| Se desea organizar un torneo de fútbol juvenil entre $N$ clubes ($N$ impar). Jugarán en formato \textit{single round-robin} a lo largo de $N+1$ fechas, por lo que cada equipo tiene dos fechas libres. Cada fecha está dividida en tres franjas horarias. Los partidos siempre se juegan en el mismo predio, así que no es necesario considerar la localía. Por lo tanto, el conjunto de partidos viene dado por $\mathcal{P}=\{\{i,j\}\colon\, 1\leq i,j\leq N, i\neq j \}$. 
+
+\begin{enumerate}[A)]
+    \item Teniendo en cuenta que se desea planificar en qué fecha y franja horaria se jugará cada partido $p\in\mathcal{P}$, modelar las restricciones básicas del torneo:
+        \begin{enumerate}[1.]
+            \item \verb|[0.1]| Cada partido debe jugarse exactamente una vez.
+            \item \verb|[0.2]| Cada equipo puede jugar a lo sumo una vez por fecha.
+            \item \verb|[0.2]| Cada equipo no puede tener dos fechas libres consecutivas.
+            \item \verb|[0.4]| Como las jugadoras de los equipos 1,4 y 7 viven lejos, viajan juntas al predio para ahorrar en transporte. Esos equipos deben jugar en las mismas fechas.
+            \item \verb|[0.4]| En cada fecha debe ocurrir al menos una de las siguientes dos situaciones:
+            \begin{itemize}
+                \item juegan el equipo $3$ y/o el equipo $4$
+                \item juegan el equipo $9$ y el equipo $10$
+            \end{itemize}
+            % \item \verb|[0.2]| Salvo para el partido $\{2,5\}$, los equipos $2$ y $5$ no deben jugar en la misma franja horaria.
+            \item \verb|[0.2]| En cada franja horaria $h$ pueden jugarse a lo sumo $C_h$ partidos.
+            \item \verb|[0.3]| Para cada par de equipos $i,j$, el valor absoluto de la diferencia entre la cantidad de veces que cada uno juega en la tercera franja horaria no puede exceder $L$.
+        \end{enumerate}
+        \textbf{Sugerencia:} para cada equipo $i$ puede ser útil considerar $P_i=\{p\in\mathcal{P}\colon i\in p\}$
+    \item Les organizadores desearían conocer distintas planificaciones del torneo según distintos criterios. Utilizando las variables definidas en el ítem A), modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes:
+        \begin{enumerate}[1.]
+            \item \verb|[1.0]| Se conoce $E_{ih}$ la cantidad de hinchas que van a alentar al equipo $i$ en la franja horaria $h$ . El objetivo es maximizar el mínimo de espectadores sobre todas las fechas del torneo: {``$\max \ds\min_{f\in fechas} \{\text{hinchas totales en fecha $f$}\}$}"
+            \item \verb|[0.2]| Minimizar la cantidad de partidos a lo largo del torneo que se juegan en la primera franja horaria.
+        \end{enumerate}
+            
+\end{enumerate}
+
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} 
+
+\verb|[4 pts.]| Una empresa de logística naval transporta productos entre un conjunto $I=\{1,\dots,N\}$ de ciudades y desea planificar sus operaciones durante los próximos $24$ meses. La flota está compuesta por $K$ buques mercantes. Para cada buque $k$ se conoce que su capacidad es de $CAP_k$ toneladas, que el costo de combustible por viajar desde la ciudad $i$ hasta la ciudad $j$ es $c_{ijk}$ y que, al comenzar la planificación, se encuentra en la ciudad $s_{k}\in I$. 
+
+Cada buque realiza a lo sumo un viaje por mes. Las ciudades están lo suficientemente cerca como para poder viajar entre cualquier par de ellas en menos de un mes. Por ejemplo, si el buque viaja desde la ciudad $1$ a la ciudad $4$ en el mes $2$, entonces al comienzo del mes $3$ estará en la ciudad $4$ y tendrá la posibilidad de viajar hacia otra ciudad o permanecer en $4$ durante ese mes. El costo de mantener al buque $k$ anclado un mes en la ciudad $i$ es $d_{ik}$. Al finalizar los $24$ meses, a cada ciudad $i$ debe haber llegado una cantidad total de toneladas en el intervalo $[\ell_{i}, u_{i}]$. Al comenzar la planificación, la ciudad $i$ tiene $T_i$ toneladas de productos que pueden ser transportados a otras ciudades a lo largo de los $24$ meses. Esta cantidad se fija al comienzo de la planificación (es decir, en $i$ no se elaborarán más productos y tampoco se considerará lo que llegue desde otras ciudades). 
+
+Por otro lado, se conoce que por cada tonelada de productos transportada que llegan hasta la ciudad $i$ se obtiene una ganancia $g_{i}$, salvo para la ciudad $5$. En ese caso, la ganancia que se obtiene viene dada por la siguiente función continua:
+\[ f(t)=
+\begin{cases}
+    \begin{array}{lr}
+        3t & \text{si } 0\leq t \leq 200 \\
+        \frac{1}{2}t + 500 & \text{si } 200 < t \leq 400 \\
+        \frac{1}{4}t + 600 & \text{si } 400 < t \leq 600 
+    \end{array}
+\end{cases}
+\]
+donde $t$ es la cantidad total de toneladas que llegaron a la ciudad $5$.
+
+Elaborar un modelo de Programación Lineal Entera Mixta para decidir cuántas toneladas transportará cada buque mensualmente y entre qué ciudades. El objetivo es:
+\begin{enumerate}
+    \item \verb|[2.0]| Maximizar la ganancia, tomando en cuenta los gastos por combustible y  anclaje. 
+\end{enumerate}
+sujeto a las siguientes restricciones:
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item \verb|[0.2]| cada buque realiza a lo sumo un viaje por mes.
+    \item \verb|[0.3]| respetar la capacidad de cada buque.
+    % \item un buque no puede transportar carga si está anclado durante ese mes.
+    \item \verb|[1.0]| un buque no puede zarpar desde la ciudad $i$ si al finalizar el mes anterior estaba en otra ciudad.
+    \item \verb|[0.3]| respetar la cantidad de toneladas que deben entregarse a cada ciudad a lo largo de los $24$ meses.
+    \item \verb|[0.2]| respetar la cantidad de toneladas de productos disponibles en cada ciudad.
+\end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+
+

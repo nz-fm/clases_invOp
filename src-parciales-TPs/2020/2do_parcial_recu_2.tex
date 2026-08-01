@@ -1,0 +1,174 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2020}
+\newcommand{\numeroparcial}
+    { Recuperatorio del Segundo Parcial }
+\newcommand{\fecha}
+    {18 de Diciembre de 2020}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 & 4 & Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+Resolver el siguiente problema de Programación Lineal utilizando el Método de dos Fases de SIMPLEX. Explicitar dónde se realiza el óptimo y el valor que toma la función objetivo en el mismo.
+    \[\begin{array}{rrrrrrrr}
+        \max & 2x_1 & + & x_2 & - & x_3  \\
+        \text{s.a:} & 2x_1 & + & 3x_2 & + & x_3 & \leq & 9 \\
+          &  &  & 2x_2 & - & x_3 & \geq & 4 \\
+          & x_1  &  &  & - & x_3 & = & 6 \\
+         & \multicolumn{7}{l}{x_3\leq 0 \;\;\;x_1,x_2\geq 0}
+    \end{array}
+    \]
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} 
+El siguiente diccionario corresponde a una iteración de SIMPLEX de un problema de Programación Lineal con objetivo de maximizar. Sean $a,b,c,d,e,f,g\in \mathbb{R}$, con $b\geq 0$,
+decidir y justificar si cada afirmación es verdadera o falsa. Debe considerarse que se utiliza el criterio usual para la selección de la variable que entrará a la base en la siguiente iteración.
+
+\[
+\begin{array}{rrrrrrrrr}
+    x_3&=&2&-&ax_1&+&x_2&+&dx_5\\
+    x_4&=&b&+&cx_1&+&x_2&+&\frac{1}{2}x_5\\
+    x_6&=&1&-&x_1&-&x_2&+&fx_5\\ \hline
+    z&=&&&ex_1&-&x_2 &+&gx_5
+\end{array}
+\]
+
+\begin{enumerate}[a)]
+    \item Para que la solución básica actual sea degenerada es suficiente pedir que $b=0$.
+    \item Para que el problema tenga infinitas soluciones óptimas basta pedir que $b>0$.
+    \item Para que la próxima iteración sea degenerada es suficiente que $e>0$ y $b>0$.
+    \item Para que en la próxima iteración $x_5$ entre a la base y salga $x_3$ basta pedir que \mbox{$g>0\wedge d<0\wedge f<0$.}
+    \item Para que el problema sea no acotado basta pedir que $g>0\;\wedge f\geq 0 \wedge d\geq 0$
+\end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} 
+Dado el siguiente problema de programación lineal:
+
+\[\begin{array}{rrrrrrrrrrrrrrrr}
+    \max & 3x_1 & + & x_2 & - & 2x_3 & + & x_4 & - & x_5 & + & 4x_6 & + & 5x_7 & &\\
+    \text{s.a.} & -x_1 & + & 3x_2 & - & x_3 & - & x_4 & + & 2x_5 & + & 6x_6 & - & x_7 & \leq & 5 \\
+    &  &  & x_2 & + & 2x_3 & - & 2x_4 & - & x_5 & + & 2x_6 & & &\leq & 5 \\
+    & 4x_1 & - & 2x_2 & - & x_3 & + & 3x_4 & + & x_5 & - & x_6 & + &\frac{1}{2}x_7 & \leq & 4 \\
+    & 3x_1 & - & x_2  &  &  & + & x_4 &  &  & + & 2x_6 & -&x_7 &\leq & 9 \\
+    & \multicolumn{15}{l}{x_1,x_2,x_3,x_4,x_5,x_6,x_7\geq 0}
+\end{array}
+\]
+
+\begin{enumerate}[a)]
+    \item Plantear el problema dual.
+    \item Utilizando el problema dual, mostrar que $(\frac{7}{2},5,0,0,0,0,0)$ \textbf{no} es solución óptima del problema primal.
+    \item Sabiendo que $x^\ast = (0,17,0,6,0,0,40)$ es solución óptima del problema primal, hallar los valores de $\alpha,\beta, \gamma\in \mathbb{R}$ para los cuales $x^\ast $ es solución óptima del problema con la misma función objetivo, pero cambiando los términos a la derecha de las restricciones por $\alpha$, $\beta$, $\alpha+\beta$, $\alpha+\gamma$, respectivamente.
+\end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+%%% EMPIEZA EL EJERCICIO 4 %%%
+
+
+\begin{quest} 
+Utilizar el algoritmo de Branch \& Bound para resolver el siguiente problema de programaci\'on lineal entera, detallando cada divisi\'on en subproblemas durante el algoritmo mediante el esquema de \'arbol visto en clase. Comenzar ramificando en $x_2$ y explicitar el m\'etodo utilizado para la resoluci\'on de cada subproblema (ejemplo: m\'etodo gr\'afico, c\'alculo de v\'ertices de cada regi\'on y posteriormente evaluar en cada uno de ellos, SIMPLEX, etc\'etera). 
+
+\[\begin{array}{rrrrrrrrc}
+\max & 3x_1 & + & 4x_2 &  &   \\
+\text{s.a:}	 & 2x_1 & + & x_2 & \leq & 14  \\
+			 & 2x_1 & + & 3x_2 & \leq & 17 \\
+			 &2x_1 & +  & 2x_2 & \leq & 15 \\
+			 &	x_1    &  & & \geq & 0 \\
+			 & & & x_2 & \geq & 0 \\
+			 & \multicolumn{3}{r}{x_1,x_2} & \in & \mathbb{Z} 
+\end{array}
+\]
+
+
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 4 %%%
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}
+

@@ -1,0 +1,150 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{booktabs}
+% \usepackage{enumitem}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2018}
+\newcommand{\numeroparcial}
+    { Recuperatorio del Primer Parcial }
+\newcommand{\fecha}
+    {26 de Noviembre de 2021}
+\newcommand{\numerotema}
+    {\bf 1}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\fa}[2]{\forall\,{#1}\in #2\;}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|c|}
+\hline 
+1 & 2 & 3 &  Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest}
+Una red de flujo es representada por un grafo dirigido $G=(V,E)$, en el cual se distinguen dos vértices: la fuente $s$ (a la cual no llegan aristas) y el sumidero $t$ (del cual no salen aristas). Cada arista $(i,j)\in E$ tiene una capacidad mínima $\ell_{ij}$ y una capacidad máxima $c_{ij}$. Por otro lado, cada vértice $i\in V-\{s,t\}$ tiene una capacidad máxima $d_i$ y la cantidad de flujo que llega a $i$ debe ser igual a la cantidad de flujo que sale de $i$. Elaborar un modelo de Programación Lineal que permita decidir cuánto flujo enviar por cada arista de la red para maximizar la cantidad de flujo que llega a $t$. 
+% Tener en cuenta las siguientes restricciones:
+% \begin{enumerate}
+%     \item Para cada $i\in V-\{s,t\}$ debe cumplirse que la cantidad de flujo que llega a $i$ debe ser igual a la cantidad de flujo que sale de $i$.
+%     \item Se debe respetar la capacidad máxima de cada vértice $i\in V-\{s,t\}$.
+%     \item Para cada arista $(i,j)\in E$ se debe respetar que la cantidad de flujo que pasa por ella sea al menos $\ell_{ij}$ y a lo sumo $c_{ij}$
+% \end{enumerate}
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+\begin{quest} Una empresa desea organizar las vacaciones de sus empleades durante el 2022. Para esto, le solicitó a cada une que asigne un puntaje de preferencia entre 1 (menos deseable) y 10 (más deseable) a cada una de las $24$ quincenas del año. 
+    
+La empresa se divide en $N$ departamentos $D_1,\dots, D_N$ según las funciones que realizan. Por otra parte, categoriza a les empleades en dos grupos según su fecha de ingreso: $\mathcal{A}$ quienes tienen más años de antigüedad y les corresponden dos quincenas de vacaciones por año y $\mathcal{N}$ quienes tienen menos años de antigüedad y les corresponde una quincena de vacaciones por año.
+
+Para decidir qué quincena otorgarle a cada empleade, se deben tener en cuenta las siguientes restricciones:
+\begin{enumerate}[i.]
+    \item Cada empleade debe recibir exactamente la cantidad de quincenas de vacaciones que le corresponden según su antigüedad.
+    \item A un empleade del grupo $\mathcal{A}$ no pueden tocarle dos quincenas de vacaciones consecutivas entre Mayo y Septiembre (es decir, entre las quincenas $9$ y la $18$).
+    \item Sea $\mathcal{P}$ el conjunto de empleades que son madres o padres, deben asignársele al menos una quincena entre $\{1, 2, 3, 4, 23, 24\}$.
+    \item Sean $1\leq k\leq N$ y $\mathcal{J}_k$ el conjunto de empleades de mayor jerarquía del departamento $D_k$, no pueden tomarse todes la misma quincena de vacaciones.
+    \item El promedio de las preferencias de las quincenas que les fueron asignadas para cada departamento debe ser mayor que $6$. Por ejemplo, si en un departamento hay dos empleados $e_1$ y $e_2$, $e_1\in\mathcal{A}$ y $e_2\in\mathcal{N}$; si a $e_1$ se le asignan dos quincenas con puntaje de preferencia $5$ y $9$ y si a $e_2$ se le asigna una quincena con puntaje de preferencia $8$, entonces el promedio de preferencias de las quincenas asignadas es de $\frac{5+9+8}{3}=\frac{22}{3}$
+    \item Durante cada quincena, cada departamento $D_k$ debe tener al menos $d_k$ empleades que no estén de vacaciones.
+\end{enumerate}
+    
+Modelar las restricciones anteriores para que puedan ser utilizadas en un modelo de Programación Lineal Entera que permita decidir en qué quincena se tomará vacaciones cada empleade y añadir las variables y/o restricciones que considere necesarias para modelar cada uno de los siguientes objetivos: 
+\begin{itemize}
+    \item[a)] Minimizar la cantidad de empleades con asignaciones cuya preferencia sea menor que $5$
+    \item[b)] Maximizar el mínimo promedio de puntaje de preferencia de los departamentos.
+\end{itemize}
+\end{quest}
+%%% TERMINA EL EJERCICIO 2 %%%
+
+
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+\begin{quest}
+    Una fábrica de productos alimenticios desea adquirir maquinaria  y planificar la elaboración de nuevos artículos en base a cuatro materias primas $P_1$, $P_2$, $P_3$ y $P_4$. Para $1\leq j\leq 4$, se disponen diariamente de $Q_j$ unidades de materia prima $P_j$. Un estudio de mercado indica que cada unidad del producto $i$ se puede vender a $p_i$ pesos. Por otra parte, para cada $1\leq j\leq 4$, se sabe que la elaboración de cada unidad del producto $i$ requiere de $u_{ij}$ unidades de materia prima $P_j$.
+    
+    La fabricación de cada artículo de cada nuevo producto consiste en los mismos $7$ procedimientos.
+    % Se sabe que cada unidad del producto $i$ tarda $t_ik$ minutos en finalizar el procedimiento $k$ (con $1\leq k\leq 7$). En caso de que el producto $i$ no requiera el procedimiento $k$, se considera $t_{ik}=0$. 
+    Cada procedimiento requiere una máquina especializada que lo realice exclusivamente. Sea $1\leq k\leq 7$ un procedimiento, $M_k$ es el conjunto de máquinas candidatas a ser compradas para realizar $k$. Sea $m\in M_k$, el precio de adquirirla es $c_{km}$ y procesa hasta $t_{km}$ productos por día. Además cada máquina puede ser sobreexigida para producir hasta el doble de su capacidad. Sin embargo, esto provoca gastos de mantenimiento diario. El costo del mantenimiento diario en función de la cantidad de productos procesados para la máquina $m\in M_k$ viene dado por:
+    \[f_{km}(z) = \begin{cases}
+    \begin{array}{ll}
+        0 & \text{si $0\leq z\leq t_{km}$} \\
+        8(z-t_{km}) & \text{si $t_{km} < z\leq \frac{3}{2}t_{km}$} \\
+        24(z-\frac{3}{2}t_{km})+4t_{km} & \text{si $\frac{3}{2}t_{km} < z \leq 2t_{km}$} \\
+    \end{array}
+    \end{cases}\]
+    que es monótona creciente y continua.
+    
+    Para cada procedimiento $k$ se debe comprar exactamente una máquina y el presupuesto total para la compra de maquinaria es $S$ pesos.
+    
+    Elaborar un modelo de Programación Lineal Entera que permita decidir qué máquina comprar para cada procedimiento y cuántos productos de cada tipo fabricar. El objetivo es maximizar la ganancia diaria.
+\end{quest}
+%%% TERMINA EL EJERCICIO 3 %%%
+
+
+%%% TERMINA EL PARCIAL %%%
+
+
+
+\end{document}

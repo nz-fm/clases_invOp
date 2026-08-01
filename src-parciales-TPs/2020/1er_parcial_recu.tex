@@ -1,0 +1,159 @@
+\documentclass[a4paper,oneside,12pt]{amsart}
+
+%\usepackage[spanish, activeacute]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage[heightrounded]{geometry}
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\cond}{cond}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\re}{Re}
+%\DeclareMathOperator{\im}{Im}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\DeclareMathOperator{\im}{Im}
+
+\newcommand{\nombremateria}
+{Investigaci\'on Operativa}
+\newcommand{\nombrecuatrimestre}
+    {Segundo cuatrimestre de 2020}
+\newcommand{\numeroparcial}
+    { Recuperatorio del Primer Parcial }
+\newcommand{\fecha}
+    {15 de Diciembre de 2020}
+\newcommand{\numerotema}
+    {\bf 1}
+
+%\oddsidemargin -1cm \evensidemargin -1cm \textwidth 17.5cm
+%topmargin 1.2cm \textheight 25cm
+%\setlength{\textheight}{25cm}
+
+\def \ds{\displaystyle}
+\newtheorem{quest}{Ejercicio}
+\thispagestyle{empty}
+
+\begin{document}
+
+\hfill \hfill
+\begin{tabular}[c]{|c|c|c|c|}
+\hline 
+1 & 2 & 3 & Calificaci\'on \\ \hline \hline
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\
+\hspace{1.2 cm} & \hspace{1.2 cm} & \hspace{1.2 cm} &\hspace{1.5 cm} \\ \hline
+
+\end{tabular}
+
+\vspace{-1cm}
+
+\noindent Nombre y apellido:
+
+\vspace{0.2cm}
+
+\noindent Número de libreta:
+
+\noindent \hrulefill 
+
+\smallskip
+\renewcommand{\baselinestretch}{1.1}
+
+\begin{center}
+	\large \textbf{\nombremateria} 
+	
+	\numeroparcial -- \fecha
+\end{center}
+
+\vspace{.6cm}
+\renewcommand{\theenumi}{\textbf{\arabic{enumi}}}
+
+%%% EMPIEZA EL EJERCICIO 1 %%%
+
+\begin{quest} 
+Una empresa elabora dos productos A y B en una línea de producción con tres máquinas $M_1$, $M_2$ y $M_3$. Cada una de ellas opera las $24$ horas, cinco días a la semana (de lunes a viernes). Cada unidad de A tiene un costo de producción de $\$150$ y cada unidad de B, $\$240$. Sus precios de venta son, respectivamente, $\$180$ y $\$297$ por unidad. La duración de los procesos de producción (en minutos) en cada máquina vienen dados por la siguiente tabla:
+    
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{lcccc}
+             & $M_1$ & $M_2$ & $M_3$ & $M_2$ o $M_3$ \\\midrule
+            Producto A & 25 & 30 & 50 & \\
+            Producto B & 42 & 20 & 35 & 20 \\
+        \end{tabular}
+    \end{table}
+    
+    Notar que A sólo requiere tres procesos de producción y B requiere cuatro. El primer proceso se realiza con $M_1$, el segundo con $M_2$, el tercero con $M_3$ y el cuarto proceso de producción de B puede realizarse con $M_2$ o con $M_3$. Una vez que se elige una de las dos, no se cambia a lo largo de la semana. No es necesario que los procesos de producción sean ejecutados en orden: por ejemplo, una unidad de A puede comenzar en $M_2$ luego pasar a $M_1$ y terminar en $M_3$. Se requiere que la producción semanal de B sea al menos el $25\%$ de la producción semanal de A. Formular un modelo de programación lineal entera que permita conocer cuántas unidades de cada producto deben elaborarse para maximizar la ganancia semanal.
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 1 %%%
+
+%%% EMPIEZA EL EJERCICIO 2 %%%
+
+\begin{quest} 
+Uno de los departamentos de una universidad tiene un conjunto $\mc{D}$ de docentes con cargos de diferentes jerarquías: $\mc{D}_1$, $\mc{D}_2$ y $\mc{D}_3$. Vale que $\mc{D} = \bigcup_{s=1}^3 D_s$ y $\; D_s\cap D_r =\varnothing\;\text{si}\; s\neq r$ . 
+
+El departamento tiene a su cargo $J$ materias $m_1,\cdots, m_J$ y realizó una encuesta a los docentes solicitando que otorguen un puntaje de preferencia a cada una de ellas, de $1$ a $100$, siendo $100$ la preferencia más alta. Por esto, se conoce $p_{ij}$ la preferencia del docente $i$ a dar la materia $j$.
+
+\begin{enumerate}
+    \item Teniendo en cuenta que el departamento desea determinar qué docentes impartirán cada materia, modelar linealmente las siguientes restricciones de la asignación:
+    \begin{enumerate}[a)]
+        \item cada docente debe ser asignado a exactamente una materia.
+        \item para cada $j=1,\dots, J$ y para cada $1\leq s\leq 3$, la materia $m_j$  requiere al menos $a_{js}$ docentes y a lo sumo $b_{js}$ del conjunto $\mc{D}_s$.
+        \item el promedio de los puntajes de preferencia de los docentes asignados a las materias de primer año debe ser por lo menos $68$.
+        \item los docentes $4, 7$ y $9$ deben ser asignados a la misma materia.
+        \item si el docente $11$ imparte la materia $5$ entonces la docente $3$ debe impartir la materia $4$.
+    \end{enumerate}
+    \item El departamento está interesado en analizar el resultado obtenido con diferentes criterios. Utilizando las variables y conjuntos definidos en el ítem $1$, modelar cada una de las siguientes funciones objetivo, agregando, de ser necesario, las restricciones y variables correspondientes.
+    \begin{enumerate}[a)]
+        \item Maximizar la asignación con menor preferencia.
+        \item Minimizar la cantidad de docentes asignados a materias con preferencias menores que $40$.
+    \end{enumerate}
+\end{enumerate}
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 2 %%%
+
+%%% EMPIEZA EL EJERCICIO 3 %%%
+
+
+\begin{quest} 
+Una compañía cervecera fabrica tres tipos de cerveza: $C_1$, $C_2$ y $C_3$, cuyos precios de venta por litro son, respectivamente, $\$6$, $\$9$ y $\$25$. La empresa está considerando empezar a producir una nueva variedad de cerveza $C_4$ cuyo litro se vendería por $\$48$, pero configurar las máquinas para producirla cuesta $\$8000$ semanales.
+
+El centro de distribución requiere que semanalmente se produzcan al menos $250$ lts. de $C_1$, $375$ lts. de $C_2$ y $150$ lts. de $C_3$. Si se decidiese producir $C_4$, se requerirían al menos $275$ lts semanales. Como la empresa tiene un depósito con capacidad limitada, se puede almacenar cierta cantidad de cada tipo de cerveza: a lo sumo $400$ lts de $C_1$, $510$ lts. de $C_2$, $250$ lts. de $C_3$ y $0$ lts. de $C_4$. Si se excede esa cantidad, la empresa debe alquilar lugar en otro depósito, costándole $\$5$ por litro excedente de cada variedad de cerveza. La empresa no desea gastar más de $\$10000$ en alquiler de espacio para almacenamiento.
+
+Por otro lado, por cuestiones de transporte, la diferencia absoluta entre la cantidad de $C_2$ y $C_3$ producidas no debe diferir en más de $175$ lts.. Además, se pide que al menos el $15\%$ de la producción total sea de $C_1$.
+
+La elaboración de cada litro de cada variedad de cerveza requiere cierta cantidad de tiempo para atravesar sus tres etapas: (1) mezcla de materia prima (2) control de calidad (3) envasado. El tiempo en horas que toma cada una de estas operaciones para cada litro de cada una de las variedades de cerveza está resumido en la siguiente tabla:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccccc}
+         & Mezcla de materia prima & Control de calidad & Envasado \\\midrule
+        $C_1$ & 0.1 & 0.2 & 0.1 \\
+        $C_2$ & 0.2 & 0.35 & 0.2 \\
+        $C_3$ & 0.7 & 0.1 & 0.2 \\
+        $C_4$ & 0.6 & 0.5 & 0.5 \\
+    \end{tabular}
+\end{table}
+
+Se cuenta semanalmente con $350$ horas para mezclar materia prima, $220$ horas para realizar control de calidad y $265$ horas para envasar la cerveza. 
+
+Formular un modelo de programación lineal mixta cuyo objetivo sea maximizar la ganancia semanal de la empresa. Como se vende la cerveza en botellas de distintos tamaños, la cantidad producida de cada variedad puede ser una magnitud real.
+
+\end{quest}
+
+%%% TERMINA EL EJERCICIO 3 %%%
+
+
+\end{document}
+
