@@ -50,15 +50,3 @@ def zykov_tree(G):
     graph_ls = []
     num_cromatico = color(G, graph_ls, n)
     return num_cromatico, graph_ls
-
-
-def ejemplo():
-    G = nx.Graph()
-    es = {('a', 'b'), ('a', 'c'), ('b', 'c'), ('b', 'e'), ('b', 'd'), ('d', 'e'), ('c', 'e'), ('c', 'f'), ('e', 'f')}
-    G.add_edges_from(es)
-    num_crom, ls = zykov_tree(G)
-    print(num_crom, len(ls))
-
-
-if __name__ == '__main__':
-    ejemplo()

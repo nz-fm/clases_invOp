@@ -20,7 +20,8 @@ Las (des)igualdades de `ineq` vienen dadas por strings: `g` representa `>=`, `l`
 `=`. Se debe cumplir que `len(ineq) == A.shape[0]`.
 
 La implementación actual de la resolución de la relajación lineal requiere tener instalado CPLEX (la versión de 
-prueba es suficiente).  En el futuro reemplazaré CPLEX por un solver más conveniente.
+prueba es suficiente).  En el futuro reemplazaré CPLEX por un solver más conveniente. También requiere tener 
+instalado [GraphViz](https://graphviz.org/) para visualizar correctamente el árbol de B&B.
 ### Ejemplo de uso
 
 Para resolver el siguiente problema de Programación Lineal Entera:
@@ -35,6 +36,7 @@ $$\begin{array}{rrrrrrrrc}
 \end{array}
 $$
 ```python
+import numpy as np
 from utils.branch_and_bound import branch_and_bound
 
 A = np.array([[2 , 1],
@@ -49,3 +51,31 @@ ineq = 'lllgg'
 
 branch_and_bound(A, b, c, ineq, 'max')
 ```
+
+## `coloreo.py`
+
+Brinda la función `zykov_tree`, que ejecuta el algoritmo de conexion-contraccion y devuelve la cantidad de grafos en 
+el árbol del algoritmo y el numérico cromático del grafo.
+Está pensado para corroborar que un ejercicio de conexión-contracción no sea demasiado largo para
+resolver si no se utiliza poda (i.e. si se busca el polinomio cromático).
+
+El argumento de la función `zykov_tree` es el grafo $G$ como `networkx.Graph`.
+
+### Ejemplo de uso
+
+Sea el siguiente grafo $G$:
+
+![graph](../src-clases/imagenes/coloreo-tikz.png)
+
+```python
+import networkx as nx
+from utils.coloreo import zykov_tree
+
+G = nx.Graph()
+E = {('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'd'), ('c', 'd'), ('d', 'e')}
+G.add_edges_from(E)
+
+num_crom, ls = zykov_tree(G)
+print(num_crom, len(ls))
+```
+
