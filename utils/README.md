@@ -79,3 +79,36 @@ num_crom, ls = zykov_tree(G)
 print(num_crom, len(ls))
 ```
 
+## `matrix_to_latex`
+
+Implementa la función `matrix_to_latex` para simplificar la escritura de los problemas de Programación Lineal para
+ejercicios y parciales. La función `matrix_to_latex` requiere como input `A` la matriz del problema, `b` el vector de 
+términos 
+independientes, `c` el vector de coeficientes, `ineq` una lista con las desigualdades correspondientes a cada fila 
+de `A` y `obj` el objetivo de optimización (`max` o `min`).
+
+### Ejemplo de uso
+
+El siguiente código
+
+```python
+import numpy as np
+from utils.matrix_to_latex import matrix_to_latex
+
+A = np.array([[2, 1, -2, 1],
+              [0, -1, 3, -2]])
+b = np.array([10, -8])
+c = np.array([3, 1, -4, 2])
+ineq = 'gl'
+obj = 'max'
+```
+
+Imprime el código en latex del modelo:
+
+$$
+\begin{array}{rrcl}
+\max & z = 3x_1+x_2-4x_3+2x_4 \\
+s.a: & 2x_1+x_2-2x_3+x_4 & \geq & 10 \\
+ & -x_2+3x_3-2x_4 & \leq & -8 \\
+\end{array}
+$$

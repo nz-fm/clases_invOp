@@ -5,9 +5,6 @@ directamente el código de Latex con la formulación del problema.
 """
 
 
-import numpy as np
-
-
 def ineq_sign(s):
     if s == 'l':
         return '\leq'
@@ -60,16 +57,3 @@ def matrix_to_latex(A, b, c, ineq, obj):
 
     model = '\n'.join(output)
     print(model)
-
-
-def translate_model_to_latex():
-    """ Para usar model_to_latex """
-    A = np.array([[2, 1, -2, 1],
-                  [0, -1, 3, -2]])
-    b = np.array([10, -8])
-    c = np.array([3, 1, -4, 2])
-    ineq = 'gl'
-    obj = 'max'
-
-    print(matrix_to_latex(A, b, c, ineq, obj))
-
