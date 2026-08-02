@@ -13,7 +13,7 @@ from networkx.drawing.nx_pydot import graphviz_layout
 
 # Full path a dot.exe de Graphviz\bin. Por ejemplo `Z:\Programs\Graphviz\bin\dot.exe` (depende de donde lo hayas
 # instalado)
-GRAPHVIZ_PATH = r'Z:\Programs\Graphviz\bin\dot.exe'
+GRAPHVIZ_PATH = r''
 
 def solve_model(A, b, c, ineq, obj):
     """
@@ -125,17 +125,3 @@ def branch_and_bound(A, b, c, ineq, obj, force_branch=None):
     nodenames = {n: nlabels[n-1] for n in bb_tree.nodes()}
     nx.draw_networkx_labels(bb_tree, pos=pos, labels=nodenames)
     plt.show()
-
-
-def apply_BB():
-    A = np.array([[2 , 1],
-                  [2, 3],
-                  [2, 2],
-                  ])
-    b = np.array([14, 17, 15])
-    c = np.array([3, 4])
-    ineq = 'lll'
-    for i in (0, 1):
-        branch_and_bound(A, b, c, ineq, 'max', i)
-
-apply_BB()
