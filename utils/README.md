@@ -103,7 +103,19 @@ ineq = 'gl'
 obj = 'max'
 ```
 
-Imprime el código en latex del modelo:
+imprime el código en latex de su correspondiente modelo:
+
+```latex
+\[
+\begin{array}{rrcl}
+\max & \multicolumn{3}{l}{z = 3x_1+x_2-4x_3+2x_4} \\
+s.a: & 2x_1+x_2-2x_3+x_4 & \geq & 10 \\
+ & -x_2+3x_3-2x_4 & \leq & -8 \\
+\end{array}
+\]
+```
+
+que LaTeX renderiza como:
 
 $$
 \begin{array}{rrcl}
@@ -112,3 +124,12 @@ s.a: & 2x_1+x_2-2x_3+x_4 & \geq & 10 \\
  & -x_2+3x_3-2x_4 & \leq & -8 \\
 \end{array}
 $$
+
+# `simplex.py`
+
+Este archivo proporciona la función `simplex` que permite aplicar el algoritmo para un problema de Programación
+Lineal **estandarizado**. Además de resolver el problema, la función tiene la opción de imprimir en pantalla los 
+cálculos
+matriciales o los diccionarios correspondientes a cada iteración del algoritmo.
+Lo he implementado principalmente para armar ejercicios en la segunda parte de la materia: con esta función puedo ver
+qué tan largo es un ejercicio clásico (o que tan "feos" son los cálculos) al aplicar SIMPLEX haciendo las cuentas.
